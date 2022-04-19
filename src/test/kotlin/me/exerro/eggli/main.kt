@@ -1,14 +1,11 @@
 package me.exerro.eggli
 
-import me.exerro.eggli.enum.GLBufferTarget
-import me.exerro.eggli.enum.GLShaderType
-import me.exerro.eggli.enum.GLType
+import me.exerro.eggli.GLDebugger.LogAction.*
+import me.exerro.eggli.enum.*
 import me.exerro.eggli.gl.*
 import me.exerro.eggli.types.GLShaderProgram
 import me.exerro.eggli.types.GLVertexArray
-import me.exerro.eggli.util.createGLFWWindowWithWorker
-import me.exerro.eggli.util.createRenderLoop
-import me.exerro.eggli.util.withDebugContext
+import me.exerro.eggli.util.*
 import me.exerro.lifetimes.Lifetime
 import me.exerro.lifetimes.withLifetime
 import org.lwjgl.glfw.GLFW
@@ -16,25 +13,29 @@ import org.lwjgl.opengl.GL46C
 
 class GLObjects(
     val shaderProgram: GLShaderProgram,
-    val vertexArray: GLVertexArray
+    val vertexArray: GLVertexArray,
+    val vertices: Int,
 )
 
-const val VERTEX_SHADER = """
+const val VERTEX_SHADER_SOURCE = """
 #version 460 core
 
+uniform mat4 u_projectionMatrix;
+
 layout (location = 0) in vec3 v_position;
+layout (location = 3) in vec3 v_colour;
 
 out vec3 f_position;
 out vec3 f_colour;
 
 void main() {
-    gl_Position = vec4(v_position, 1);
+    gl_Position = u_projectionMatrix * vec4(v_position, 1);
     f_position = v_position;
-    f_colour = v_position;
+    f_colour = v_colour;
 }
 """
 
-const val FRAGMENT_SHADER = """
+const val FRAGMENT_SHADER_SOURCE = """
 #version 460 core
 
 in vec3 f_position;
@@ -49,53 +50,40 @@ void main() {
 
 context (Lifetime, GLDebugger.Context)
 fun createRenderingObjects() = GL {
-    val (shaderProgram) = glCreateProgram()
-    val (vao) = glGenVertexArrays()
-    val (positionBuffer) = glGenBuffers()
+    val (shaderProgram) = createShaderProgram(
+        GL_VERTEX_SHADER to VERTEX_SHADER_SOURCE,
+        GL_FRAGMENT_SHADER to FRAGMENT_SHADER_SOURCE,
+    )
+    val (cube) = createDefaultCube(
+        includeUVs = false,
+        includeColours = true,
+        useElements = true,
+    )
+    val proj = createPerspectiveProjectionMatrixValues(aspectRatio = 1080f / 720f)
 
-    glNamedBufferData(positionBuffer, floatArrayOf(
-        -0.5f, -0.5f, 0.0f,
-        0.5f, -0.5f, 0.0f,
-        0.0f, 0.5f, 0.0f,
-    ))
+//    glEnable(GLTarget.CullFace)
+    glEnable(GLTarget.DepthTest)
 
-    glBindVertexArray(vao) {
-        glBindBuffer(GLBufferTarget.Array, positionBuffer) {
-            glVertexAttribPointer(0, 3, GLType.Float)
-        }
-    }
-
-    glEnableVertexAttribArray(vao, 0)
-
-    withLifetime {
-        val (vertex) = glCreateShader(GLShaderType.Vertex)
-        val (fragment) = glCreateShader(GLShaderType.Fragment)
-
-        glShaderSource(vertex, VERTEX_SHADER)
-        glShaderSource(fragment, FRAGMENT_SHADER)
-        glCompileShader(vertex)
-        glCompileShader(fragment)
-        glAttachShader(shaderProgram, vertex)
-        glAttachShader(shaderProgram, fragment)
-        glLinkProgram(shaderProgram)
-        glDetachShader(shaderProgram, vertex)
-        glDetachShader(shaderProgram, fragment)
+    glUseProgram(shaderProgram) {
+        glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "u_projectionMatrix"), proj)
     }
 
     GLObjects(
         shaderProgram = shaderProgram,
-        vertexArray = vao,
+        vertexArray = cube.get().vertexArray,
+        vertices = DefaultCubeObjects.VERTICES,
     )
 }
 
 context (GLContext, GLDebugger.Context)
 fun renderFrame(glObjects: GLObjects) {
-    GL46C.glClearColor(0.1f, 0.12f, 0.13f, 1f)
-    GL46C.glClear(GL46C.GL_COLOR_BUFFER_BIT)
+    glClearColor(0.1f, 0.12f, 0.13f)
+    glClear(GL_COLOR_BUFFER_BIT + GL_DEPTH_BUFFER_BIT)
 
     glUseProgram(glObjects.shaderProgram) {
         glBindVertexArray(glObjects.vertexArray) {
-            GL46C.glDrawArrays(GL46C.GL_TRIANGLES, 0, 3)
+//            glDrawArrays(GL_TRIANGLES, 0, glObjects.vertices)
+            glDrawElements(GL_TRIANGLES, glObjects.vertices)
         }
     }
 }
@@ -105,8 +93,10 @@ fun runWindow() {
     val (windowId, worker) = createGLFWWindowWithWorker(title = "Eggli Test Window")
     val glObjects = worker.evaluateBlocking(createRenderingObjects())
     val renderingDebugger = glDebugger
-        .ignoringAction(GLDebugger.LogAction.ObjectBound)
-        .ignoringAction(GLDebugger.LogAction.ObjectUnbound)
+        .ignoringAction(ObjectBound)
+        .ignoringAction(ObjectUnbound)
+        .ignoringAction(DrawCall)
+        .ignoringAction(StateChanged)
 
     withDebugContext(renderingDebugger) {
         createRenderLoop(windowId, worker) {

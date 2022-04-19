@@ -38,32 +38,5 @@ enum class GLBufferUsage(val glValue: Int, val glName: String) {
         /** TODO */
         fun fromGLValue(glValue: Int) = values()
             .firstOrNull { it.glValue == glValue }
-
-        /** @see StreamDraw */
-        val GL_STREAM_DRAW = StreamDraw
-
-        /** @see StreamRead */
-        val GL_STREAM_READ = StreamRead
-
-        /** @see StreamCopy */
-        val GL_STREAM_COPY = StreamCopy
-
-        /** @see StaticDraw */
-        val GL_STATIC_DRAW = StaticDraw
-
-        /** @see StaticRead */
-        val GL_STATIC_READ = StaticRead
-
-        /** @see StaticCopy */
-        val GL_STATIC_COPY = StaticCopy
-
-        /** @see DynamicDraw */
-        val GL_DYNAMIC_DRAW = DynamicDraw
-
-        /** @see DynamicRead */
-        val GL_DYNAMIC_READ = DynamicRead
-
-        /** @see DynamicCopy */
-        val GL_DYNAMIC_COPY = DynamicCopy
     }
 }

@@ -50,44 +50,5 @@ enum class GLType(val glValue: kotlin.Int, val glName: String) {
         /** TODO */
         fun fromGLValue(glValue: kotlin.Int) = values()
             .firstOrNull { it.glValue == glValue }
-
-        /** @see Byte */
-        val GL_BYTE = Byte
-
-        /** @see UnsignedByte */
-        val GL_UNSIGNED_BYTE = UnsignedByte
-
-        /** @see Short */
-        val GL_SHORT = Short
-
-        /** @see UnsignedShort */
-        val GL_UNSIGNED_SHORT = UnsignedShort
-
-        /** @see Int */
-        val GL_INT = Int
-
-        /** @see UnsignedInt */
-        val GL_UNSIGNED_INT = UnsignedInt
-
-        /** @see HalfFloat */
-        val GL_HALF_FLOAT = HalfFloat
-
-        /** @see Float */
-        val GL_FLOAT = Float
-
-        /** @see Double */
-        val GL_DOUBLE = Double
-
-        /** @see Fixed */
-        val GL_FIXED = Fixed
-
-        /** @see Int2101010Rev */
-        val GL_INT_2_10_10_10_REV = Int2101010Rev
-
-        /** @see UnsignedInt2101010Rev */
-        val GL_UNSIGNED_INT_2_10_10_10_REV = UnsignedInt2101010Rev
-
-        /** @see UnsignedInt10f11f11fRev */
-        val GL_UNSIGNED_INT_10F_11F_11F_REV = UnsignedInt10f11f11fRev
     }
 }

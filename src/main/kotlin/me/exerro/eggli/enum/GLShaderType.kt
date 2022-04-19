@@ -29,23 +29,5 @@ enum class GLShaderType(val glValue: Int, val glName: String) {
         /** TODO */
         fun fromGLValue(glValue: Int) = values()
             .firstOrNull { it.glValue == glValue }
-
-        /** @see Fragment */
-        val GL_FRAGMENT_SHADER = Fragment
-
-        /** @see Vertex */
-        val GL_VERTEX_SHADER = Vertex
-
-        /** @see Geometry */
-        val GL_GEOMETRY_SHADER = Geometry
-
-        /** @see TesselationControl */
-        val GL_TESS_CONTROL_SHADER = TesselationControl
-
-        /** @see TesselationEvaluation */
-        val GL_TESS_EVALUATION_SHADER = TesselationEvaluation
-
-        /** @see Compute */
-        val GL_COMPUTE_SHADER = Compute
     }
 }

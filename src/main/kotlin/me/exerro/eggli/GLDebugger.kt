@@ -16,7 +16,10 @@ interface GLDebugger {
                 LogAction.ObjectBound -> "35"
                 LogAction.ObjectUnbound -> "35"
                 LogAction.StateChanged -> "34"
+                LogAction.UniformChanged -> "34"
                 LogAction.Generic -> "37"
+                LogAction.Info -> "30"
+                LogAction.DrawCall -> "30"
                 LogAction.Error -> "31"
             }
             this@GLDebugger.log(action, entity, "\u001b[${colouring}m$message\u001b[0m")
@@ -77,7 +80,10 @@ interface GLDebugger {
         ObjectBound,
         ObjectUnbound,
         StateChanged,
+        UniformChanged,
         Generic,
+        Info,
+        DrawCall,
         Error,
     }
 
@@ -91,6 +97,7 @@ interface GLDebugger {
         Shader,
         Program,
         Window,
+        DrawTarget,
     }
 
     /** @see GLDebugger */

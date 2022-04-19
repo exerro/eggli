@@ -16,6 +16,19 @@ class GL<T> internal constructor(
     var value = null as T?; internal set
 
     /** TODO */
+    fun <R> map(fn: (T) -> R) = GL {
+        val (value) = this@GL
+        fn(value)
+    }
+
+    /** TODO */
+    fun <R> flatMap(fn: (T) -> GL<R>) = GL {
+        val (value) = this@GL
+        val (result) = fn(value)
+        result
+    }
+
+    /** TODO */
     context (GLContext)
     internal fun evaluate(): T =
         if (!evaluating.getAndSet(true)) {

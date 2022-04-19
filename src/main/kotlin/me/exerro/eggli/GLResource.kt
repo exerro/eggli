@@ -4,7 +4,7 @@ import me.exerro.lifetimes.Lifetime
 
 /** TODO */
 context (GLContext, Lifetime)
-open class GLResource<T>(
+open class GLResource<out T>(
     /** TODO */
     private val value: T,
     /** TODO */
@@ -43,5 +43,22 @@ open class GLResource<T>(
             isDestroyed.also { isDestroyed = true }
         }
         if (!wasDestroyed) worker.runLater(runIfStopped = true) { destructor(value) }
+    }
+
+    /** @see GLResource */
+    companion object {
+        /** TODO */
+        context (GLContext, Lifetime)
+        fun <T> createDestroyed(): GLResource<T> {
+            val resource = GLResource(Unit) { }
+            resource.destroy()
+            // the value of type Unit is hidden behind the get() method, which
+            // will throw an exception if the resource is destroyed, which it is
+            // because of the previous call
+            // it's safe to cast this to another type since we'll never access
+            // the value anyway
+            @Suppress("UNCHECKED_CAST")
+            return resource as GLResource<T>
+        }
     }
 }

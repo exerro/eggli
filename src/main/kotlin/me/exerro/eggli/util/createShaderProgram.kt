@@ -1,0 +1,40 @@
+package me.exerro.eggli.util
+
+import me.exerro.eggli.GL
+import me.exerro.eggli.GLDebugger
+import me.exerro.eggli.enum.GLShaderType
+import me.exerro.eggli.gl.*
+import me.exerro.lifetimes.Lifetime
+import me.exerro.lifetimes.withLifetime
+
+/** TODO */
+context (Lifetime, GLDebugger.Context)
+fun createShaderProgram(
+    vararg shaders: Pair<GLShaderType, String>,
+) = createShaderProgram(shaders.toList())
+
+/** @see createShaderProgram */
+context (Lifetime, GLDebugger.Context)
+fun createShaderProgram(
+    shaders: Iterable<Pair<GLShaderType, String>>,
+) = GL {
+    val (shaderProgram) = glCreateProgram()
+
+    // we wrap this code in a lifetime so that any allocations (i.e. the
+    // individual shaders) are cleaned up automatically afterwards
+    withLifetime {
+        for ((type, source) in shaders) {
+            val (s) = glCreateShader(type)
+            glShaderSource(s, source)
+            glCompileShader(s)
+            glAttachShader(shaderProgram, s)
+        }
+
+        glLinkProgram(shaderProgram)
+
+        // here, shaders will be destroyed, and they're not necessary because
+        // the shader program has already been linked
+    }
+
+    shaderProgram
+}
