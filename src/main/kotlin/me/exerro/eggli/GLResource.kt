@@ -35,6 +35,7 @@ open class GLResource<T>(
 
     override fun equals(other: Any?) = value == other
     override fun hashCode() = value.hashCode()
+    override fun toString() = value.toString()
 
     private val lock = Any()
     private val lifetimeBinding = onLifetimeEnded {

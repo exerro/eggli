@@ -11,7 +11,6 @@ import kotlin.coroutines.suspendCoroutine
 /** TODO */
 context (Lifetime)
 class GLWorker private constructor(
-    private val glfwWindowId: Long,
     threadName: String,
     queueCapacity: Int,
     private val onError: (Throwable) -> Unit,
@@ -65,9 +64,6 @@ class GLWorker private constructor(
         start = true,
         isDaemon = false,
     ) {
-        GLFW.glfwMakeContextCurrent(glfwWindowId)
-        org.lwjgl.opengl.GL.createCapabilities()
-
         while (running || workQueue.isNotEmpty()) {
             try {
                 val fn = workQueue.take()
@@ -89,11 +85,24 @@ class GLWorker private constructor(
     companion object {
         /** TODO */
         context (Lifetime)
+        fun createWithoutContext(
+            threadName: String = "GL Worker Thread",
+            queueCapacity: Int = 1024,
+            onError: (Throwable) -> Unit = Throwable::printStackTrace,
+        ) = GLWorker(threadName, queueCapacity, onError)
+
+        /** TODO */
+        context (Lifetime)
         fun createForGLFWWindow(
             glfwWindowId: Long,
             threadName: String = "GL Worker Thread",
             queueCapacity: Int = 1024,
             onError: (Throwable) -> Unit = Throwable::printStackTrace,
-        ) = GLWorker(glfwWindowId, threadName, queueCapacity, onError)
+        ) = GLWorker(threadName, queueCapacity, onError).also {
+            it.runLater {
+                GLFW.glfwMakeContextCurrent(glfwWindowId)
+                org.lwjgl.opengl.GL.createCapabilities()
+            }
+        }
     }
 }
