@@ -1,16 +1,16 @@
 <h1 align="center">
-  kotlin-template
+  eggli
 </h1>
 
 <p align="center">
-  <a href="https://jitpack.io/#exerro/kotlin-template"><img src="https://jitpack.io/v/exerro/kotlin-template.svg" alt="JitPack badge"/></a>
+  <a href="https://jitpack.io/#exerro/eggli"><img src="https://jitpack.io/v/exerro/eggli.svg" alt="JitPack badge"/></a>
 </p>
 
 A template for kotlin projects.
 
 ## Installation
 
-Check out the [releases](https://github.com/exerro/kotlin-template/releases), or
+Check out the [releases](https://github.com/exerro/eggli/releases), or
 using a build system...
 
 ### Gradle (`build.gradle.kts`)
@@ -22,7 +22,7 @@ repositories {
 }
 
 dependencies {
-    implementation("me.exerro:kotlin-template:1.0.0")
+    implementation("me.exerro:eggli:1.0.0")
 }
 ```
 
@@ -38,16 +38,16 @@ dependencies {
 
 <dependency>
   <groupId>me.exerro</groupId>
-  <artifactId>kotlin-template</artifactId>
+  <artifactId>eggli</artifactId>
   <version>1.0.0</version>
 </dependency>
 ```
 
 ## Updating this template
 
-* Change `kotlin-template` in `settings.gradle.kts`
-* Change `kotlin-template` in `build.gradle.kts`
-* Change `kotlin-template` in this README.
+* Change `eggli` in `settings.gradle.kts`
+* Change `eggli` in `build.gradle.kts`
+* Change `eggli` in this README.
 
 ## Testing the build before release
 
