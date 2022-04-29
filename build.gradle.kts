@@ -37,7 +37,7 @@ allprojects {
 
 dependencies {
     implementation(kotlin("stdlib"))
-    implementation("me.exerro:lifetimes-kt:1.0.0")
+    implementation("me.exerro:lifetimes-kt:1.1.0")
 
     implementation(platform("org.lwjgl:lwjgl-bom:3.3.1-SNAPSHOT"))
 

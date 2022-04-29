@@ -20,6 +20,9 @@ fun createShaderProgram(
 ) = GL {
     val (shaderProgram) = glCreateProgram()
 
+    // TODO: if the lifetime ends within this function, things will get weird
+    //  should wrap in a lifetime.ifAlive kinda thing
+
     // we wrap this code in a lifetime so that any allocations (i.e. the
     // individual shaders) are cleaned up automatically afterwards
     withLifetime {

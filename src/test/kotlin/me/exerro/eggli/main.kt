@@ -9,7 +9,6 @@ import me.exerro.eggli.util.*
 import me.exerro.lifetimes.Lifetime
 import me.exerro.lifetimes.withLifetime
 import org.lwjgl.glfw.GLFW
-import org.lwjgl.opengl.GL46C
 
 class GLObjects(
     val shaderProgram: GLShaderProgram,
