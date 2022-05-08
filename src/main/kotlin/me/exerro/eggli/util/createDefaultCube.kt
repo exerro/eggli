@@ -9,10 +9,10 @@ import me.exerro.eggli.enum.GLType
 import me.exerro.eggli.gl.*
 import me.exerro.eggli.types.GLBuffer
 import me.exerro.eggli.types.GLVertexArray
+import me.exerro.eggli.util.DefaultCubeObjects.Companion.COLOUR_VERTEX_ARRAY_INDEX
+import me.exerro.eggli.util.DefaultCubeObjects.Companion.NORMAL_VERTEX_ARRAY_INDEX
 import me.exerro.eggli.util.DefaultCubeObjects.Companion.POSITION_VERTEX_ARRAY_INDEX
 import me.exerro.eggli.util.DefaultCubeObjects.Companion.UV_VERTEX_ARRAY_INDEX
-import me.exerro.eggli.util.DefaultCubeObjects.Companion.NORMAL_VERTEX_ARRAY_INDEX
-import me.exerro.eggli.util.DefaultCubeObjects.Companion.COLOUR_VERTEX_ARRAY_INDEX
 import me.exerro.lifetimes.Lifetime
 
 /** TODO */
@@ -58,7 +58,7 @@ fun createDefaultCube(
     centreZ: Float = -1f,
 ) = GL {
     val (vertexArray) = glGenVertexArrays()
-    val (positionBuffer) = glGenBuffers()
+    val (positionBuffer) = glCreateBuffers()
     val (uvBuffer) = createBuffer(includeUVs)
     val (normalBuffer) = createBuffer(includeNormals)
     val (colourBuffer) = createBuffer(includeColours)
@@ -133,7 +133,7 @@ fun createDefaultCube(
 context (GLContext, Lifetime, GLDebugger.Context)
 private fun createBuffer(include: Boolean): GL<GLBuffer> =
     when (include) {
-        true -> glGenBuffers()
+        true -> glCreateBuffers()
         else -> GL { GLResource.createDestroyed() }
     }
 

@@ -3,7 +3,7 @@ package me.exerro.eggli.enum
 import org.lwjgl.opengl.GL46C
 
 /** TODO */
-enum class GLTarget(val glValue: Int, val glName: String) {
+enum class GLOption(val glValue: Int, val glName: String) {
     /** If enabled, blend the computed fragment color values with the values in the color buffers. See glBlendFunc. */
     Blend(GL46C.GL_BLEND, glName = "GL_BLEND"),
 
@@ -111,7 +111,7 @@ enum class GLTarget(val glValue: Int, val glName: String) {
 
     override fun toString() = glName
 
-    /** @see GLTarget */
+    /** @see GLOption */
     companion object {
         /** TODO */
         fun fromGLValue(glValue: Int) = values()

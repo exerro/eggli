@@ -60,8 +60,8 @@ fun createRenderingObjects() = GL {
     )
     val proj = createPerspectiveProjectionMatrixValues(aspectRatio = 1080f / 720f)
 
-//    glEnable(GLTarget.CullFace)
-    glEnable(GLTarget.DepthTest)
+//    glEnable(GLOption.CullFace)
+    glEnable(GLOption.DepthTest)
 
     glUseProgram(shaderProgram) {
         glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "u_projectionMatrix"), proj)

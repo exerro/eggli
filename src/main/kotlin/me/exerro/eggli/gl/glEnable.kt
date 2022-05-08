@@ -4,12 +4,12 @@ import me.exerro.eggli.GLContext
 import me.exerro.eggli.GLDebugger
 import me.exerro.eggli.GLDebugger.LogAction.*
 import me.exerro.eggli.GLDebugger.LogEntity.State
-import me.exerro.eggli.enum.GLTarget
+import me.exerro.eggli.enum.GLOption
 import org.lwjgl.opengl.GL46C
 
 /** TODO */
 context (GLContext, GLDebugger.Context)
-fun glEnable(target: GLTarget) {
+fun glEnable(target: GLOption) {
     GL46C.glEnable(target.glValue)
     glLog(StateChanged, State, "Enabled $target")
     glCheckForErrors()

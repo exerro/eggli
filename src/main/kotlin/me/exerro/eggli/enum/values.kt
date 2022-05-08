@@ -8,7 +8,7 @@ import me.exerro.eggli.enum.GLClearBit.Companion.ColorBuffer
 import me.exerro.eggli.enum.GLClearBit.Companion.DepthBuffer
 import me.exerro.eggli.enum.GLClearBit.Companion.StencilBuffer
 import me.exerro.eggli.enum.GLShaderType.*
-import me.exerro.eggli.enum.GLTarget.*
+import me.exerro.eggli.enum.GLOption.*
 import me.exerro.eggli.enum.GLType.*
 import kotlin.Array
 
