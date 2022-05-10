@@ -1,14 +1,39 @@
-package me.exerro.esel.language
+package me.exerro.eggli.gen
 
-import com.google.devtools.ksp.processing.SymbolProcessorEnvironment
-import com.google.devtools.ksp.processing.SymbolProcessorProvider
+import com.google.devtools.ksp.processing.*
+import com.google.devtools.ksp.symbol.KSAnnotated
 
-/** Provide the [GenerationProcessor] to generate our source files. */
-class GenerationProcessorProvider: SymbolProcessorProvider {
-    override fun create(environment: SymbolProcessorEnvironment) =
-        GenerationProcessor(
-            codeGenerator = environment.codeGenerator,
-            logger = environment.logger,
-            options = environment.options
+/** Generates eggli code. */
+class GenerationProcessor(
+    private val codeGenerator: CodeGenerator,
+    private val logger: KSPLogger,
+    private val options: Map<String, String>,
+): SymbolProcessor {
+    override fun process(resolver: Resolver): List<KSAnnotated> {
+        if (hasRun) return emptyList()
+        hasRun = true
+
+        // get the dependencies of the files we're creating
+        val dependencies = Dependencies(aggregating = false)
+
+        writeCodeFile(dependencies, "enum", "GLenum", buildGLenumFileContent())
+
+        return emptyList()
+    }
+
+    private fun writeCodeFile(
+        dependencies: Dependencies,
+        packageName: String,
+        name: String,
+        content: String,
+    ) {
+        val file = codeGenerator.createNewFile(
+            dependencies = dependencies,
+            packageName = "me.exerro.eggli.$packageName",
+            fileName = name,
         )
+        file.write(content.toByteArray())
+    }
+
+    private var hasRun = false
 }

@@ -6,9 +6,6 @@ import me.exerro.eggli.GLDebugger.LogAction.Generic
 import me.exerro.eggli.GLDebugger.LogEntity.Buffer
 import me.exerro.eggli.enum.GLBufferTarget
 import me.exerro.eggli.enum.GLBufferUsage
-import me.exerro.eggli.types.GLShader
-import me.exerro.eggli.types.GLShaderProgram
-import me.exerro.eggli.types.GLVertexArray
 import org.lwjgl.opengl.GL46C
 
 /** TODO

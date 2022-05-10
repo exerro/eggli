@@ -22,20 +22,14 @@ val lwjglNatives = run {
 }
 
 plugins {
-    java
-    kotlin("jvm") version "1.6.20"
+    kotlin("jvm")
     `maven-publish`
-}
-
-allprojects {
-    repositories {
-        mavenCentral()
-        maven { url = uri("https://jitpack.io") }
-        maven("https://oss.sonatype.org/content/repositories/snapshots/")
-    }
+    id("com.google.devtools.ksp")
 }
 
 dependencies {
+    ksp(project(":eggli-gen"))
+
     implementation(kotlin("stdlib"))
     implementation("me.exerro:lifetimes-kt:1.1.0")
 
@@ -50,6 +44,10 @@ dependencies {
     runtimeOnly("org.lwjgl", "lwjgl-stb", classifier = lwjglNatives)
 }
 
+ksp {
+    // arg("key", "value")
+}
+
 publishing {
     publications {
         create<MavenPublication>("maven") {
@@ -62,13 +60,8 @@ publishing {
     }
 }
 
-allprojects {
-    tasks.withType<KotlinCompile> {
-        kotlinOptions.jvmTarget = "1.8"
-        kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.contracts.ExperimentalContracts"
-        kotlinOptions.freeCompilerArgs += "-Xopt-in=kotlin.time.ExperimentalTime"
-        kotlinOptions.freeCompilerArgs += "-Xcontext-receivers"
-        kotlinOptions.freeCompilerArgs += "-language-version"
-        kotlinOptions.freeCompilerArgs += "1.7"
-    }
+kotlin.sourceSets.main {
+    kotlin.srcDirs(
+        file("$buildDir/generated/ksp/main/kotlin"),
+    )
 }

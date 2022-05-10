@@ -20,7 +20,7 @@ import me.exerro.eggli.util.DefaultCubeObjects.Companion.UV_VERTEX_BUFFER_COMPON
 import me.exerro.lifetimes.Lifetime
 
 /** TODO */
-data class DefaultCubeObjects(
+data class DefaultFaceObjects(
     val vertexArray: GLVertexArray,
     val positionBuffer: GLBuffer,
     val uvBuffer: GLBuffer,
@@ -28,7 +28,7 @@ data class DefaultCubeObjects(
     val colourBuffer: GLBuffer,
     val elementBuffer: GLBuffer,
 ) {
-    /** @see DefaultCubeObjects */
+    /** @see DefaultFaceObjects */
     companion object {
         /** Index of the position vertex buffer within the vertex array. */
         const val POSITION_VERTEX_BUFFER_INDEX = 0
@@ -55,13 +55,13 @@ data class DefaultCubeObjects(
         const val COLOUR_VERTEX_BUFFER_COMPONENTS = 4
 
         /** TODO */
-        const val VERTICES = 36
+        const val VERTICES = 6
     }
 }
 
 /** TODO */
 context (Lifetime, GLDebugger.Context)
-fun createDefaultCube(
+fun createDefaultFace(
     includeUVs: Boolean = true,
     includeNormals: Boolean = true,
     includeColours: Boolean = false,
@@ -82,10 +82,10 @@ fun createDefaultCube(
     val (colourBuffer) = createBuffer(includeColours)
     val (elementBuffer) = createBuffer(useElements)
 
-    val positionData = if (useElements) CUBE_POSITIONS.copyOf(CUBE_POSITIONS.size) else genCubeData(POSITION_VERTEX_BUFFER_COMPONENTS, CUBE_POSITIONS, CUBE_ELEMENTS)
-    val uvData = if (!includeUVs || useElements) CUBE_UVS else genCubeData(UV_VERTEX_BUFFER_COMPONENTS, CUBE_UVS, CUBE_ELEMENTS)
-    val normalData = if (!includeNormals || useElements) CUBE_NORMALS else genCubeData(NORMAL_VERTEX_BUFFER_COMPONENTS, CUBE_NORMALS, CUBE_ELEMENTS)
-    val colourData = if (!includeColours || useElements) CUBE_COLOURS else genCubeData(COLOUR_VERTEX_BUFFER_COMPONENTS, CUBE_COLOURS, CUBE_ELEMENTS)
+    val positionData = if (useElements) FACE_POSITIONS.copyOf(FACE_POSITIONS.size) else genFaceData(POSITION_VERTEX_BUFFER_COMPONENTS, FACE_POSITIONS, Face_ELEMENTS)
+    val uvData = if (!includeUVs || useElements) FACE_UVS else genFaceData(UV_VERTEX_BUFFER_COMPONENTS, FACE_UVS, Face_ELEMENTS)
+    val normalData = if (!includeNormals || useElements) FACE_NORMALS else genFaceData(NORMAL_VERTEX_BUFFER_COMPONENTS, FACE_NORMALS, Face_ELEMENTS)
+    val colourData = if (!includeColours || useElements) FACE_COLOURS else genFaceData(COLOUR_VERTEX_BUFFER_COMPONENTS, FACE_COLOURS, Face_ELEMENTS)
 
     for (i in positionData.indices step 3) {
         positionData[i] *= width
@@ -100,7 +100,7 @@ fun createDefaultCube(
     if (includeUVs) glNamedBufferData(uvBuffer, uvData)
     if (includeNormals) glNamedBufferData(normalBuffer, normalData)
     if (includeColours) glNamedBufferData(colourBuffer, colourData)
-    if (useElements) glNamedBufferData(elementBuffer, CUBE_ELEMENTS)
+    if (useElements) glNamedBufferData(elementBuffer, Face_ELEMENTS)
 
     glBindVertexArray(vertexArray) {
         glBindBuffer(GLBufferTarget.ArrayBuffer, positionBuffer) {
@@ -155,148 +155,39 @@ private fun createBuffer(include: Boolean): GL<GLBuffer> =
         else -> GL { GLResource.createDestroyed() }
     }
 
-private fun genCubeData(size: Int, data: FloatArray, elements: IntArray) =
+private fun genFaceData(size: Int, data: FloatArray, elements: IntArray) =
     FloatArray(size * elements.size) { index ->
         data[elements[index / size] * size + index % size]
     }
 
-private val CUBE_POSITIONS = floatArrayOf(
-    // front
+private val FACE_POSITIONS = floatArrayOf(
     -0.5f,  0.5f,  0.5f,
     -0.5f, -0.5f,  0.5f,
      0.5f, -0.5f,  0.5f,
      0.5f,  0.5f,  0.5f,
-    // back
-     0.5f,  0.5f, -0.5f,
-     0.5f, -0.5f, -0.5f,
-    -0.5f, -0.5f, -0.5f,
-    -0.5f,  0.5f, -0.5f,
-    // left
-    -0.5f,  0.5f, -0.5f,
-    -0.5f, -0.5f, -0.5f,
-    -0.5f, -0.5f,  0.5f,
-    -0.5f,  0.5f,  0.5f,
-    // right
-     0.5f,  0.5f,  0.5f,
-     0.5f, -0.5f,  0.5f,
-     0.5f, -0.5f, -0.5f,
-     0.5f,  0.5f, -0.5f,
-    // top
-    -0.5f,  0.5f, -0.5f,
-    -0.5f,  0.5f,  0.5f,
-     0.5f,  0.5f,  0.5f,
-     0.5f,  0.5f, -0.5f,
-    // bottom
-    -0.5f, -0.5f,  0.5f,
-    -0.5f, -0.5f, -0.5f,
-     0.5f, -0.5f, -0.5f,
-     0.5f, -0.5f,  0.5f,
 )
 
-private val CUBE_UVS = floatArrayOf(
-    // front
-    0.25f, 0.3333333f,
-    0.25f, 0.6666667f,
-    0.50f, 0.6666667f,
-    0.50f, 0.3333333f,
-    // back
-    0.75f, 0.3333333f,
-    0.75f, 0.6666667f,
-    1.00f, 0.6666667f,
-    1.00f, 0.3333333f,
-    // left
-    0.00f, 0.3333333f,
-    0.00f, 0.6666667f,
-    0.25f, 0.6666667f,
-    0.25f, 0.3333333f,
-    // right
-    0.50f, 0.3333333f,
-    0.50f, 0.6666667f,
-    0.75f, 0.6666667f,
-    0.75f, 0.3333333f,
-    // top
-    0.25f, 0.00f,
-    0.25f, 0.3333333f,
-    0.50f, 0.3333333f,
-    0.50f, 0.00f,
-    // bottom
-    0.25f, 0.6666667f,
-    0.25f, 1.00f,
-    0.50f, 1.00f,
-    0.50f, 0.6666667f,
+private val FACE_UVS = floatArrayOf(
+    0f, 0f,
+    0f, 1f,
+    1f, 1f,
+    1f, 0f,
 )
 
-private val CUBE_NORMALS = floatArrayOf(
-    // front
+private val FACE_NORMALS = floatArrayOf(
      0f,  0f,  1f,
      0f,  0f,  1f,
      0f,  0f,  1f,
      0f,  0f,  1f,
-    // back
-     0f,  0f, -1f,
-     0f,  0f, -1f,
-     0f,  0f, -1f,
-     0f,  0f, -1f,
-    // left
-    -1f,  0f,  0f,
-    -1f,  0f,  0f,
-    -1f,  0f,  0f,
-    -1f,  0f,  0f,
-    // right
-     1f,  0f,  0f,
-     1f,  0f,  0f,
-     1f,  0f,  0f,
-     1f,  0f,  0f,
-    // top
-     0f,  1f,  0f,
-     0f,  1f,  0f,
-     0f,  1f,  0f,
-     0f,  1f,  0f,
-    // bottom
-     0f, -1f,  0f,
-     0f, -1f,  0f,
-     0f, -1f,  0f,
-     0f, -1f,  0f,
 )
 
-private val CUBE_COLOURS = floatArrayOf(
-    // front
+private val FACE_COLOURS = floatArrayOf(
     0f, 0f, 1f, 1f,
     0f, 0f, 1f, 1f,
     0f, 0f, 1f, 1f,
     0f, 0f, 1f, 1f,
-    // back
-    1f, 1f, 0f, 1f,
-    1f, 1f, 0f, 1f,
-    1f, 1f, 0f, 1f,
-    1f, 1f, 0f, 1f,
-    // left
-    0f, 1f, 1f, 1f,
-    0f, 1f, 1f, 1f,
-    0f, 1f, 1f, 1f,
-    0f, 1f, 1f, 1f,
-    // right
-    1f, 0f, 0f, 1f,
-    1f, 0f, 0f, 1f,
-    1f, 0f, 0f, 1f,
-    1f, 0f, 0f, 1f,
-    // top
-    0f, 1f, 0f, 1f,
-    0f, 1f, 0f, 1f,
-    0f, 1f, 0f, 1f,
-    0f, 1f, 0f, 1f,
-    // bottom
-    1f, 0f, 1f, 1f,
-    1f, 0f, 1f, 1f,
-    1f, 0f, 1f, 1f,
-    1f, 0f, 1f, 1f,
 )
 
-private val CUBE_ELEMENTS = intArrayOf(
+private val Face_ELEMENTS = intArrayOf(
      0,  1,  2,  0,  2,  3,
-     4,  5,  6,  4,  6,  7,
-     8,  9, 10,  8, 10, 11,
-    12, 13, 14, 12, 14, 15,
-    16, 17, 18, 16, 18, 19,
-    20, 21, 22, 20, 22, 23,
 )

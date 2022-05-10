@@ -20,6 +20,7 @@ interface GLDebugger {
                 LogAction.Generic -> "37"
                 LogAction.Info -> "30"
                 LogAction.DrawCall -> "30"
+                LogAction.Data -> "34"
                 LogAction.Error -> "31"
             }
             this@GLDebugger.log(action, entity, "\u001b[${colouring}m$message\u001b[0m")
@@ -83,6 +84,7 @@ interface GLDebugger {
         UniformChanged,
         Generic,
         Info,
+        Data,
         DrawCall,
         Error,
     }
