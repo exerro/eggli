@@ -9,6 +9,7 @@ import me.exerro.eggli.enum.GLClearBit.Companion.DepthBuffer
 import me.exerro.eggli.enum.GLClearBit.Companion.StencilBuffer
 import me.exerro.eggli.enum.GLShaderType.*
 import me.exerro.eggli.enum.GLOption.*
+import me.exerro.eggli.enum.GLTextureType.*
 import me.exerro.eggli.enum.GLType.*
 import kotlin.Array
 
@@ -337,6 +338,48 @@ inline val GL_TEXTURE_CUBE_MAP_SEAMLESS get() = TextureCubeMapSeamless
 /** @see ProgramPointSize */
 context (GLContext)
 inline val GL_PROGRAM_POINT_SIZE get() = ProgramPointSize
+
+////////////////////////////////////////////////////////////////
+
+/** @see Texture1D */
+context (GLContext)
+inline val GL_TEXTURE_1D get() = Texture1D
+
+/** @see Texture1DArray */
+context (GLContext)
+inline val GL_TEXTURE_1D_ARRAY get() = Texture1DArray
+
+/** @see Texture2D */
+context (GLContext)
+inline val GL_TEXTURE_2D get() = Texture2D
+
+/** @see Texture2DArray */
+context (GLContext)
+inline val GL_TEXTURE_2D_ARRAY get() = Texture2DArray
+
+/** @see Texture2DMultisample */
+context (GLContext)
+inline val GL_TEXTURE_2D_MULTISAMPLE get() = Texture2DMultisample
+
+/** @see Texture2DMultisampleArray */
+context (GLContext)
+inline val GL_TEXTURE_2D_MULTISAMPLE_ARRAY get() = Texture2DMultisampleArray
+
+/** @see Texture3D */
+context (GLContext)
+inline val GL_TEXTURE_3D get() = Texture3D
+
+/** @see CubeMap */
+context (GLContext)
+inline val GL_TEXTURE_CUBE_MAP get() = CubeMap
+
+/** @see CubeMapArray */
+context (GLContext)
+inline val GL_TEXTURE_CUBE_MAP_ARRAY get() = CubeMapArray
+
+/** @see Rectangle */
+context (GLContext)
+inline val GL_TEXTURE_RECTANGLE get() = Rectangle
 
 ////////////////////////////////////////////////////////////////
 

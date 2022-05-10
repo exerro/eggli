@@ -1,6 +1,7 @@
 package me.exerro.eggli
 
 import me.exerro.eggli.GLDebugger.LogAction.*
+import me.exerro.eggli.GLDebugger.LogEntity.Shader
 import me.exerro.eggli.enum.*
 import me.exerro.eggli.gl.*
 import me.exerro.eggli.types.GLShaderProgram
@@ -14,6 +15,7 @@ class GLObjects(
     val shaderProgram: GLShaderProgram,
     val vertexArray: GLVertexArray,
     val vertices: Int,
+    val elements: Boolean,
 )
 
 const val VERTEX_SHADER_SOURCE = """
@@ -37,18 +39,21 @@ void main() {
 const val FRAGMENT_SHADER_SOURCE = """
 #version 460 core
 
+uniform float u_time;
+
 in vec3 f_position;
 in vec3 f_colour;
 
 out vec4 o_colour;
 
 void main() {
-    o_colour = vec4(f_colour, 1);
+    o_colour = vec4(f_colour * (1 + cos(u_time)) / 2, 1);
 }
 """
 
 context (Lifetime, GLDebugger.Context)
 fun createRenderingObjects() = GL {
+    val useElements = false
     val (shaderProgram) = createShaderProgram(
         GL_VERTEX_SHADER to VERTEX_SHADER_SOURCE,
         GL_FRAGMENT_SHADER to FRAGMENT_SHADER_SOURCE,
@@ -56,7 +61,7 @@ fun createRenderingObjects() = GL {
     val (cube) = createDefaultCube(
         includeUVs = false,
         includeColours = true,
-        useElements = true,
+        useElements = useElements,
     )
     val proj = createPerspectiveProjectionMatrixValues(aspectRatio = 1080f / 720f)
 
@@ -71,18 +76,22 @@ fun createRenderingObjects() = GL {
         shaderProgram = shaderProgram,
         vertexArray = cube.get().vertexArray,
         vertices = DefaultCubeObjects.VERTICES,
+        elements = useElements,
     )
 }
 
 context (GLContext, GLDebugger.Context)
-fun renderFrame(glObjects: GLObjects) {
+fun renderFrame(glObjects: GLObjects, t: Float) {
     glClearColor(0.1f, 0.12f, 0.13f)
     glClear(GL_COLOR_BUFFER_BIT + GL_DEPTH_BUFFER_BIT)
 
     glUseProgram(glObjects.shaderProgram) {
+        glUniform1f(glGetUniformLocation(glObjects.shaderProgram, "u_time"), t)
         glBindVertexArray(glObjects.vertexArray) {
-//            glDrawArrays(GL_TRIANGLES, 0, glObjects.vertices)
-            glDrawElements(GL_TRIANGLES, glObjects.vertices)
+            if (glObjects.elements)
+                glDrawElements(count = glObjects.vertices)
+            else
+                glDrawArrays(count = glObjects.vertices)
         }
     }
 }
@@ -96,10 +105,13 @@ fun runWindow() {
         .ignoringAction(ObjectUnbound)
         .ignoringAction(DrawCall)
         .ignoringAction(StateChanged)
+        .ignoring(Info, Shader)
+        .ignoring(UniformChanged, Shader)
+    val t0 = System.currentTimeMillis()
 
     withDebugContext(renderingDebugger) {
         createRenderLoop(windowId, worker) {
-            renderFrame(glObjects)
+            renderFrame(glObjects, (System.currentTimeMillis() - t0) / 1000f)
             isAlive
         }
     }

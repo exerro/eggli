@@ -9,13 +9,12 @@ import org.lwjgl.opengl.GL46C
 
 /** TODO */
 context (GLContext, GLDebugger.Context)
-fun glDrawElements(
-    mode: GLDrawMode,
+fun glDrawArrays(
+    mode: GLDrawMode = GLDrawMode.Triangles,
+    first: Int = 0,
     count: Int,
-    type: Int = GL46C.GL_UNSIGNED_INT,
-    indices: Long = 0L
 ) {
-    GL46C.glDrawElements(mode.glValue, count, type, indices)
-    glLog(DrawCall, DrawTarget, "glDrawElements($mode, $count, $type, $indices)")
+    GL46C.glDrawArrays(mode.glValue, first, count)
+    glLog(DrawCall, DrawTarget, "glDrawArrays($mode, $first, $count)")
     glCheckForErrors()
 }

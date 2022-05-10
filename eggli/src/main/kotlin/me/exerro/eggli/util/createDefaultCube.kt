@@ -9,11 +9,16 @@ import me.exerro.eggli.enum.GLType
 import me.exerro.eggli.gl.*
 import me.exerro.eggli.types.GLBuffer
 import me.exerro.eggli.types.GLVertexArray
-import me.exerro.eggli.util.DefaultCubeObjects.Companion.COLOUR_VERTEX_ARRAY_INDEX
-import me.exerro.eggli.util.DefaultCubeObjects.Companion.NORMAL_VERTEX_ARRAY_INDEX
-import me.exerro.eggli.util.DefaultCubeObjects.Companion.POSITION_VERTEX_ARRAY_INDEX
-import me.exerro.eggli.util.DefaultCubeObjects.Companion.UV_VERTEX_ARRAY_INDEX
+import me.exerro.eggli.util.DefaultCubeObjects.Companion.COLOUR_VERTEX_BUFFER_INDEX
+import me.exerro.eggli.util.DefaultCubeObjects.Companion.NORMAL_VERTEX_BUFFER_INDEX
+import me.exerro.eggli.util.DefaultCubeObjects.Companion.POSITION_VERTEX_BUFFER_INDEX
+import me.exerro.eggli.util.DefaultCubeObjects.Companion.UV_VERTEX_BUFFER_INDEX
+import me.exerro.eggli.util.DefaultCubeObjects.Companion.COLOUR_VERTEX_BUFFER_COMPONENTS
+import me.exerro.eggli.util.DefaultCubeObjects.Companion.NORMAL_VERTEX_BUFFER_COMPONENTS
+import me.exerro.eggli.util.DefaultCubeObjects.Companion.POSITION_VERTEX_BUFFER_COMPONENTS
+import me.exerro.eggli.util.DefaultCubeObjects.Companion.UV_VERTEX_BUFFER_COMPONENTS
 import me.exerro.lifetimes.Lifetime
+import java.util.Arrays
 
 /** TODO */
 data class DefaultCubeObjects(
@@ -26,17 +31,29 @@ data class DefaultCubeObjects(
 ) {
     /** @see DefaultCubeObjects */
     companion object {
-        /** TODO */
-        const val POSITION_VERTEX_ARRAY_INDEX = 0
+        /** Index of the position vertex buffer within the vertex array. */
+        const val POSITION_VERTEX_BUFFER_INDEX = 0
 
-        /** TODO */
-        const val UV_VERTEX_ARRAY_INDEX = 1
+        /** Index of the UV vertex buffer within the vertex array. */
+        const val UV_VERTEX_BUFFER_INDEX = 1
 
-        /** TODO */
-        const val NORMAL_VERTEX_ARRAY_INDEX = 2
+        /** Index of the normal vertex buffer within the vertex array. */
+        const val NORMAL_VERTEX_BUFFER_INDEX = 2
 
-        /** TODO */
-        const val COLOUR_VERTEX_ARRAY_INDEX = 3
+        /** Index of the normal vertex buffer within the vertex array. */
+        const val COLOUR_VERTEX_BUFFER_INDEX = 3
+
+        /** Size (number of components) of the position vertex buffer. */
+        const val POSITION_VERTEX_BUFFER_COMPONENTS = 3
+
+        /** Size (number of components) of the UV vertex buffer. */
+        const val UV_VERTEX_BUFFER_COMPONENTS = 2
+
+        /** Size (number of components) of the normal vertex buffer. */
+        const val NORMAL_VERTEX_BUFFER_COMPONENTS = 3
+
+        /** Size (number of components) of the normal vertex buffer. */
+        const val COLOUR_VERTEX_BUFFER_COMPONENTS = 4
 
         /** TODO */
         const val VERTICES = 36
@@ -57,6 +74,8 @@ fun createDefaultCube(
     centreY: Float = 0f,
     centreZ: Float = -1f,
 ) = GL {
+    // TODO: look into creating a single buffer!
+
     val (vertexArray) = glGenVertexArrays()
     val (positionBuffer) = glCreateBuffers()
     val (uvBuffer) = createBuffer(includeUVs)
@@ -64,10 +83,10 @@ fun createDefaultCube(
     val (colourBuffer) = createBuffer(includeColours)
     val (elementBuffer) = createBuffer(useElements)
 
-    val positionData = if (useElements) CUBE_POSITIONS else genCubeData(3, CUBE_POSITIONS, CUBE_ELEMENTS)
-    val uvData = if (!includeUVs || useElements) CUBE_UVS else genCubeData(2, CUBE_UVS, CUBE_ELEMENTS)
-    val normalData = if (!includeNormals || useElements) CUBE_NORMALS else genCubeData(3, CUBE_NORMALS, CUBE_ELEMENTS)
-    val colourData = if (!includeColours || useElements) CUBE_COLOURS else genCubeData(4, CUBE_COLOURS, CUBE_ELEMENTS)
+    val positionData = if (useElements) CUBE_POSITIONS.copyOf(CUBE_POSITIONS.size) else genCubeData(POSITION_VERTEX_BUFFER_COMPONENTS, CUBE_POSITIONS, CUBE_ELEMENTS)
+    val uvData = if (!includeUVs || useElements) CUBE_UVS else genCubeData(UV_VERTEX_BUFFER_COMPONENTS, CUBE_UVS, CUBE_ELEMENTS)
+    val normalData = if (!includeNormals || useElements) CUBE_NORMALS else genCubeData(NORMAL_VERTEX_BUFFER_COMPONENTS, CUBE_NORMALS, CUBE_ELEMENTS)
+    val colourData = if (!includeColours || useElements) CUBE_COLOURS else genCubeData(COLOUR_VERTEX_BUFFER_COMPONENTS, CUBE_COLOURS, CUBE_ELEMENTS)
 
     for (i in positionData.indices step 3) {
         positionData[i] *= width
@@ -86,19 +105,19 @@ fun createDefaultCube(
 
     glBindVertexArray(vertexArray) {
         glBindBuffer(GLBufferTarget.Array, positionBuffer) {
-            glVertexAttribPointer(POSITION_VERTEX_ARRAY_INDEX, 3, GLType.Float)
+            glVertexAttribPointer(POSITION_VERTEX_BUFFER_INDEX, POSITION_VERTEX_BUFFER_COMPONENTS, GLType.Float)
         }
 
         if (includeUVs) glBindBuffer(GLBufferTarget.Array, uvBuffer) {
-            glVertexAttribPointer(UV_VERTEX_ARRAY_INDEX, 2, GLType.Float)
+            glVertexAttribPointer(UV_VERTEX_BUFFER_INDEX, UV_VERTEX_BUFFER_COMPONENTS, GLType.Float)
         }
 
         if (includeNormals) glBindBuffer(GLBufferTarget.Array, normalBuffer) {
-            glVertexAttribPointer(NORMAL_VERTEX_ARRAY_INDEX, 3, GLType.Float)
+            glVertexAttribPointer(NORMAL_VERTEX_BUFFER_INDEX, NORMAL_VERTEX_BUFFER_COMPONENTS, GLType.Float)
         }
 
         if (includeColours) glBindBuffer(GLBufferTarget.Array, colourBuffer) {
-            glVertexAttribPointer(COLOUR_VERTEX_ARRAY_INDEX, 4, GLType.Float)
+            glVertexAttribPointer(COLOUR_VERTEX_BUFFER_INDEX, COLOUR_VERTEX_BUFFER_COMPONENTS, GLType.Float)
         }
 
         if (useElements) {
@@ -106,10 +125,10 @@ fun createDefaultCube(
         }
     }
 
-    glEnableVertexAttribArray(vertexArray, POSITION_VERTEX_ARRAY_INDEX)
-    if (includeUVs) glEnableVertexAttribArray(vertexArray, UV_VERTEX_ARRAY_INDEX)
-    if (includeNormals) glEnableVertexAttribArray(vertexArray, NORMAL_VERTEX_ARRAY_INDEX)
-    if (includeColours) glEnableVertexAttribArray(vertexArray, COLOUR_VERTEX_ARRAY_INDEX)
+    glEnableVertexAttribArray(vertexArray, POSITION_VERTEX_BUFFER_INDEX)
+    if (includeUVs) glEnableVertexAttribArray(vertexArray, UV_VERTEX_BUFFER_INDEX)
+    if (includeNormals) glEnableVertexAttribArray(vertexArray, NORMAL_VERTEX_BUFFER_INDEX)
+    if (includeColours) glEnableVertexAttribArray(vertexArray, COLOUR_VERTEX_BUFFER_INDEX)
 
     val cubeObjects = DefaultCubeObjects(
         vertexArray = vertexArray,
@@ -139,7 +158,7 @@ private fun createBuffer(include: Boolean): GL<GLBuffer> =
 
 private fun genCubeData(size: Int, data: FloatArray, elements: IntArray) =
     FloatArray(size * elements.size) { index ->
-        data[elements[index / size] + index % size]
+        data[elements[index / size] * size + index % size]
     }
 
 private val CUBE_POSITIONS = floatArrayOf(
