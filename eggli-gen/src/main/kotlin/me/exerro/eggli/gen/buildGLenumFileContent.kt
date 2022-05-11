@@ -76,6 +76,19 @@ private val enumData = createEnumData {
         noDocumentation
     }
 
+    val GLDepthFunction by options {
+        val GL_ALWAYS by "The depth test always passes."
+        val GL_NEVER by "The depth test never passes."
+        val GL_LESS by "Passes if the fragment's depth value is less than the stored depth value."
+        val GL_EQUAL by "Passes if the fragment's depth value is equal to the stored depth value."
+        val GL_LEQUAL by "Passes if the fragment's depth value is less than or equal to the stored depth value."
+        val GL_GREATER by "Passes if the fragment's depth value is greater than the stored depth value."
+        val GL_NOTEQUAL by "Passes if the fragment's depth value is not equal to the stored depth value."
+        val GL_GEQUAL by "Passes if the fragment's depth value is greater than or equal to the stored depth value."
+
+        noDocumentation
+    }
+
     val GLDrawMode by options {
         val GL_POINTS by noDocumentation
         val GL_LINE_STRIP by noDocumentation
@@ -140,6 +153,32 @@ private val enumData = createEnumData {
         val GL_TESS_CONTROL_SHADER by noDocumentation
         val GL_TESS_EVALUATION_SHADER by noDocumentation
         val GL_COMPUTE_SHADER by noDocumentation
+
+        noDocumentation
+    }
+
+    val GLStencilAction by options {
+        val GL_KEEP by "The currently stored stencil value is kept."
+        val GL_ZERO by "The stencil value is set to 0."
+        val GL_REPLACE by "The stencil value is replaced with the reference value set with glStencilFunc."
+        val GL_INCR by "The stencil value is increased by 1 if it is lower than the maximum value."
+        val GL_INCR_WRAP by "Same as GL_INCR, but wraps it back to 0 as soon as the maximum value is exceeded."
+        val GL_DECR by "The stencil value is decreased by 1 if it is higher than the minimum value."
+        val GL_DECR_WRAP by "Same as GL_DECR, but wraps it to the maximum value if it ends up lower than 0."
+        val GL_INVERT by "Bitwise inverts the current stencil buffer value."
+
+        noDocumentation
+    }
+
+    val GLStencilFunction by options {
+        val GL_ALWAYS by "The stencil test always passes."
+        val GL_NEVER by "The stencil test never passes."
+        val GL_LESS by "Passes if the fragment's stencil value is less than the reference stencil value."
+        val GL_EQUAL by "Passes if the fragment's stencil value is equal to the reference stencil value."
+        val GL_LEQUAL by "Passes if the fragment's stencil value is less than or equal to the reference stencil value."
+        val GL_GREATER by "Passes if the fragment's stencil value is greater than the reference stencil value."
+        val GL_NOTEQUAL by "Passes if the fragment's stencil value is not equal to the reference stencil value."
+        val GL_GEQUAL by "Passes if the fragment's stencil value is greater than or equal to the reference stencil value."
 
         noDocumentation
     }
