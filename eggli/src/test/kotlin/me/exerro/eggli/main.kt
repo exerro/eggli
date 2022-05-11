@@ -63,17 +63,17 @@ fun createRenderingObjects() = GL {
         GL_VERTEX_SHADER to VERTEX_SHADER_SOURCE,
         GL_FRAGMENT_SHADER to FRAGMENT_SHADER_SOURCE,
     )
-//    val (shape) = createDefaultCube(
-//        includeUVs = true,
-//        includeColours = true,
-//        useElements = useElements,
-//        uvsPerFace = true,
-//    )
-    val (shape) = createDefaultFace(
+    val (shape) = createDefaultCube(
         includeUVs = true,
         includeColours = true,
         useElements = useElements,
+        uvsPerFace = true,
     )
+//    val (shape) = createDefaultFace(
+//        includeUVs = true,
+//        includeColours = true,
+//        useElements = useElements,
+//    )
     val proj = createPerspectiveProjectionMatrixValues(aspectRatio = 1080f / 720f)
     val textureData = GL::class.java.getResourceAsStream("/me/exerro/eggli/img/box_0_diffuse.png")!!.readBytes()
     val (texture) = glCreateTextures(GL_TEXTURE_2D)
@@ -83,8 +83,9 @@ fun createRenderingObjects() = GL {
     loadTextureData(texture, textureData)
     glTextureParameter(texture, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
 
-//    glEnable(GLOption.CullFace)
+    glEnable(GLOption.CullFace)
     glEnable(GLOption.DepthTest)
+    glCullFace(GL_FRONT)
 
     glUseProgram(shaderProgram) {
         glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "u_projectionMatrix"), proj)

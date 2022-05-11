@@ -105,6 +105,14 @@ private val enumData = createEnumData {
         noDocumentation
     }
 
+    val GLCullFace by options {
+        val GL_BACK by "Culls only the back faces."
+        val GL_FRONT by "Culls only the front faces."
+        val GL_FRONT_AND_BACK by "Culls both the front and back faces."
+
+        noDocumentation
+    }
+
     val GLDepthFunction by options {
         val GL_ALWAYS by "The depth test always passes."
         val GL_NEVER by "The depth test never passes."
@@ -474,6 +482,13 @@ private val enumData = createEnumData {
         val GL_INT_2_10_10_10_REV by noDocumentation
         val GL_UNSIGNED_INT_2_10_10_10_REV by noDocumentation
         val GL_UNSIGNED_INT_10F_11F_11F_REV by noDocumentation
+
+        noDocumentation
+    }
+
+    val GLWindingOrder by options {
+        val GL_CW by "Clockwise."
+        val GL_CCW by "Anti-clockwise."
 
         noDocumentation
     }
