@@ -6,19 +6,15 @@ import me.exerro.eggli.enum.*
 import me.exerro.eggli.gl.*
 import me.exerro.eggli.types.GLShaderProgram
 import me.exerro.eggli.types.GLTexture
-import me.exerro.eggli.types.GLVertexArray
 import me.exerro.eggli.util.*
 import me.exerro.lifetimes.Lifetime
 import me.exerro.lifetimes.withLifetime
 import org.lwjgl.glfw.GLFW
-import org.lwjgl.opengl.GL46C
 
 class GLObjects(
     val texture: GLTexture,
     val shaderProgram: GLShaderProgram,
-    val vertexArray: GLVertexArray,
-    val vertices: Int,
-    val elements: Boolean,
+    val shape: GLResource<SimpleMesh>,
 )
 
 const val VERTEX_SHADER_SOURCE = """
@@ -97,9 +93,7 @@ fun createRenderingObjects() = GL {
     GLObjects(
         texture = texture,
         shaderProgram = shaderProgram,
-        vertexArray = shape.get().vertexArray,
-        vertices = DefaultCubeObjects.VERTICES,
-        elements = useElements,
+        shape = shape,
     )
 }
 
@@ -109,13 +103,13 @@ fun renderFrame(glObjects: GLObjects, t: Float) {
     glClear(GL_COLOR_BUFFER_BIT + GL_DEPTH_BUFFER_BIT)
 
     glUseProgram(glObjects.shaderProgram) {
+        glUniform1f(glGetUniformLocation(glObjects.shaderProgram, "u_time"), t)
         glBindTexture(GL_TEXTURE_2D, glObjects.texture) {
-            glUniform1f(glGetUniformLocation(glObjects.shaderProgram, "u_time"), t)
-            glBindVertexArray(glObjects.vertexArray) {
-                if (glObjects.elements)
-                    glDrawElements(count = glObjects.vertices)
+            glBindVertexArray(glObjects.shape.get().vertexArray) {
+                if (glObjects.shape.get().usesElementBuffer)
+                    glDrawElements(count = glObjects.shape.get().vertices)
                 else
-                    glDrawArrays(count = glObjects.vertices)
+                    glDrawArrays(count = glObjects.shape.get().vertices)
             }
         }
     }

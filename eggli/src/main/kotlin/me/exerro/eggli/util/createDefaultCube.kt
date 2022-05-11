@@ -8,56 +8,15 @@ import me.exerro.eggli.enum.GLBufferTarget
 import me.exerro.eggli.enum.GLType
 import me.exerro.eggli.gl.*
 import me.exerro.eggli.types.GLBuffer
-import me.exerro.eggli.types.GLVertexArray
-import me.exerro.eggli.util.DefaultCubeObjects.Companion.COLOUR_VERTEX_BUFFER_INDEX
-import me.exerro.eggli.util.DefaultCubeObjects.Companion.NORMAL_VERTEX_BUFFER_INDEX
-import me.exerro.eggli.util.DefaultCubeObjects.Companion.POSITION_VERTEX_BUFFER_INDEX
-import me.exerro.eggli.util.DefaultCubeObjects.Companion.UV_VERTEX_BUFFER_INDEX
-import me.exerro.eggli.util.DefaultCubeObjects.Companion.COLOUR_VERTEX_BUFFER_COMPONENTS
-import me.exerro.eggli.util.DefaultCubeObjects.Companion.NORMAL_VERTEX_BUFFER_COMPONENTS
-import me.exerro.eggli.util.DefaultCubeObjects.Companion.POSITION_VERTEX_BUFFER_COMPONENTS
-import me.exerro.eggli.util.DefaultCubeObjects.Companion.UV_VERTEX_BUFFER_COMPONENTS
+import me.exerro.eggli.util.SimpleMesh.Companion.COLOUR_ATTRIBUTE
+import me.exerro.eggli.util.SimpleMesh.Companion.NORMAL_ATTRIBUTE
+import me.exerro.eggli.util.SimpleMesh.Companion.POSITION_ATTRIBUTE
+import me.exerro.eggli.util.SimpleMesh.Companion.UV_ATTRIBUTE
+import me.exerro.eggli.util.SimpleMesh.Companion.COLOUR_COMPONENTS
+import me.exerro.eggli.util.SimpleMesh.Companion.NORMAL_COMPONENTS
+import me.exerro.eggli.util.SimpleMesh.Companion.POSITION_COMPONENTS
+import me.exerro.eggli.util.SimpleMesh.Companion.UV_COMPONENTS
 import me.exerro.lifetimes.Lifetime
-
-/** TODO */
-data class DefaultCubeObjects(
-    val vertexArray: GLVertexArray,
-    val positionBuffer: GLBuffer,
-    val uvBuffer: GLBuffer,
-    val normalBuffer: GLBuffer,
-    val colourBuffer: GLBuffer,
-    val elementBuffer: GLBuffer,
-) {
-    /** @see DefaultCubeObjects */
-    companion object {
-        /** Index of the position vertex buffer within the vertex array. */
-        const val POSITION_VERTEX_BUFFER_INDEX = 0
-
-        /** Index of the UV vertex buffer within the vertex array. */
-        const val UV_VERTEX_BUFFER_INDEX = 1
-
-        /** Index of the normal vertex buffer within the vertex array. */
-        const val NORMAL_VERTEX_BUFFER_INDEX = 2
-
-        /** Index of the normal vertex buffer within the vertex array. */
-        const val COLOUR_VERTEX_BUFFER_INDEX = 3
-
-        /** Size (number of components) of the position vertex buffer. */
-        const val POSITION_VERTEX_BUFFER_COMPONENTS = 3
-
-        /** Size (number of components) of the UV vertex buffer. */
-        const val UV_VERTEX_BUFFER_COMPONENTS = 2
-
-        /** Size (number of components) of the normal vertex buffer. */
-        const val NORMAL_VERTEX_BUFFER_COMPONENTS = 3
-
-        /** Size (number of components) of the normal vertex buffer. */
-        const val COLOUR_VERTEX_BUFFER_COMPONENTS = 4
-
-        /** TODO */
-        const val VERTICES = 36
-    }
-}
 
 /** TODO */
 context (Lifetime, GLDebugger.Context)
@@ -84,10 +43,10 @@ fun createDefaultCube(
     val (elementBuffer) = createBuffer(useElements)
 
     val uvSourceData = if (uvsPerFace) CUBE_UVS_PER_FACE else CUBE_UVS
-    val positionData = if (useElements) CUBE_POSITIONS.copyOf(CUBE_POSITIONS.size) else genCubeData(POSITION_VERTEX_BUFFER_COMPONENTS, CUBE_POSITIONS, CUBE_ELEMENTS)
-    val uvData = if (!includeUVs || useElements) uvSourceData else genCubeData(UV_VERTEX_BUFFER_COMPONENTS, uvSourceData, CUBE_ELEMENTS)
-    val normalData = if (!includeNormals || useElements) CUBE_NORMALS else genCubeData(NORMAL_VERTEX_BUFFER_COMPONENTS, CUBE_NORMALS, CUBE_ELEMENTS)
-    val colourData = if (!includeColours || useElements) CUBE_COLOURS else genCubeData(COLOUR_VERTEX_BUFFER_COMPONENTS, CUBE_COLOURS, CUBE_ELEMENTS)
+    val positionData = if (useElements) CUBE_POSITIONS.copyOf(CUBE_POSITIONS.size) else genCubeData(POSITION_COMPONENTS, CUBE_POSITIONS, CUBE_ELEMENTS)
+    val uvData = if (!includeUVs || useElements) uvSourceData else genCubeData(UV_COMPONENTS, uvSourceData, CUBE_ELEMENTS)
+    val normalData = if (!includeNormals || useElements) CUBE_NORMALS else genCubeData(NORMAL_COMPONENTS, CUBE_NORMALS, CUBE_ELEMENTS)
+    val colourData = if (!includeColours || useElements) CUBE_COLOURS else genCubeData(COLOUR_COMPONENTS, CUBE_COLOURS, CUBE_ELEMENTS)
 
     for (i in positionData.indices step 3) {
         positionData[i] *= width
@@ -106,19 +65,19 @@ fun createDefaultCube(
 
     glBindVertexArray(vertexArray) {
         glBindBuffer(GLBufferTarget.ArrayBuffer, positionBuffer) {
-            glVertexAttribPointer(POSITION_VERTEX_BUFFER_INDEX, POSITION_VERTEX_BUFFER_COMPONENTS, GLType.Float)
+            glVertexAttribPointer(POSITION_ATTRIBUTE, POSITION_COMPONENTS, GLType.Float)
         }
 
         if (includeUVs) glBindBuffer(GLBufferTarget.ArrayBuffer, uvBuffer) {
-            glVertexAttribPointer(UV_VERTEX_BUFFER_INDEX, UV_VERTEX_BUFFER_COMPONENTS, GLType.Float)
+            glVertexAttribPointer(UV_ATTRIBUTE, UV_COMPONENTS, GLType.Float)
         }
 
         if (includeNormals) glBindBuffer(GLBufferTarget.ArrayBuffer, normalBuffer) {
-            glVertexAttribPointer(NORMAL_VERTEX_BUFFER_INDEX, NORMAL_VERTEX_BUFFER_COMPONENTS, GLType.Float)
+            glVertexAttribPointer(NORMAL_ATTRIBUTE, NORMAL_COMPONENTS, GLType.Float)
         }
 
         if (includeColours) glBindBuffer(GLBufferTarget.ArrayBuffer, colourBuffer) {
-            glVertexAttribPointer(COLOUR_VERTEX_BUFFER_INDEX, COLOUR_VERTEX_BUFFER_COMPONENTS, GLType.Float)
+            glVertexAttribPointer(COLOUR_ATTRIBUTE, COLOUR_COMPONENTS, GLType.Float)
         }
 
         if (useElements) {
@@ -126,28 +85,18 @@ fun createDefaultCube(
         }
     }
 
-    glEnableVertexAttribArray(vertexArray, POSITION_VERTEX_BUFFER_INDEX)
-    if (includeUVs) glEnableVertexAttribArray(vertexArray, UV_VERTEX_BUFFER_INDEX)
-    if (includeNormals) glEnableVertexAttribArray(vertexArray, NORMAL_VERTEX_BUFFER_INDEX)
-    if (includeColours) glEnableVertexAttribArray(vertexArray, COLOUR_VERTEX_BUFFER_INDEX)
+    glEnableVertexAttribArray(vertexArray, POSITION_ATTRIBUTE)
+    if (includeUVs) glEnableVertexAttribArray(vertexArray, UV_ATTRIBUTE)
+    if (includeNormals) glEnableVertexAttribArray(vertexArray, NORMAL_ATTRIBUTE)
+    if (includeColours) glEnableVertexAttribArray(vertexArray, COLOUR_ATTRIBUTE)
 
-    val cubeObjects = DefaultCubeObjects(
+    SimpleMesh.createGLResource(
+        vertices = CUBE_ELEMENTS.size,
         vertexArray = vertexArray,
-        positionBuffer = positionBuffer,
-        uvBuffer = uvBuffer,
-        normalBuffer = normalBuffer,
-        colourBuffer = colourBuffer,
+        dataBuffers = listOf(positionBuffer, uvBuffer, normalBuffer, colourBuffer),
         elementBuffer = elementBuffer,
+        usesElementBuffer = useElements,
     )
-
-    GLResource(cubeObjects) {
-        it.vertexArray.destroy()
-        it.positionBuffer.destroy()
-        it.uvBuffer.destroy()
-        it.normalBuffer.destroy()
-        it.colourBuffer.destroy()
-        it.elementBuffer.destroy()
-    }
 }
 
 context (GLContext, Lifetime, GLDebugger.Context)
