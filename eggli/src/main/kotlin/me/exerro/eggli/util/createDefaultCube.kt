@@ -72,6 +72,7 @@ fun createDefaultCube(
     centreX: Float = 0f,
     centreY: Float = 0f,
     centreZ: Float = -1f,
+    uvsPerFace: Boolean = true,
 ) = GL {
     // TODO: look into creating a single buffer!
 
@@ -82,8 +83,9 @@ fun createDefaultCube(
     val (colourBuffer) = createBuffer(includeColours)
     val (elementBuffer) = createBuffer(useElements)
 
+    val uvSourceData = if (uvsPerFace) CUBE_UVS_PER_FACE else CUBE_UVS
     val positionData = if (useElements) CUBE_POSITIONS.copyOf(CUBE_POSITIONS.size) else genCubeData(POSITION_VERTEX_BUFFER_COMPONENTS, CUBE_POSITIONS, CUBE_ELEMENTS)
-    val uvData = if (!includeUVs || useElements) CUBE_UVS else genCubeData(UV_VERTEX_BUFFER_COMPONENTS, CUBE_UVS, CUBE_ELEMENTS)
+    val uvData = if (!includeUVs || useElements) uvSourceData else genCubeData(UV_VERTEX_BUFFER_COMPONENTS, uvSourceData, CUBE_ELEMENTS)
     val normalData = if (!includeNormals || useElements) CUBE_NORMALS else genCubeData(NORMAL_VERTEX_BUFFER_COMPONENTS, CUBE_NORMALS, CUBE_ELEMENTS)
     val colourData = if (!includeColours || useElements) CUBE_COLOURS else genCubeData(COLOUR_VERTEX_BUFFER_COMPONENTS, CUBE_COLOURS, CUBE_ELEMENTS)
 
@@ -224,6 +226,15 @@ private val CUBE_UVS = floatArrayOf(
     0.25f, 1.00f,
     0.50f, 1.00f,
     0.50f, 0.6666667f,
+)
+
+private val CUBE_UVS_PER_FACE = floatArrayOf(
+    0f, 0f, 0f, 1f, 1f, 1f, 1f, 0f,
+    0f, 0f, 0f, 1f, 1f, 1f, 1f, 0f,
+    0f, 0f, 0f, 1f, 1f, 1f, 1f, 0f,
+    0f, 0f, 0f, 1f, 1f, 1f, 1f, 0f,
+    0f, 0f, 0f, 1f, 1f, 1f, 1f, 0f,
+    0f, 0f, 0f, 1f, 1f, 1f, 1f, 0f,
 )
 
 private val CUBE_NORMALS = floatArrayOf(

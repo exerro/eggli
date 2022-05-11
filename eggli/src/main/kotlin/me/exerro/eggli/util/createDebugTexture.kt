@@ -1,7 +1,6 @@
 package me.exerro.eggli.util
 
 import me.exerro.eggli.GL
-import me.exerro.eggli.GLContext
 import me.exerro.eggli.GLDebugger
 import me.exerro.eggli.enum.*
 import me.exerro.eggli.gl.*
@@ -24,17 +23,13 @@ fun createDebugTexture(
         else c1
     }
 
-    glBindTexture(GL_TEXTURE_2D, texture) {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data)
-        glGenerateMipmap(GL_TEXTURE_2D)
-    }
-
+    glTextureStorage2D(texture, width = width, height = height)
+    glTextureSubImage2D(texture, width = width, height = height, format = GL_RGBA, type = GL_UNSIGNED_BYTE, pixels = data)
     glTextureParameter(texture, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE)
     glTextureParameter(texture, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE)
-//    glTextureParameter(texture, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR)
-//    glTextureParameter(texture, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
     glTextureParameter(texture, GL_TEXTURE_MIN_FILTER, GL_NEAREST)
     glTextureParameter(texture, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
+    glBindTexture(GL_TEXTURE_2D, texture) { glGenerateMipmap(GL_TEXTURE_2D) }
 
     texture
 }

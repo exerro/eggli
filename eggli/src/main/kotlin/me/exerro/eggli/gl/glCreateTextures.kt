@@ -13,7 +13,7 @@ import org.lwjgl.opengl.GL46C
 
 /** TODO */
 context (Lifetime, GLDebugger.Context)
-fun glGenTextures(type: GLTextureTarget): GL<GLTexture> = GL {
+fun glCreateTextures(type: GLTextureTarget): GL<GLTexture> = GL {
     val textureId = GL46C.glCreateTextures(type.glValue)
     glLog(ObjectCreated, Texture, "Created texture $textureId")
     glCheckForErrors()

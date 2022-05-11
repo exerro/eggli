@@ -63,7 +63,6 @@ void main() {
 context (Lifetime, GLDebugger.Context)
 fun createRenderingObjects() = GL {
     val useElements = false
-    val (texture) = createDebugTexture(c1 = 0xffffff)
     val (shaderProgram) = createShaderProgram(
         GL_VERTEX_SHADER to VERTEX_SHADER_SOURCE,
         GL_FRAGMENT_SHADER to FRAGMENT_SHADER_SOURCE,
@@ -72,6 +71,7 @@ fun createRenderingObjects() = GL {
         includeUVs = true,
         includeColours = true,
         useElements = useElements,
+        uvsPerFace = true,
     )
 //    val (shape) = createDefaultFace(
 //        includeUVs = true,
@@ -79,6 +79,13 @@ fun createRenderingObjects() = GL {
 //        useElements = useElements,
 //    )
     val proj = createPerspectiveProjectionMatrixValues(aspectRatio = 1080f / 720f)
+    val textureData = GL::class.java.getResourceAsStream("/me/exerro/eggli/img/box_0_diffuse.png")!!.readBytes()
+    val (texture) = glCreateTextures(GL_TEXTURE_2D)
+    glTextureParameter(texture, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
+    glTextureParameter(texture, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
+    glTextureParameter(texture, GL_TEXTURE_MAG_FILTER, GL_NEAREST)
+    loadTextureData(texture, textureData)
+    glTextureParameter(texture, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
 
 //    glEnable(GLOption.CullFace)
     glEnable(GLOption.DepthTest)

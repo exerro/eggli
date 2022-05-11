@@ -10,6 +10,10 @@ import org.lwjgl.opengl.GL46C
 
 /** TODO */
 context (GLContext, GLDebugger.Context)
+@Deprecated(
+    message = "In many cases, glTextureStorage2D + glTextureSubImage2D is preferred",
+    level = DeprecationLevel.WARNING,
+)
 fun glTexImage2D(
     target: GLTextureTarget,
     level: Int = 0,
@@ -28,6 +32,10 @@ fun glTexImage2D(
 
 /** TODO */
 context (GLContext, GLDebugger.Context)
+@Deprecated(
+    message = "In many cases, glTextureStorage2D + glTextureSubImage2D is preferred",
+    level = DeprecationLevel.WARNING,
+)
 fun glTexImage2D(
     target: GLTextureTarget,
     level: Int = 0,

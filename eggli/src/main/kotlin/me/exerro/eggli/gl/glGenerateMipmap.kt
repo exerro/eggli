@@ -10,7 +10,8 @@ import org.lwjgl.opengl.GL46C
 // TODO: constrain this type
 /**
  * Generate mipmaps for a specified texture target.
- * @param target the target to which the texture whose mimaps to generate is bound. One of:
+ * @param target the target to which the texture whose mipmaps to generate is
+ * bound. One of:
  * [GL_TEXTURE_1D],
  * [GL_TEXTURE_2D],
  * [GL_TEXTURE_3D],
