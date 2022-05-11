@@ -43,6 +43,35 @@ private val enumData = createEnumData {
                 "glMultiTexCoord."
     }
 
+    val GLBlendEquation by options {
+        val GL_FUNC_ADD by "the default, adds both colors to each other: C_{result}=Src+Dst."
+        val GL_FUNC_SUBTRACT by "subtracts both colors from each other: C_{result}=Src−Dst."
+        val GL_FUNC_REVERSE_SUBTRACT by "subtracts both colors, but reverses order: C_{result}=Dst−Src."
+        val GL_MIN by "takes the component-wise minimum of both colors: C_{result}=min(Dst,Src)."
+        val GL_MAX by "takes the component-wise maximum of both colors: C_{result}=max(Dst,Src)."
+
+        noDocumentation
+    }
+
+    val GLBlendFactor by options {
+        val GL_ZERO by "Factor is equal to 0."
+        val GL_ONE by "Factor is equal to 1."
+        val GL_SRC_COLOR by "Factor is equal to the source color vector C_{source}."
+        val GL_ONE_MINUS_SRC_COLOR by "Factor is equal to 1 minus the source color vector: 1−C_{source}."
+        val GL_DST_COLOR by "Factor is equal to the destination color vector C_{destination}"
+        val GL_ONE_MINUS_DST_COLOR by "Factor is equal to 1 minus the destination color vector: 1−C_{destination}."
+        val GL_SRC_ALPHA by "Factor is equal to the alpha component of the source color vector C_{source}."
+        val GL_ONE_MINUS_SRC_ALPHA by "Factor is equal to 1−alpha of the source color vector C_{source}."
+        val GL_DST_ALPHA by "Factor is equal to the alpha component of the destination color vector C_{destination}."
+        val GL_ONE_MINUS_DST_ALPHA by "Factor is equal to 1−alpha of the destination color vector C_{destination}."
+        val GL_CONSTANT_COLOR by "Factor is equal to the constant color vector C_{constant}."
+        val GL_ONE_MINUS_CONSTANT_COLOR by "Factor is equal to 1 - the constant color vector C_{constant}."
+        val GL_CONSTANT_ALPHA by "Factor is equal to the alpha component of the constant color vector C_{constant}."
+        val GL_ONE_MINUS_CONSTANT_ALPHA by "Factor is equal to 1−alpha of the constant color vector C_{constant}."
+
+        noDocumentation
+    }
+
     val GLBufferTarget by options {
         val GL_ARRAY_BUFFER by noDocumentation
         val GL_ATOMIC_COUNTER_BUFFER by noDocumentation

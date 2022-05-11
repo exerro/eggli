@@ -6,10 +6,15 @@ import me.exerro.eggli.GLDebugger.LogAction.StateChanged
 import me.exerro.eggli.GLDebugger.LogEntity.State
 import org.lwjgl.opengl.GL46C
 
-/** @see <a href="https://docs.gl/gl4/glDepthMask">Reference Page</a> */
+/** @see <a href="https://docs.gl/gl4/glBlendColor">Reference Page</a> */
 context (GLContext, GLDebugger.Context)
-fun glDepthMask(flag: Boolean) {
-    glLog(StateChanged, State, "Setting depth mask to $flag")
-    GL46C.glDepthMask(flag)
+fun glBlendColor(
+    red: Float,
+    green: Float,
+    blue: Float,
+    alpha: Float = 1f,
+) {
+    glLog(StateChanged, State, "glBlendColor($red, $green, $blue, $alpha)")
+    GL46C.glBlendColor(red, green, blue, alpha)
     glCheckForErrors()
 }
