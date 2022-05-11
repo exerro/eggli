@@ -62,8 +62,11 @@ publishing {
     }
 }
 
-kotlin.sourceSets.main {
-    kotlin.srcDirs(
-        file("$buildDir/generated/ksp/main/kotlin"),
-    )
+kotlin {
+    sourceSets.main {
+        kotlin.srcDir("build/generated/ksp/main/kotlin")
+    }
+    sourceSets.test {
+        kotlin.srcDir("build/generated/ksp/test/kotlin")
+    }
 }

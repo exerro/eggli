@@ -51,8 +51,8 @@ in vec3 f_colour;
 out vec4 o_colour;
 
 void main() {
-//    o_colour = vec4(f_colour * (1 + cos(u_time)) / 2, 1) * texture(u_texture, f_uv);
-    o_colour = texture(u_texture, f_uv);
+    o_colour = vec4(f_colour * (1 + cos(u_time)) / 2, 1) * texture(u_texture, f_uv);
+//    o_colour = texture(u_texture, f_uv);
 }
 """
 
@@ -63,17 +63,17 @@ fun createRenderingObjects() = GL {
         GL_VERTEX_SHADER to VERTEX_SHADER_SOURCE,
         GL_FRAGMENT_SHADER to FRAGMENT_SHADER_SOURCE,
     )
-    val (shape) = createDefaultCube(
-        includeUVs = true,
-        includeColours = true,
-        useElements = useElements,
-        uvsPerFace = true,
-    )
-//    val (shape) = createDefaultFace(
+//    val (shape) = createDefaultCube(
 //        includeUVs = true,
 //        includeColours = true,
 //        useElements = useElements,
+//        uvsPerFace = true,
 //    )
+    val (shape) = createDefaultFace(
+        includeUVs = true,
+        includeColours = true,
+        useElements = useElements,
+    )
     val proj = createPerspectiveProjectionMatrixValues(aspectRatio = 1080f / 720f)
     val textureData = GL::class.java.getResourceAsStream("/me/exerro/eggli/img/box_0_diffuse.png")!!.readBytes()
     val (texture) = glCreateTextures(GL_TEXTURE_2D)

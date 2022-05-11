@@ -11,12 +11,12 @@ class GenerationProcessor(
 ): SymbolProcessor {
     override fun process(resolver: Resolver): List<KSAnnotated> {
         if (hasRun) return emptyList()
-        hasRun = true
 
         // get the dependencies of the files we're creating
         val dependencies = Dependencies(aggregating = false)
 
         writeCodeFile(dependencies, "enum", "GLenum", buildGLenumFileContent())
+        hasRun = true
 
         return emptyList()
     }
