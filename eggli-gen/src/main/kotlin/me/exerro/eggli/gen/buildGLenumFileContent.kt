@@ -5,6 +5,44 @@ import kotlin.reflect.KProperty
 
 @Suppress("LocalVariableName", "UNUSED_VARIABLE")
 private val enumData = createEnumData {
+    val GLActiveTexture by options {
+        val GL_TEXTURE0 by noDocumentation
+        val GL_TEXTURE1 by noDocumentation
+        val GL_TEXTURE2 by noDocumentation
+        val GL_TEXTURE3 by noDocumentation
+        val GL_TEXTURE4 by noDocumentation
+        val GL_TEXTURE5 by noDocumentation
+        val GL_TEXTURE6 by noDocumentation
+        val GL_TEXTURE7 by noDocumentation
+        val GL_TEXTURE8 by noDocumentation
+        val GL_TEXTURE9 by noDocumentation
+        val GL_TEXTURE10 by noDocumentation
+        val GL_TEXTURE11 by noDocumentation
+        val GL_TEXTURE12 by noDocumentation
+        val GL_TEXTURE13 by noDocumentation
+        val GL_TEXTURE14 by noDocumentation
+        val GL_TEXTURE15 by noDocumentation
+        val GL_TEXTURE16 by noDocumentation
+        val GL_TEXTURE17 by noDocumentation
+        val GL_TEXTURE18 by noDocumentation
+        val GL_TEXTURE19 by noDocumentation
+        val GL_TEXTURE20 by noDocumentation
+        val GL_TEXTURE21 by noDocumentation
+        val GL_TEXTURE22 by noDocumentation
+        val GL_TEXTURE23 by noDocumentation
+        val GL_TEXTURE24 by noDocumentation
+        val GL_TEXTURE25 by noDocumentation
+        val GL_TEXTURE26 by noDocumentation
+        val GL_TEXTURE27 by noDocumentation
+        val GL_TEXTURE28 by noDocumentation
+        val GL_TEXTURE29 by noDocumentation
+        val GL_TEXTURE30 by noDocumentation
+        val GL_TEXTURE31 by noDocumentation
+
+        "A texture unit accepted by the texture parameter of glActiveTexture and" +
+                "glMultiTexCoord."
+    }
+
     val GLBufferTarget by options {
         val GL_ARRAY_BUFFER by noDocumentation
         val GL_ATOMIC_COUNTER_BUFFER by noDocumentation

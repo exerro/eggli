@@ -126,17 +126,20 @@ fun runWindow() {
         .ignoring(Info, Shader)
         .ignoring(UniformChanged, Shader)
     val t0 = System.currentTimeMillis()
+    var running = true
 
     withDebugContext(renderingDebugger) {
         createRenderLoop(windowId, worker) {
             renderFrame(glObjects, (System.currentTimeMillis() - t0) / 1000f)
-            isAlive
+            running
         }
     }
 
     while (!GLFW.glfwWindowShouldClose(windowId)) {
         GLFW.glfwWaitEvents()
     }
+
+    running = false
 }
 
 fun main() {

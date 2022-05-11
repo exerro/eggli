@@ -5,6 +5,7 @@ import me.exerro.eggli.GLWorker
 import org.lwjgl.glfw.GLFW
 
 /** TODO */
+// TODO: return RenderLoopHandle
 fun createRenderLoop(
     glfwWindowId: Long,
     worker: GLWorker,
