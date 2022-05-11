@@ -1,16 +1,24 @@
 package me.exerro.eggli.util
 
-/** TODO */
+/**
+ * A handle to control whether a render loop continues running.
+ *
+ * @see stop
+ * @see stopLater
+ * @see stopBlocking
+ * @see createRenderLoop
+ */
 interface RenderLoopHandle {
-    /** TODO */
+    /** Whether the render loop is currently running. */
     val isRunning: Boolean
 
-    /** TODO */
+    /** Stop the render loop, resuming execution once the loop has stopped. */
     suspend fun stop()
 
-    /** TODO */
+    /** Stop the render loop at some point in the future, resuming execution
+     *  immediately. */
     fun stopLater()
 
-    /** TODO */
-    fun stopSync()
+    /** Stop the render loop, resuming execution once the loop has stopped. */
+    fun stopBlocking()
 }
