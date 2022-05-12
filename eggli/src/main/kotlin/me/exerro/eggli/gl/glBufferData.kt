@@ -13,6 +13,20 @@ import org.lwjgl.opengl.GL46C
 context (GLContext, GLDebugger.Context)
 @Deprecated(
     message = "In many cases, glNamedBufferData is preferred",
+    replaceWith = ReplaceWith("glNamedBufferData(buffer, size, usage)"),
+    level = DeprecationLevel.WARNING,
+)
+fun glBufferData(target: GLBufferTarget, size: Long, usage: GLBufferUsage = GLBufferUsage.StaticDraw) {
+    GL46C.glBufferData(target.glValue, size, usage.glValue)
+    glLog(Generic, Buffer, "Allocating buffer data for target $target ($size bytes)")
+    glCheckForErrors()
+}
+
+/** TODO
+ *  https://www.khronos.org/opengl/wiki/GLAPI/glBufferData */
+context (GLContext, GLDebugger.Context)
+@Deprecated(
+    message = "In many cases, glNamedBufferData is preferred",
     replaceWith = ReplaceWith("glNamedBufferData(buffer, data, usage)"),
     level = DeprecationLevel.WARNING,
 )

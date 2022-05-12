@@ -11,6 +11,15 @@ import org.lwjgl.opengl.GL46C
 /** TODO
  *  https://www.khronos.org/opengl/wiki/GLAPI/glBufferData */
 context (GLContext, GLDebugger.Context)
+fun glNamedBufferData(buffer: GLBuffer, size: Long, usage: GLBufferUsage = GLBufferUsage.StaticDraw) {
+    GL46C.glNamedBufferData(buffer.get(), size, usage.glValue)
+    glLog(Generic, Buffer, "Allocating buffer data for buffer $buffer ($size bytes)")
+    glCheckForErrors()
+}
+
+/** TODO
+ *  https://www.khronos.org/opengl/wiki/GLAPI/glBufferData */
+context (GLContext, GLDebugger.Context)
 fun glNamedBufferData(buffer: GLBuffer, data: ShortArray, usage: GLBufferUsage = GLBufferUsage.StaticDraw) {
     GL46C.glNamedBufferData(buffer.get(), data, usage.glValue)
     glLog(Generic, Buffer, "Set buffer data for buffer $buffer")
