@@ -17,6 +17,7 @@ fun glTextureStorage2D(
     width: Int,
     height: Int,
 ) {
+    // TODO: the following are not supported: GL_DEPTH_COMPONENT, GL_DEPTH_STENCIL, GL_RED, GL_RG, GL_RGB, GL_RGBA
     glLog(Data, Texture, "glTextureStorage2D($texture, $levels, $internalFormat, $width, $height)")
     GL46C.glTextureStorage2D(texture.get(), levels, internalFormat.glValue, width, height, )
     glCheckForErrors()

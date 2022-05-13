@@ -105,6 +105,46 @@ private val enumData = createEnumData {
         noDocumentation
     }
 
+    val GLColorAttachment by options {
+        val GL_COLOR_ATTACHMENT0 by noDocumentation
+        val GL_COLOR_ATTACHMENT1 by noDocumentation
+        val GL_COLOR_ATTACHMENT2 by noDocumentation
+        val GL_COLOR_ATTACHMENT3 by noDocumentation
+        val GL_COLOR_ATTACHMENT4 by noDocumentation
+        val GL_COLOR_ATTACHMENT5 by noDocumentation
+        val GL_COLOR_ATTACHMENT6 by noDocumentation
+        val GL_COLOR_ATTACHMENT7 by noDocumentation
+        val GL_COLOR_ATTACHMENT8 by noDocumentation
+        val GL_COLOR_ATTACHMENT9 by noDocumentation
+        val GL_COLOR_ATTACHMENT10 by noDocumentation
+        val GL_COLOR_ATTACHMENT11 by noDocumentation
+        val GL_COLOR_ATTACHMENT12 by noDocumentation
+        val GL_COLOR_ATTACHMENT13 by noDocumentation
+        val GL_COLOR_ATTACHMENT14 by noDocumentation
+        val GL_COLOR_ATTACHMENT15 by noDocumentation
+        val GL_COLOR_ATTACHMENT16 by noDocumentation
+        val GL_COLOR_ATTACHMENT17 by noDocumentation
+        val GL_COLOR_ATTACHMENT18 by noDocumentation
+        val GL_COLOR_ATTACHMENT19 by noDocumentation
+        val GL_COLOR_ATTACHMENT20 by noDocumentation
+        val GL_COLOR_ATTACHMENT21 by noDocumentation
+        val GL_COLOR_ATTACHMENT22 by noDocumentation
+        val GL_COLOR_ATTACHMENT23 by noDocumentation
+        val GL_COLOR_ATTACHMENT24 by noDocumentation
+        val GL_COLOR_ATTACHMENT25 by noDocumentation
+        val GL_COLOR_ATTACHMENT26 by noDocumentation
+        val GL_COLOR_ATTACHMENT27 by noDocumentation
+        val GL_COLOR_ATTACHMENT28 by noDocumentation
+        val GL_COLOR_ATTACHMENT29 by noDocumentation
+        val GL_COLOR_ATTACHMENT30 by noDocumentation
+        val GL_COLOR_ATTACHMENT31 by noDocumentation
+        val GL_DEPTH_ATTACHMENT by noDocumentation
+        val GL_STENCIL_ATTACHMENT by noDocumentation
+        val GL_DEPTH_STENCIL_ATTACHMENT by noDocumentation
+
+        noDocumentation
+    }
+
     val GLCullFace by options {
         val GL_BACK by "Culls only the back faces."
         val GL_FRONT by "Culls only the front faces."
@@ -139,6 +179,28 @@ private val enumData = createEnumData {
         val GL_TRIANGLE_STRIP_ADJACENCY by noDocumentation
         val GL_TRIANGLES_ADJACENCY by noDocumentation
         val GL_PATCHES by noDocumentation
+
+        noDocumentation
+    }
+
+    val GLFramebufferStatus by options {
+        val GL_FRAMEBUFFER_COMPLETE by "The  framebuffer is complete."
+        val GL_FRAMEBUFFER_UNDEFINED by "The  framebuffer is the default read or draw framebuffer, but the default framebuffer does not exist."
+        val GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT by "At least one of the framebuffer attachment points is framebuffer incomplete."
+        val GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT by "The framebuffer has no images attached to it."
+        val GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER by "The value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for at least one color attachment point(s) named by GL_DRAW_BUFFERi."
+        val GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER by "GL_READ_BUFFER is not GL_NONE and the value of GL_FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE is GL_NONE for the color attachment point named by GL_READ_BUFFER."
+        val GL_FRAMEBUFFER_UNSUPPORTED by "The combination of internal formats of the attached images violates an implementation-dependent set of restrictions."
+        val GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE by "Returned if the value of GL_RENDERBUFFER_SAMPLES is not the same for all attached renderbuffers; if the value of GL_TEXTURE_SAMPLES is the not same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_RENDERBUFFER_SAMPLES does not match the value of GL_TEXTURE_SAMPLES. Also returned if the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not the same for all attached textures; or, if the attached images are a mix of renderbuffers and textures, the value of GL_TEXTURE_FIXED_SAMPLE_LOCATIONS is not GL_TRUE for all attached textures."
+        val GL_FRAMEBUFFER_INCOMPLETE_LAYER_TARGETS by "A framebuffer attachment is layered, and any populated attachment is not layered, or all populated color attachments are not from textures of the same target."
+
+        noDocumentation
+    }
+
+    val GLFramebufferTarget by options {
+        val GL_FRAMEBUFFER by noDocumentation
+        val GL_READ_FRAMEBUFFER by noDocumentation
+        val GL_DRAW_FRAMEBUFFER by noDocumentation
 
         noDocumentation
     }
@@ -247,6 +309,13 @@ private val enumData = createEnumData {
         val GL_RG by noDocumentation
         val GL_RGB by noDocumentation
         val GL_RGBA by noDocumentation
+
+        // TODO: these might not be supported for glTexImage2D idk
+        val GL_DEPTH_COMPONENT16 by noDocumentation
+        val GL_DEPTH_COMPONENT24 by noDocumentation
+        val GL_DEPTH_COMPONENT32 by noDocumentation
+        val GL_DEPTH_COMPONENT32F by noDocumentation
+
         val GL_R8 by noDocumentation
         val GL_R8_SNORM by noDocumentation
         val GL_R16 by noDocumentation
