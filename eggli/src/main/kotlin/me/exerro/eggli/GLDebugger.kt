@@ -1,11 +1,22 @@
 package me.exerro.eggli
 
+import java.io.OutputStream
 import java.io.PrintStream
 
 /** TODO */
 interface GLDebugger {
     /** TODO */
     fun log(action: LogAction, entity: LogEntity, message: String)
+
+    /** TODO */
+    fun log(action: LogAction, entity: LogEntity, fn: (PrintStream) -> Unit) {
+        val data = StringBuilder()
+        val stream = object: OutputStream() {
+            override fun write(b: Int) { data.appendCodePoint(b) }
+        }
+        fn(PrintStream(stream))
+        log(action, entity, data.toString().trim())
+    }
 
     /**
      * Return a modified version of this [GLDebugger] which adds ANSI colouring

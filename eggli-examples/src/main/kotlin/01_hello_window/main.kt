@@ -1,12 +1,10 @@
-package me.exerro.eggli.examples.`01_hello_window`
+package `01_hello_window`
 
 import me.exerro.eggli.GLDebugger
 import me.exerro.eggli.GLDebugger.LogAction.DrawCall
 import me.exerro.eggli.GLDebugger.LogEntity.DrawTarget
 import me.exerro.eggli.GLWorker
 import me.exerro.eggli.enum.GL_COLOR_BUFFER_BIT
-import me.exerro.eggli.examples.WINDOW_HEIGHT
-import me.exerro.eggli.examples.WINDOW_WIDTH
 import me.exerro.eggli.gl.glClear
 import me.exerro.eggli.gl.glClearColor
 import me.exerro.eggli.util.createGLFWWindowWithWorker
@@ -29,16 +27,16 @@ fun main() {
      * Create a [GLDebugger] instance. [GLDebugger] is used to log OpenGL
      * related information to aid debugging. Here, we're creating the default
      * debugger (which writes to stdout) and making it ANSI coloured (so
-     * different types of log messages are easily distinguished).
+     * different types of log messages are easily distinguished.)
      */
     val debugger = GLDebugger
         .createDefault()
         .ansiColoured()
 
     /**
-     * To avoid spamming the console with messages every frame, we create a
-     * debugger specific for rendering frames which filters specific log
-     * messages: in this case, draw calls (i.e. glClear).
+     * To avoid spamming the console with messages every frame, we create
+     * another debugger just for rendering frames. This filters specific log
+     * messages: in this case, draw calls (i.e. glClear.)
      */
     val renderingDebugger = debugger
         .ignoring(DrawCall, DrawTarget)
@@ -51,7 +49,7 @@ fun main() {
      * destroyed when the lifetime ends. There's a lot of flexibility to
      * lifetimes, but here we just want a lifetime spanning the whole duration
      * of the application. When we get to the end of the block, all GL resources
-     * allocated within will be destroyed, although there aren't any in this
+     * allocated within would be destroyed, although there aren't any in this
      * example.
      */
     withLifetime {
@@ -64,20 +62,17 @@ fun main() {
              * Here we create our window and worker. OpenGL is inherently single
              * threaded, making it awkward to do multithreaded graphics. This is
              * particularly annoying with GLFW since resizing a window will
-             * block the main thread, preventing graphics updates if you're
-             * rendering on the main thread. To account for this, Eggli does all
-             * OpenGL operations on a separate thread. You can interface with
-             * this thread through a [GLWorker], which this function creates for
-             * you (along with the OpenGL rendering thread).
+             * block the `01_hello_window`.main thread, preventing graphics
+             * updates if you're rendering on the main thread. To account for
+             * this, Eggli does all OpenGL operations on a separate thread. You
+             * can interface with this thread through a [GLWorker], which this
+             * function creates for you (along with the OpenGL rendering
+             * thread.)
              */
-            val (windowId, worker) = createGLFWWindowWithWorker(
-                width = WINDOW_WIDTH,
-                height = WINDOW_HEIGHT,
-                title = "Eggli Example Window",
-            )
+            val (windowId, worker) = createGLFWWindowWithWorker(title = "Eggli Hello Window Example")
 
             /**
-             * To do our first OpenGL call, we need to be running on the OpenGL
+             * To run our first OpenGL call, we need to be running on the OpenGL
              * thread. [GLWorker.runLater] lets us submit a function to run on
              * that thread without waiting for it to finish. This is all we need
              * in this case, since we don't need to wait for the clear colour to
@@ -94,12 +89,12 @@ fun main() {
             /**
              * Since everything OpenGL related is running on a single thread, we
              * can't have a normal `while` loop to draw, as that would block
-             * anything else wanting to run on the thread would have to wait
-             * indefinitely. To get around this, a utility function
-             * [createRenderLoop] is provided, which will run the function on
-             * the OpenGL thread and queue it to run again afterwards forever.
-             * You can tell this to stop through the handle that's returned.
-             * Here, we introduce the rendering debugger context, and start our
+             * anything else wanting to run on the thread. To get around this, a
+             * utility function [createRenderLoop] is provided, which will run
+             * the function on the OpenGL thread and queue it to run again
+             * afterwards forever. You can tell this to stop through the handle
+             * that's returned.
+             * Here, we introduce the rendering debug context, and start our
              * render loop which clears the screen's colour buffer.
              */
             val renderLoopHandle = withDebugContext(renderingDebugger) {

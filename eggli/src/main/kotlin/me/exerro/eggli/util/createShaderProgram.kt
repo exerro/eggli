@@ -3,9 +3,21 @@ package me.exerro.eggli.util
 import me.exerro.eggli.GL
 import me.exerro.eggli.GLDebugger
 import me.exerro.eggli.enum.GLShaderType
+import me.exerro.eggli.enum.GL_FRAGMENT_SHADER
+import me.exerro.eggli.enum.GL_VERTEX_SHADER
 import me.exerro.eggli.gl.*
 import me.exerro.lifetimes.Lifetime
 import me.exerro.lifetimes.withLifetime
+
+/** TODO */
+context (Lifetime, GLDebugger.Context)
+fun createShaderProgram(
+    vertex: String,
+    fragment: String
+) = createShaderProgram(
+    GL_VERTEX_SHADER to vertex,
+    GL_FRAGMENT_SHADER to fragment,
+)
 
 /** TODO */
 context (Lifetime, GLDebugger.Context)

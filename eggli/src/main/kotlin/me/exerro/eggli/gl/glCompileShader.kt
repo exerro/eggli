@@ -19,6 +19,7 @@ fun glCompileShader(shader: GLShader, validate: Boolean = true) {
     if (validate && GL46C.glGetShaderi(shaderId, GL46C.GL_COMPILE_STATUS) != GL46C.GL_TRUE) {
         val message = "Shader compilation error:\n${GL46C.glGetShaderInfoLog(shaderId)}"
         glLog(Error, Shader, message)
+        error("Shader did not compile")
     }
 
     glCheckForErrors()

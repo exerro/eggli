@@ -8,6 +8,9 @@ class GLContext internal constructor(
     val worker: GLWorker,
 ) {
     /** TODO */
+    fun <T> GL<T>.get() = evaluate()
+
+    /** TODO */
     operator fun <T> GL<T>.component1() = evaluate()
 
     /** TODO */

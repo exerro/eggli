@@ -46,5 +46,19 @@ task<JavaExec>("01_hello_window") {
     group = "examples"
     description = "Run the 01_hello_window example"
     classpath = sourceSets.main.get().runtimeClasspath
-    mainClass.set("me.exerro.eggli.examples.01_hello_window.MainKt")
+    mainClass.set("01_hello_window.MainKt")
+}
+
+task<JavaExec>("02_hello_face") {
+    group = "examples"
+    description = "Run the 02_hello_face example"
+    classpath = sourceSets.main.get().runtimeClasspath
+    mainClass.set("02_hello_face.MainKt")
+}
+
+task<JavaExec>("03_textured_cube") {
+    group = "examples"
+    description = "Run the 03_textured_cube example"
+    classpath = sourceSets.main.get().runtimeClasspath
+    mainClass.set("03_textured_cube.MainKt")
 }

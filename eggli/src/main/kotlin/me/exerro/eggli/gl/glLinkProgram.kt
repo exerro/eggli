@@ -19,6 +19,7 @@ fun glLinkProgram(program: GLShaderProgram, validate: Boolean = true) {
     if (validate && GL46C.glGetProgrami(programId, GL46C.GL_LINK_STATUS) != GL46C.GL_TRUE) {
         val message = "Program link error:\n${GL46C.glGetProgramInfoLog(programId)}"
         glLog(Error, Program, message)
+        error("Program did not link")
     }
 
     glCheckForErrors()

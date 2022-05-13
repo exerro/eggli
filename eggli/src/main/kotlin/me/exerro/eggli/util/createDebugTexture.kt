@@ -9,17 +9,20 @@ import me.exerro.lifetimes.Lifetime
 /** TODO */
 context (Lifetime, GLDebugger.Context)
 fun createDebugTexture(
-    width: Int = 8,
-    height: Int = 8,
+    width: Int = 64,
+    height: Int = 64,
+    divisions: Int = 2,
     c0: Int = 0xff00ff,
     c1: Int = 0x000000,
 ) = GL {
-    val (texture) = glGenTextures()
+    val (texture) = glCreateTextures(GL_TEXTURE_2D)
     val data = IntArray(width * height) { index ->
         val y = index / width
         val x = index % width
+        val xd = x * divisions / width
+        val yd = y * divisions / height
 
-        if (x < width / 2 == y < height / 2) c0
+        if (xd % 2 == yd % 2) c0
         else c1
     }
 

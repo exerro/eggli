@@ -7,7 +7,7 @@ fun createPerspectiveProjectionMatrixValues(
     aspectRatio: Float,
     fov: Float = `120_DEGREES`,
     near: Float = 0.001f,
-    far: Float = 100f,
+    far: Float = 1000f,
 ) = floatArrayOf(
     1 / tan(fov / 2) / aspectRatio, 0f, 0f, 0f,
     0f, 1 / tan(fov / 2), 0f, 0f,

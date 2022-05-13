@@ -47,7 +47,8 @@ class GLWorker private constructor(
             lock.countDown()
         }
         lock.await()
-        return value!!
+        @Suppress("UNCHECKED_CAST")
+        return value as T
     }
 
     /** TODO */
