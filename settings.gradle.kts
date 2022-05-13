@@ -25,4 +25,4 @@ dependencyResolutionManagement {
     }
 }
 
-include(":eggli", ":eggli-gen")
+include(":eggli", ":eggli-examples", ":eggli-gen")

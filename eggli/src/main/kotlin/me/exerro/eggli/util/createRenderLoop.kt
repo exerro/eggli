@@ -9,8 +9,17 @@ import kotlin.coroutines.Continuation
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
-/** TODO */
-// TODO: return RenderLoopHandle
+/**
+ * Create a "render loop" which continuously runs [renderFrame] on the OpenGL
+ * thread by submitting it to [worker]. To avoid blocking other tasks from
+ * running on the thread, this function repeatedly queues [renderFrame] to run
+ * after each successive render with no delay. Delays may occur when other work
+ * is done on the thread between renders.
+ *
+ * The [RenderLoopHandle] returned can be used to stop the loop from running.
+ *
+ * @param glfwWindowId window ID used to swap buffers after each render
+ */
 fun createRenderLoop(
     glfwWindowId: Long,
     worker: GLWorker,
@@ -57,6 +66,5 @@ fun createRenderLoop(
             isRunning.set(false)
             completion.await()
         }
-
     }
 }

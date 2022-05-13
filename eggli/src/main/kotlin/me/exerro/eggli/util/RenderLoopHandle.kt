@@ -15,10 +15,15 @@ interface RenderLoopHandle {
     /** Stop the render loop, resuming execution once the loop has stopped. */
     suspend fun stop()
 
-    /** Stop the render loop at some point in the future, resuming execution
-     *  immediately. */
+    /**
+     * Stop the render loop at some point in the future, resuming execution
+     * immediately.
+     */
     fun stopLater()
 
-    /** Stop the render loop, resuming execution once the loop has stopped. */
+    /**
+     * Stop the render loop, blocking the current thread until the render loop
+     * has stopped.
+     */
     fun stopBlocking()
 }

@@ -6,7 +6,13 @@ import me.exerro.eggli.GLDebugger.LogAction.StateChanged
 import me.exerro.eggli.GLDebugger.LogEntity.State
 import org.lwjgl.opengl.GL46C
 
-/** TODO */
+/**
+ * Specify the red, green, blue, and alpha values used by [glClear] to clear the
+ * color buffers. Values specified by [glClearColor] are clamped to the range
+ * [0,1].
+ *
+ * @see <a href="https://docs.gl/gl4/glClearColor">Reference Page</a>
+ */
 context (GLContext, GLDebugger.Context)
 fun glClearColor(red: Float, green: Float, blue: Float, alpha: Float = 1f) {
     GL46C.glClearColor(red, green, blue, alpha)

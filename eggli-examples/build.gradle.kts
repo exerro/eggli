@@ -1,3 +1,4 @@
+
 val lwjglNatives = run {
     val name = System.getProperty("os.name")!!
     val arch = System.getProperty("os.arch")!!
@@ -21,17 +22,15 @@ val lwjglNatives = run {
 
 plugins {
     kotlin("jvm")
-    `maven-publish`
-    id("com.google.devtools.ksp")
 }
 
 dependencies {
-    ksp(project(":eggli-gen"))
-
     implementation(kotlin("stdlib"))
     implementation("me.exerro:lifetimes-kt:1.1.0")
+    implementation(project(":eggli"))
 
     implementation(platform("org.lwjgl:lwjgl-bom:3.3.1-SNAPSHOT"))
+
     implementation("org.lwjgl", "lwjgl")
     implementation("org.lwjgl", "lwjgl-glfw")
     implementation("org.lwjgl", "lwjgl-opengl")
@@ -41,30 +40,11 @@ dependencies {
     runtimeOnly("org.lwjgl", "lwjgl-opengl", classifier = lwjglNatives)
     runtimeOnly("org.lwjgl", "lwjgl-stb", classifier = lwjglNatives)
     runtimeOnly("org.lwjgl", "lwjgl-stb", classifier = lwjglNatives)
-
 }
 
-ksp {
-    // arg("key", "value")
-}
-
-publishing {
-    publications {
-        create<MavenPublication>("maven") {
-            groupId = "me.exerro"
-            artifactId = "eggli"
-            version = "1.0.0"
-
-            from(components["java"])
-        }
-    }
-}
-
-kotlin {
-    sourceSets.main {
-        kotlin.srcDir("build/generated/ksp/main/kotlin")
-    }
-    sourceSets.test {
-        kotlin.srcDir("build/generated/ksp/test/kotlin")
-    }
+task<JavaExec>("01_hello_window") {
+    group = "examples"
+    description = "Run the 01_hello_window example"
+    classpath = sourceSets.main.get().runtimeClasspath
+    mainClass.set("me.exerro.eggli.examples.01_hello_window.MainKt")
 }

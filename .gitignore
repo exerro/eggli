@@ -6,5 +6,4 @@
 
 # Build output
 /build/
-/eggli/build/
-/eggli-gen/build/
+/*/build/

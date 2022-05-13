@@ -13,7 +13,7 @@ class GL<T> internal constructor(
 
     /** TODO */
     @Volatile
-    var value = null as T?; internal set
+    var value = null as T?; private set
 
     /** TODO */
     fun <R> map(fn: (T) -> R) = GL {
