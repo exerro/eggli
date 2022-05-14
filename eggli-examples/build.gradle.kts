@@ -1,8 +1,8 @@
 
+// [LWJGL]
 val lwjglNatives = run {
     val name = System.getProperty("os.name")!!
     val arch = System.getProperty("os.arch")!!
-
     when {
         arrayOf("Linux", "FreeBSD", "SunOS", "Unit").any { name.startsWith(it) } ->
             if (arrayOf("arm", "aarch64").any { arch.startsWith(it) })
@@ -29,8 +29,8 @@ dependencies {
     implementation("me.exerro:lifetimes-kt:1.1.0")
     implementation(project(":eggli"))
 
+    // [LWJGL]
     implementation(platform("org.lwjgl:lwjgl-bom:3.3.1-SNAPSHOT"))
-
     implementation("org.lwjgl", "lwjgl")
     implementation("org.lwjgl", "lwjgl-glfw")
     implementation("org.lwjgl", "lwjgl-opengl")
