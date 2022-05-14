@@ -15,7 +15,7 @@ import org.lwjgl.opengl.GL46C
  * @see <a href="https://docs.gl/gl4/glViewport">Reference Page</a>
  */
 context (GLContext, GLDebugger.Context)
-fun glViewport(x: Int, y: Int, w: Int, h: Int) {
+fun glViewport(x: Int = 0, y: Int = 0, w: Int, h: Int) {
     glLog(StateChanged, State, "Setting viewport to ($x, $y, $w, $h)")
     GL46C.glViewport(x, y, w, h)
     glCheckForErrors()

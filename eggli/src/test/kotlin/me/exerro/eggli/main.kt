@@ -21,33 +21,15 @@ const val WINDOW_HEIGHT = 720
 class GLObjects(
     val framebuffer: GLFramebuffer,
     val boxTexture: GLTexture,
-    val imageTexture: GLTexture,
+    val albedoTexture: GLTexture,
+    val positionTexture: GLTexture,
+    val normalTexture: GLTexture,
     val depthTexture: GLTexture,
-    val shaderProgram: GLShaderProgram,
-    val copyShaderProgram: GLShaderProgram,
+    val modelShaderProgram: GLShaderProgram,
+    val aoShaderProgram: GLShaderProgram,
     val shape: GLResource<SimpleMesh>,
+    val fullscreenQuad: GLResource<SimpleMesh>,
 )
-
-const val VERTEX_SHADER_SOURCE = """
-#version 460 core
-
-uniform mat4 u_projectionMatrix;
-
-layout (location = 0) in vec3 v_position;
-layout (location = 1) in vec2 v_uv;
-layout (location = 3) in vec3 v_colour;
-
-out vec3 f_position;
-out vec2 f_uv;
-out vec3 f_colour;
-
-void main() {
-    gl_Position = u_projectionMatrix * vec4(v_position, 1);
-    f_position = v_position;
-    f_uv = v_uv;
-    f_colour = v_colour;
-}
-"""
 
 const val FRAGMENT_SHADER_SOURCE = """
 #version 460 core
@@ -57,52 +39,37 @@ uniform sampler2D u_texture;
 
 in vec3 f_position;
 in vec2 f_uv;
-in vec3 f_colour;
+in vec3 f_normal;
+in vec4 f_colour;
 
-out vec4 o_colour;
+layout (location = 0) out vec4 o_colour;
+layout (location = 1) out vec4 o_position;
+layout (location = 2) out vec4 o_normal;
 
 void main() {
-    o_colour = vec4(f_colour * (1 + cos(u_time)) / 2, 1) * texture(u_texture, f_uv);
+    o_colour = vec4(f_colour.xyz, (1 + cos(u_time)) / 2) * texture(u_texture, f_uv);
+    o_position.xyz = f_position;
+    o_normal.xyz = f_normal.xyz;
+    o_normal.w = 1;
+    o_normal = vec4(f_colour.xyz, (1 + cos(u_time)) / 2) * texture(u_texture, f_uv);
 //    o_colour = texture(u_texture, f_uv);
 }
 """
 
-const val COPY_VERTEX_SHADER_SOURCE = """
-#version 460 core
-
-uniform mat4 u_projectionMatrix;
-
-layout (location = 0) in vec3 v_position;
-layout (location = 1) in vec2 v_uv;
-layout (location = 3) in vec3 v_colour;
-
-out vec3 f_position;
-out vec2 f_uv;
-out vec3 f_colour;
-
-void main() {
-    gl_Position = u_projectionMatrix * vec4(v_position, 1);
-    f_position = v_position;
-    f_uv = v_uv;
-    f_colour = v_colour;
-}
-"""
-
-const val COPY_FRAGMENT_SHADER_SOURCE = """
+const val AO_FRAGMENT_SHADER_SOURCE = """
 #version 460 core
 
 uniform float u_time;
-uniform sampler2D u_texture;
+layout (binding = 0) uniform sampler2D u_texture;
 
-in vec3 f_position;
 in vec2 f_uv;
-in vec3 f_colour;
 
 out vec4 o_colour;
 
 void main() {
-    o_colour = vec4(f_colour * (1 + cos(u_time)) / 2, 1) * texture(u_texture, f_uv);
-//    o_colour = texture(u_texture, f_uv);
+//    o_colour = vec4(f_uv, 0, 1);
+    o_colour.xyz = texture(u_texture, f_uv).xyz;
+    o_colour.w = 1;
 }
 """
 
@@ -110,25 +77,36 @@ context (Lifetime, GLDebugger.Context)
 fun createRenderingObjects() = GL {
     val useElements = false
     val (shaderProgram) = createShaderProgram(
-        GL_VERTEX_SHADER to VERTEX_SHADER_SOURCE,
-        GL_FRAGMENT_SHADER to FRAGMENT_SHADER_SOURCE,
+        createModelVertexShaderSource(
+            positionLocation = 0,
+            normalLocation = 2,
+            ShaderAttribute.uv,
+            ShaderAttribute.colour,
+        ),
+//        VERTEX_SHADER_SOURCE,
+        FRAGMENT_SHADER_SOURCE,
     )
-    val (copyShaderProgram) = createShaderProgram(
-        GL_VERTEX_SHADER to COPY_VERTEX_SHADER_SOURCE,
-        GL_FRAGMENT_SHADER to COPY_FRAGMENT_SHADER_SOURCE,
+    val (aoShaderProgram) = createShaderProgram(
+        createPassThroughVertexShaderSource(
+            positionLocation = 0,
+            ShaderAttribute.uv,
+        ),
+        AO_FRAGMENT_SHADER_SOURCE,
     )
     val (shape) = createDefaultCube(
         includeUVs = true,
         includeColours = true,
         useElements = useElements,
         uvsPerFace = true,
+        centreZ = 0f,
+    )
+    val (fullscreenQuad) = createDefaultFace(
+        includeNormals = false,
+        useElements = false,
+        width = 2f,
+        height = 2f,
     )
     val (framebuffer) = glGenFramebuffers()
-//    val (shape) = createDefaultFace(
-//        includeUVs = true,
-//        includeColours = true,
-//        useElements = useElements,
-//    )
     val proj = createPerspectiveProjectionMatrixValues(aspectRatio = 1080f / 720f)
     val textureData = GL::class.java.getResourceAsStream("/me/exerro/eggli/img/box_0_diffuse.png")!!.readBytes()
 
@@ -137,10 +115,20 @@ fun createRenderingObjects() = GL {
     glTextureParameter(boxTexture, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
     loadTextureData(boxTexture, textureData)
 
-    val (imageTexture) = glCreateTextures(GL_TEXTURE_2D)
-    glTextureParameter(imageTexture, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
-    glTextureParameter(imageTexture, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
-    glTextureStorage2D(imageTexture, width = FRAMEBUFFER_WIDTH, height = FRAMEBUFFER_HEIGHT)
+    val (albedoTexture) = glCreateTextures(GL_TEXTURE_2D)
+    glTextureParameter(albedoTexture, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
+    glTextureParameter(albedoTexture, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
+    glTextureStorage2D(albedoTexture, width = FRAMEBUFFER_WIDTH, height = FRAMEBUFFER_HEIGHT)
+
+    val (positionTexture) = glCreateTextures(GL_TEXTURE_2D)
+    glTextureParameter(positionTexture, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
+    glTextureParameter(positionTexture, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
+    glTextureStorage2D(positionTexture, internalFormat = GL_RGB32F, width = FRAMEBUFFER_WIDTH, height = FRAMEBUFFER_HEIGHT)
+
+    val (normalTexture) = glCreateTextures(GL_TEXTURE_2D)
+    glTextureParameter(normalTexture, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
+    glTextureParameter(normalTexture, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
+    glTextureStorage2D(normalTexture, internalFormat = GL_RGBA8, width = FRAMEBUFFER_WIDTH, height = FRAMEBUFFER_HEIGHT)
 
     val (depthTexture) = glCreateTextures(GL_TEXTURE_2D)
     glTextureParameter(depthTexture, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
@@ -148,44 +136,56 @@ fun createRenderingObjects() = GL {
     glTextureStorage2D(depthTexture, internalFormat = GL_DEPTH_COMPONENT24, width = FRAMEBUFFER_WIDTH, height = FRAMEBUFFER_HEIGHT)
 
     glBindFramebuffer(GL_FRAMEBUFFER, framebuffer) {
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, imageTexture)
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, albedoTexture)
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT1, GL_TEXTURE_2D, positionTexture)
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT2, GL_TEXTURE_2D, normalTexture)
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthTexture)
 
         if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
             error("Fuck")
     }
 
-//    glEnable(GLOption.CullFace)
-    glEnable(GLOption.DepthTest)
-//    glCullFace(GL_FRONT)
+    glEnable(GL_CULL_FACE)
+    glEnable(GL_DEPTH_TEST)
+    glEnable(GL_BLEND)
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA)
 
     glUseProgram(shaderProgram) {
         glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "u_projectionMatrix"), proj)
+        glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "u_viewMatrix"), createIdentityMatrixValues())
+        glUniformMatrix4fv(glGetUniformLocation(shaderProgram, "u_modelMatrix"), createIdentityMatrixValues())
     }
 
     GLObjects(
         framebuffer = framebuffer,
         boxTexture = boxTexture,
-        imageTexture = imageTexture,
+        albedoTexture = albedoTexture,
+        positionTexture = positionTexture,
+        normalTexture = normalTexture,
         depthTexture = depthTexture,
-        shaderProgram = shaderProgram,
-        copyShaderProgram = copyShaderProgram,
+        modelShaderProgram = shaderProgram,
+        aoShaderProgram = aoShaderProgram,
         shape = shape,
+        fullscreenQuad = fullscreenQuad,
     )
 }
 
 context (GLContext, GLDebugger.Context)
 fun renderFrame(glObjects: GLObjects, t: Float) {
-    glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT)
-    glClearColor(0.1f, 0.12f, 0.13f)
-    glClear(GL_COLOR_BUFFER_BIT + GL_DEPTH_BUFFER_BIT)
+    glUseProgram(glObjects.modelShaderProgram) {
+        val rotation = createYRotationMatrixValues(t)
+        val translation = createTranslationMatrixValues(dz = -1f)
+        val transform = multiplyMatrixValues(translation, rotation)
+        glUniformMatrix4fv(glGetUniformLocation(glObjects.modelShaderProgram, "u_modelMatrix"), transform)
+    }
 
-    glViewport(0, 0, FRAMEBUFFER_WIDTH, FRAMEBUFFER_HEIGHT)
     glBindFramebuffer(GL_DRAW_FRAMEBUFFER, glObjects.framebuffer) {
+        glViewport(0, 0, FRAMEBUFFER_WIDTH, FRAMEBUFFER_HEIGHT)
         glClearColor(1f, 1f, 1f, 1f)
         glClear(GL_COLOR_BUFFER_BIT + GL_DEPTH_BUFFER_BIT)
-        glUseProgram(glObjects.shaderProgram) {
-            glUniform1f(glGetUniformLocation(glObjects.shaderProgram, "u_time"), t)
+        glCullFace(GL_FRONT)
+        glUseProgram(glObjects.modelShaderProgram) {
+            glUniform1f(glGetUniformLocation(glObjects.modelShaderProgram, "u_time"), t)
             glBindTexture(GL_TEXTURE_2D, glObjects.boxTexture) {
                 glBindVertexArray(glObjects.shape.get().vertexArray) {
                     if (glObjects.shape.get().usesElementBuffer)
@@ -198,14 +198,16 @@ fun renderFrame(glObjects: GLObjects, t: Float) {
     }
 
     glViewport(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT)
-    glUseProgram(glObjects.shaderProgram) {
-        glUniform1f(glGetUniformLocation(glObjects.shaderProgram, "u_time"), t)
-        glBindTexture(GL_TEXTURE_2D, glObjects.depthTexture) {
-            glBindVertexArray(glObjects.shape.get().vertexArray) {
-                if (glObjects.shape.get().usesElementBuffer)
-                    glDrawElements(count = glObjects.shape.get().vertices)
+    glClearColor(0.1f, 0.12f, 0.13f)
+    glClear(GL_COLOR_BUFFER_BIT + GL_DEPTH_BUFFER_BIT)
+    glCullFace(GL_BACK)
+    glUseProgram(glObjects.aoShaderProgram) {
+        glBindTexture(GL_TEXTURE_2D, glObjects.normalTexture) {
+            glBindVertexArray(glObjects.fullscreenQuad.get().vertexArray) {
+                if (glObjects.fullscreenQuad.get().usesElementBuffer)
+                    glDrawElements(count = glObjects.fullscreenQuad.get().vertices)
                 else
-                    glDrawArrays(count = glObjects.shape.get().vertices)
+                    glDrawArrays(count = glObjects.fullscreenQuad.get().vertices)
             }
         }
     }

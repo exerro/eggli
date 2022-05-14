@@ -26,8 +26,7 @@ fun createDefaultFace(
     includeColours: Boolean = false,
     useElements: Boolean = false,
     width: Float = 1f,
-    height: Float = width,
-    depth: Float = width,
+    height: Float = 1f,
     centreX: Float = 0f,
     centreY: Float = 0f,
     centreZ: Float = -1f,
@@ -51,7 +50,6 @@ fun createDefaultFace(
         positionData[i] += centreX
         positionData[i + 1] *= height
         positionData[i + 1] += centreY
-        positionData[i + 2] *= depth
         positionData[i + 2] += centreZ
     }
 

@@ -62,3 +62,10 @@ task<JavaExec>("03_textured_cube") {
     classpath = sourceSets.main.get().runtimeClasspath
     mainClass.set("03_textured_cube.MainKt")
 }
+
+task<JavaExec>("04_multiple_render_targets") {
+    group = "examples"
+    description = "Run the 04_multiple_render_targets example"
+    classpath = sourceSets.main.get().runtimeClasspath
+    mainClass.set("04_multiple_render_targets.MainKt")
+}

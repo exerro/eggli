@@ -166,6 +166,48 @@ private val enumData = createEnumData {
         noDocumentation
     }
 
+    val GLDrawBuffer by options {
+        val GL_NONE by "The fragment shader output value is not written into any color buffer."
+        val GL_FRONT_LEFT by "The fragment shader output value is written into the front left color buffer."
+        val GL_FRONT_RIGHT by "The fragment shader output value is written into the front right color buffer."
+        val GL_BACK_LEFT by "The fragment shader output value is written into the back left color buffer."
+        val GL_BACK_RIGHT by "The fragment shader output value is written into the back right color buffer."
+        val GL_COLOR_ATTACHMENT0 by "The fragment shader output value is written into the nth color attachment of the current framebuffer. n may range from zero to the value of GL_MAX_COLOR_ATTACHMENTS."
+        val GL_COLOR_ATTACHMENT1 by "The fragment shader output value is written into the nth color attachment of the current framebuffer. n may range from zero to the value of GL_MAX_COLOR_ATTACHMENTS."
+        val GL_COLOR_ATTACHMENT2 by "The fragment shader output value is written into the nth color attachment of the current framebuffer. n may range from zero to the value of GL_MAX_COLOR_ATTACHMENTS."
+        val GL_COLOR_ATTACHMENT3 by "The fragment shader output value is written into the nth color attachment of the current framebuffer. n may range from zero to the value of GL_MAX_COLOR_ATTACHMENTS."
+        val GL_COLOR_ATTACHMENT4 by "The fragment shader output value is written into the nth color attachment of the current framebuffer. n may range from zero to the value of GL_MAX_COLOR_ATTACHMENTS."
+        val GL_COLOR_ATTACHMENT5 by "The fragment shader output value is written into the nth color attachment of the current framebuffer. n may range from zero to the value of GL_MAX_COLOR_ATTACHMENTS."
+        val GL_COLOR_ATTACHMENT6 by "The fragment shader output value is written into the nth color attachment of the current framebuffer. n may range from zero to the value of GL_MAX_COLOR_ATTACHMENTS."
+        val GL_COLOR_ATTACHMENT7 by "The fragment shader output value is written into the nth color attachment of the current framebuffer. n may range from zero to the value of GL_MAX_COLOR_ATTACHMENTS."
+        val GL_COLOR_ATTACHMENT8 by "The fragment shader output value is written into the nth color attachment of the current framebuffer. n may range from zero to the value of GL_MAX_COLOR_ATTACHMENTS."
+        val GL_COLOR_ATTACHMENT9 by "The fragment shader output value is written into the nth color attachment of the current framebuffer. n may range from zero to the value of GL_MAX_COLOR_ATTACHMENTS."
+        val GL_COLOR_ATTACHMENT10 by "The fragment shader output value is written into the nth color attachment of the current framebuffer. n may range from zero to the value of GL_MAX_COLOR_ATTACHMENTS."
+        val GL_COLOR_ATTACHMENT11 by "The fragment shader output value is written into the nth color attachment of the current framebuffer. n may range from zero to the value of GL_MAX_COLOR_ATTACHMENTS."
+        val GL_COLOR_ATTACHMENT12 by "The fragment shader output value is written into the nth color attachment of the current framebuffer. n may range from zero to the value of GL_MAX_COLOR_ATTACHMENTS."
+        val GL_COLOR_ATTACHMENT13 by "The fragment shader output value is written into the nth color attachment of the current framebuffer. n may range from zero to the value of GL_MAX_COLOR_ATTACHMENTS."
+        val GL_COLOR_ATTACHMENT14 by "The fragment shader output value is written into the nth color attachment of the current framebuffer. n may range from zero to the value of GL_MAX_COLOR_ATTACHMENTS."
+        val GL_COLOR_ATTACHMENT15 by "The fragment shader output value is written into the nth color attachment of the current framebuffer. n may range from zero to the value of GL_MAX_COLOR_ATTACHMENTS."
+        val GL_COLOR_ATTACHMENT16 by "The fragment shader output value is written into the nth color attachment of the current framebuffer. n may range from zero to the value of GL_MAX_COLOR_ATTACHMENTS."
+        val GL_COLOR_ATTACHMENT17 by "The fragment shader output value is written into the nth color attachment of the current framebuffer. n may range from zero to the value of GL_MAX_COLOR_ATTACHMENTS."
+        val GL_COLOR_ATTACHMENT18 by "The fragment shader output value is written into the nth color attachment of the current framebuffer. n may range from zero to the value of GL_MAX_COLOR_ATTACHMENTS."
+        val GL_COLOR_ATTACHMENT19 by "The fragment shader output value is written into the nth color attachment of the current framebuffer. n may range from zero to the value of GL_MAX_COLOR_ATTACHMENTS."
+        val GL_COLOR_ATTACHMENT20 by "The fragment shader output value is written into the nth color attachment of the current framebuffer. n may range from zero to the value of GL_MAX_COLOR_ATTACHMENTS."
+        val GL_COLOR_ATTACHMENT21 by "The fragment shader output value is written into the nth color attachment of the current framebuffer. n may range from zero to the value of GL_MAX_COLOR_ATTACHMENTS."
+        val GL_COLOR_ATTACHMENT22 by "The fragment shader output value is written into the nth color attachment of the current framebuffer. n may range from zero to the value of GL_MAX_COLOR_ATTACHMENTS."
+        val GL_COLOR_ATTACHMENT23 by "The fragment shader output value is written into the nth color attachment of the current framebuffer. n may range from zero to the value of GL_MAX_COLOR_ATTACHMENTS."
+        val GL_COLOR_ATTACHMENT24 by "The fragment shader output value is written into the nth color attachment of the current framebuffer. n may range from zero to the value of GL_MAX_COLOR_ATTACHMENTS."
+        val GL_COLOR_ATTACHMENT25 by "The fragment shader output value is written into the nth color attachment of the current framebuffer. n may range from zero to the value of GL_MAX_COLOR_ATTACHMENTS."
+        val GL_COLOR_ATTACHMENT26 by "The fragment shader output value is written into the nth color attachment of the current framebuffer. n may range from zero to the value of GL_MAX_COLOR_ATTACHMENTS."
+        val GL_COLOR_ATTACHMENT27 by "The fragment shader output value is written into the nth color attachment of the current framebuffer. n may range from zero to the value of GL_MAX_COLOR_ATTACHMENTS."
+        val GL_COLOR_ATTACHMENT28 by "The fragment shader output value is written into the nth color attachment of the current framebuffer. n may range from zero to the value of GL_MAX_COLOR_ATTACHMENTS."
+        val GL_COLOR_ATTACHMENT29 by "The fragment shader output value is written into the nth color attachment of the current framebuffer. n may range from zero to the value of GL_MAX_COLOR_ATTACHMENTS."
+        val GL_COLOR_ATTACHMENT30 by "The fragment shader output value is written into the nth color attachment of the current framebuffer. n may range from zero to the value of GL_MAX_COLOR_ATTACHMENTS."
+        val GL_COLOR_ATTACHMENT31 by "The fragment shader output value is written into the nth color attachment of the current framebuffer. n may range from zero to the value of GL_MAX_COLOR_ATTACHMENTS."
+
+        noDocumentation
+    }
+
     val GLDrawMode by options {
         val GL_POINTS by noDocumentation
         val GL_LINE_STRIP by noDocumentation

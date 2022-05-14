@@ -5,6 +5,7 @@ import me.exerro.eggli.GLDebugger
 import me.exerro.eggli.GLResource
 import me.exerro.eggli.types.GLBuffer
 import me.exerro.eggli.types.GLVertexArray
+import me.exerro.eggli.types.GLAttributeIndex
 import me.exerro.lifetimes.Lifetime
 
 /** TODO */
@@ -18,16 +19,16 @@ data class SimpleMesh(
     /** @see SimpleMesh */
     companion object {
         /** Attribute index of the position vertex buffer within the VAO. */
-        const val POSITION_ATTRIBUTE = 0
+        const val POSITION_ATTRIBUTE: GLAttributeIndex = 0
 
         /** Attribute index of the UV vertex buffer within the VAO. */
-        const val UV_ATTRIBUTE = 1
+        const val UV_ATTRIBUTE: GLAttributeIndex = 1
 
         /** Attribute index of the normal vertex buffer within the VAO. */
-        const val NORMAL_ATTRIBUTE = 2
+        const val NORMAL_ATTRIBUTE: GLAttributeIndex = 2
 
         /** Attribute index of the normal vertex buffer within the VAO. */
-        const val COLOUR_ATTRIBUTE = 3
+        const val COLOUR_ATTRIBUTE: GLAttributeIndex = 3
 
         /** Size (number of components) of positions in vertices. */
         const val POSITION_COMPONENTS = 3
