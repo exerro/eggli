@@ -10,7 +10,7 @@ import org.lwjgl.opengl.GL46C
 /** TODO */
 context (GLContext, GLDebugger.Context)
 fun glEnable(target: GLOption) {
+    glLog(StateChanged, State, "Enabling $target")
     GL46C.glEnable(target.glValue)
-    glLog(StateChanged, State, "Enabled $target")
     glCheckForErrors()
 }

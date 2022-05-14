@@ -29,7 +29,7 @@ dependencies {
     ksp(project(":eggli-gen"))
 
     implementation(kotlin("stdlib"))
-    implementation("me.exerro:lifetimes-kt:1.1.0")
+    implementation("me.exerro:lifetimes-kt:1.2.0")
 
     implementation(platform("org.lwjgl:lwjgl-bom:3.3.1-SNAPSHOT"))
     implementation("org.lwjgl", "lwjgl")
@@ -53,7 +53,7 @@ publishing {
         create<MavenPublication>("maven") {
             groupId = "me.exerro"
             artifactId = "eggli"
-            version = "1.0.0"
+            version = "0.1.0"
 
             from(components["java"])
         }

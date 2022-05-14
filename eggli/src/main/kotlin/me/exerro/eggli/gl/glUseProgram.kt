@@ -13,32 +13,32 @@ import org.lwjgl.opengl.GL46C
 /** TODO */
 context (GLContext, GLDebugger.Context)
 fun glUseProgram(program: GLShaderProgram) {
+    glLog(ObjectBound, Program, "Binding shader program $program")
     GL46C.glUseProgram(program.get())
-    glLog(ObjectBound, Program, "Bound shader program $program")
     glCheckForErrors()
 }
 
 /** TODO */
 context (GLContext, GLDebugger.Context)
 fun glUseProgram() {
+    glLog(ObjectUnbound, Program, "Unbinding shader program")
     GL46C.glUseProgram(0)
-    glLog(ObjectUnbound, Program, "Unbound shader program")
     glCheckForErrors()
 }
 
 /** TODO */
 context (GLContext, GLDebugger.Context)
 fun <T> glUseProgram(program: GLShaderProgram, block: () -> T): T {
+    glLog(ObjectBound, Program, "Binding shader program $program")
     GL46C.glUseProgram(program.get())
-    glLog(ObjectBound, Program, "Bound shader program $program")
     glCheckForErrors()
 
     try {
         return block()
     }
     finally {
+        glLog(ObjectUnbound, Program, "Unbinding shader program")
         GL46C.glUseProgram(0)
-        glLog(ObjectUnbound, Program, "Unbound shader program")
         glCheckForErrors()
     }
 }

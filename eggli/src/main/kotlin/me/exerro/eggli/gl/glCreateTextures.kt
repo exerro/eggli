@@ -18,8 +18,8 @@ fun glCreateTextures(type: GLTextureTarget): GL<GLTexture> = GL {
     glLog(ObjectCreated, Texture, "Created texture $textureId")
     glCheckForErrors()
     GLResource(textureId) {
+        glLog(ObjectDestroyed, Texture, "Destroying texture $textureId")
         GL46C.glDeleteTextures(it)
-        glLog(ObjectDestroyed, Texture, "Destroyed texture $textureId")
         glCheckForErrors()
     }
 }

@@ -15,7 +15,7 @@ fun glDrawElements(
     type: Int = GL46C.GL_UNSIGNED_INT,
     indices: Long = 0L
 ) {
-    GL46C.glDrawElements(mode.glValue, count, type, indices)
     glLog(DrawCall, DrawTarget, "glDrawElements($mode, $count, $type, $indices)")
+    GL46C.glDrawElements(mode.glValue, count, type, indices)
     glCheckForErrors()
 }

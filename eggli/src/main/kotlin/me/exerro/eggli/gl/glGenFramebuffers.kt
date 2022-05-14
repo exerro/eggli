@@ -17,8 +17,8 @@ fun glGenFramebuffers(): GL<GLFramebuffer> = GL {
     glLog(ObjectCreated, FBuffer, "Created framebuffer $framebufferId")
     glCheckForErrors()
     GLResource(framebufferId) {
+        glLog(ObjectDestroyed, FBuffer, "Destroying framebuffer $framebufferId")
         GL46C.glDeleteFramebuffers(it)
-        glLog(ObjectDestroyed, FBuffer, "Destroyed framebuffer $framebufferId")
         glCheckForErrors()
     }
 }

@@ -207,8 +207,8 @@ interface GLDebugger {
 
         private val actionMaxLength = LogAction.values().maxOf { it.name.length }
         private val entityMaxLength = LogEntity.values().maxOf { it.name.length }
-        private val logFormat = "[%02d:%02d:%02d::%03d] (%${entityMaxLength}s) %${actionMaxLength}s :: %s"
-        private val colouredLogFormat = "\u001b[37m[\u001b[0m%02d:%02d:%02d::%03d\u001b[37m] (\u001b[36m%-${entityMaxLength}s\u001b[37m) \u001b[36m%-${actionMaxLength}s\u001b[37m :: \u001b[0m%s"
+        private val logFormat = "[%02d:%02d:%02d::%03d] (%${entityMaxLength}s, %${actionMaxLength}s) :: %s"
+        private val colouredLogFormat = "\u001b[37m[\u001b[0m%02d:%02d:%02d::%03d\u001b[37m] (\u001b[36m%-${entityMaxLength}s\u001b[37m, \u001b[36m%-${actionMaxLength}s\u001b[37m) :: \u001b[0m%s"
         private val logMessageIndentation = logFormat.format(0, 0, 0, 0, "", "", "").length
     }
 }

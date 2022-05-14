@@ -10,7 +10,7 @@ import org.lwjgl.opengl.GL46C
 /** TODO */
 context (GLContext, GLDebugger.Context)
 fun glDisable(target: GLOption) {
+    glLog(StateChanged, State, "Disabling $target")
     GL46C.glDisable(target.glValue)
-    glLog(StateChanged, State, "Disabled $target")
     glCheckForErrors()
 }

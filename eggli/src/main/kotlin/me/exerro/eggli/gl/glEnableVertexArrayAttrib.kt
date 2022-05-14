@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL46C
 /** TODO */
 context (GLContext, GLDebugger.Context)
 fun glEnableVertexAttribArray(vao: GLVertexArray, index: GLAttributeIndex) {
+    glLog(StateChanged, VArray, "Enabling vertex attribute array $index for vertex array $vao")
     GL46C.glEnableVertexArrayAttrib(vao.get(), index)
-    glLog(StateChanged, VArray, "Enabled vertex attribute array $index for vertex array $vao")
     glCheckForErrors()
 }

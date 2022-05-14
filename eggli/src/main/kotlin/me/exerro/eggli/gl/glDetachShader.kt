@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL46C
 /** TODO */
 context (GLContext, GLDebugger.Context)
 fun glDetachShader(program: GLShaderProgram, shader: GLShader) {
+    glLog(StateChanged, Program, "Detaching shader $shader from program $program")
     GL46C.glDetachShader(program.get(), shader.get())
-    glLog(StateChanged, Program, "Detached shader $shader from program $program")
     glCheckForErrors()
 }

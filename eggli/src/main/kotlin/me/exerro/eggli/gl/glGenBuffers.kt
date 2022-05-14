@@ -17,8 +17,8 @@ fun glGenBuffers(): GL<GLBuffer> = GL {
     glLog(ObjectCreated, Buffer, "Created buffer $bufferId")
     glCheckForErrors()
     GLResource(bufferId) {
+        glLog(ObjectDestroyed, Buffer, "Destroying buffer $bufferId")
         GL46C.glDeleteBuffers(it)
-        glLog(ObjectDestroyed, Buffer, "Destroyed buffer $bufferId")
         glCheckForErrors()
     }
 }

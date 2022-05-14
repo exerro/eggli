@@ -12,8 +12,8 @@ import org.lwjgl.opengl.GL46C
  *  https://www.khronos.org/opengl/wiki/GLAPI/glBufferData */
 context (GLContext, GLDebugger.Context)
 fun glNamedBufferData(buffer: GLBuffer, size: Long, usage: GLBufferUsage = GLBufferUsage.StaticDraw) {
-    GL46C.glNamedBufferData(buffer.get(), size, usage.glValue)
     glLog(Generic, Buffer, "Allocating buffer data for buffer $buffer ($size bytes)")
+    GL46C.glNamedBufferData(buffer.get(), size, usage.glValue)
     glCheckForErrors()
 }
 
@@ -21,8 +21,8 @@ fun glNamedBufferData(buffer: GLBuffer, size: Long, usage: GLBufferUsage = GLBuf
  *  https://www.khronos.org/opengl/wiki/GLAPI/glBufferData */
 context (GLContext, GLDebugger.Context)
 fun glNamedBufferData(buffer: GLBuffer, data: ShortArray, usage: GLBufferUsage = GLBufferUsage.StaticDraw) {
+    glLog(Generic, Buffer, "Setting buffer data for buffer $buffer")
     GL46C.glNamedBufferData(buffer.get(), data, usage.glValue)
-    glLog(Generic, Buffer, "Set buffer data for buffer $buffer")
     glCheckForErrors()
 }
 
@@ -30,8 +30,8 @@ fun glNamedBufferData(buffer: GLBuffer, data: ShortArray, usage: GLBufferUsage =
  *  https://www.khronos.org/opengl/wiki/GLAPI/glBufferData */
 context (GLContext, GLDebugger.Context)
 fun glNamedBufferData(buffer: GLBuffer, data: IntArray, usage: GLBufferUsage = GLBufferUsage.StaticDraw) {
+    glLog(Generic, Buffer, "Setting buffer data for buffer $buffer")
     GL46C.glNamedBufferData(buffer.get(), data, usage.glValue)
-    glLog(Generic, Buffer, "Set buffer data for buffer $buffer")
     glCheckForErrors()
 }
 
@@ -39,8 +39,8 @@ fun glNamedBufferData(buffer: GLBuffer, data: IntArray, usage: GLBufferUsage = G
  *  https://www.khronos.org/opengl/wiki/GLAPI/glBufferData */
 context (GLContext, GLDebugger.Context)
 fun glNamedBufferData(buffer: GLBuffer, data: LongArray, usage: GLBufferUsage = GLBufferUsage.StaticDraw) {
+    glLog(Generic, Buffer, "Setting buffer data for buffer $buffer")
     GL46C.glNamedBufferData(buffer.get(), data, usage.glValue)
-    glLog(Generic, Buffer, "Set buffer data for buffer $buffer")
     glCheckForErrors()
 }
 
@@ -57,7 +57,7 @@ fun glNamedBufferData(buffer: GLBuffer, data: FloatArray, usage: GLBufferUsage =
  *  https://www.khronos.org/opengl/wiki/GLAPI/glBufferData */
 context (GLContext, GLDebugger.Context)
 fun glNamedBufferData(buffer: GLBuffer, data: DoubleArray, usage: GLBufferUsage = GLBufferUsage.StaticDraw) {
+    glLog(Generic, Buffer, "Setting buffer data for buffer $buffer")
     GL46C.glNamedBufferData(buffer.get(), data, usage.glValue)
-    glLog(Generic, Buffer, "Set buffer data for buffer $buffer")
     glCheckForErrors()
 }

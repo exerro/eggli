@@ -13,8 +13,8 @@ context (GLContext, GLDebugger.Context)
 fun glCompileShader(shader: GLShader, validate: Boolean = true) {
     val shaderId = shader.get()
 
+    glLog(Generic, Shader, "Compiling shader $shader")
     GL46C.glCompileShader(shaderId)
-    glLog(Generic, Shader, "Compiled shader $shader")
 
     if (validate && GL46C.glGetShaderi(shaderId, GL46C.GL_COMPILE_STATUS) != GL46C.GL_TRUE) {
         val message = "Shader compilation error:\n${GL46C.glGetShaderInfoLog(shaderId)}"

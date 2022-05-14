@@ -17,8 +17,8 @@ context (GLContext, GLDebugger.Context)
     level = DeprecationLevel.WARNING,
 )
 fun glBufferData(target: GLBufferTarget, size: Long, usage: GLBufferUsage = GLBufferUsage.StaticDraw) {
-    GL46C.glBufferData(target.glValue, size, usage.glValue)
     glLog(Generic, Buffer, "Allocating buffer data for target $target ($size bytes)")
+    GL46C.glBufferData(target.glValue, size, usage.glValue)
     glCheckForErrors()
 }
 
@@ -31,8 +31,8 @@ context (GLContext, GLDebugger.Context)
     level = DeprecationLevel.WARNING,
 )
 fun glBufferData(target: GLBufferTarget, data: ShortArray, usage: GLBufferUsage = GLBufferUsage.StaticDraw) {
+    glLog(Generic, Buffer, "Setting buffer data for target $target")
     GL46C.glBufferData(target.glValue, data, usage.glValue)
-    glLog(Generic, Buffer, "Set buffer data for target $target")
     glCheckForErrors()
 }
 
@@ -45,8 +45,8 @@ context (GLContext, GLDebugger.Context)
     level = DeprecationLevel.WARNING,
 )
 fun glBufferData(target: GLBufferTarget, data: IntArray, usage: GLBufferUsage = GLBufferUsage.StaticDraw) {
+    glLog(Generic, Buffer, "Setting buffer data for target $target")
     GL46C.glBufferData(target.glValue, data, usage.glValue)
-    glLog(Generic, Buffer, "Set buffer data for target $target")
     glCheckForErrors()
 }
 
@@ -59,8 +59,8 @@ context (GLContext, GLDebugger.Context)
     level = DeprecationLevel.WARNING,
 )
 fun glBufferData(target: GLBufferTarget, data: LongArray, usage: GLBufferUsage = GLBufferUsage.StaticDraw) {
+    glLog(Generic, Buffer, "Setting buffer data for target $target")
     GL46C.glBufferData(target.glValue, data, usage.glValue)
-    glLog(Generic, Buffer, "Set buffer data for target $target")
     glCheckForErrors()
 }
 
@@ -73,8 +73,8 @@ context (GLContext, GLDebugger.Context)
     level = DeprecationLevel.WARNING,
 )
 fun glBufferData(target: GLBufferTarget, data: FloatArray, usage: GLBufferUsage = GLBufferUsage.StaticDraw) {
+    glLog(Generic, Buffer, "Setting buffer data for target $target")
     GL46C.glBufferData(target.glValue, data, usage.glValue)
-    glLog(Generic, Buffer, "Set buffer data for target $target")
     glCheckForErrors()
 }
 
@@ -87,7 +87,7 @@ context (GLContext, GLDebugger.Context)
     level = DeprecationLevel.WARNING,
 )
 fun glBufferData(target: GLBufferTarget, data: DoubleArray, usage: GLBufferUsage = GLBufferUsage.StaticDraw) {
+    glLog(Generic, Buffer, "Setting buffer data for target $target")
     GL46C.glBufferData(target.glValue, data, usage.glValue)
-    glLog(Generic, Buffer, "Set buffer data for target $target")
     glCheckForErrors()
 }

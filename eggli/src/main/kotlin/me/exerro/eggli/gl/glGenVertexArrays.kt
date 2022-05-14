@@ -17,8 +17,8 @@ fun glGenVertexArrays(): GL<GLVertexArray> = GL {
     glLog(ObjectCreated, VArray, "Created vertex array $vaoId")
     glCheckForErrors()
     GLResource(vaoId) {
+        glLog(ObjectDestroyed, VArray, "Destroying vertex array $vaoId")
         GL46C.glDeleteVertexArrays(it)
-        glLog(ObjectDestroyed, VArray, "Destroyed vertex array $vaoId")
         glCheckForErrors()
     }
 }

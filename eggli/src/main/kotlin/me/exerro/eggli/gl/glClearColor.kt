@@ -15,15 +15,15 @@ import org.lwjgl.opengl.GL46C
  */
 context (GLContext, GLDebugger.Context)
 fun glClearColor(red: Float, green: Float, blue: Float, alpha: Float = 1f) {
-    GL46C.glClearColor(red, green, blue, alpha)
     glLog(StateChanged, State, "glClearColor($red, $green, $blue, $alpha)")
+    GL46C.glClearColor(red, green, blue, alpha)
     glCheckForErrors()
 }
 
 /** TODO */
 context (GLContext, GLDebugger.Context)
 fun glClearColor(rgb: Float, alpha: Float = 1f) {
-    GL46C.glClearColor(rgb, rgb, rgb, alpha)
     glLog(StateChanged, State, "glClearColor($rgb, $rgb, $rgb, $alpha)")
+    GL46C.glClearColor(rgb, rgb, rgb, alpha)
     glCheckForErrors()
 }

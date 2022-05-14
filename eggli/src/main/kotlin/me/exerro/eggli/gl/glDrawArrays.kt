@@ -14,7 +14,7 @@ fun glDrawArrays(
     first: Int = 0,
     count: Int,
 ) {
-    GL46C.glDrawArrays(mode.glValue, first, count)
     glLog(DrawCall, DrawTarget, "glDrawArrays($mode, $first, $count)")
+    GL46C.glDrawArrays(mode.glValue, first, count)
     glCheckForErrors()
 }

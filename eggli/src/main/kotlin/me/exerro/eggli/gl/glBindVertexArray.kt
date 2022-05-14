@@ -13,32 +13,32 @@ import org.lwjgl.opengl.GL46C
 /** TODO */
 context (GLContext, GLDebugger.Context)
 fun glBindVertexArray(vao: GLVertexArray) {
+    glLog(ObjectBound, VArray, "Binding vertex array $vao")
     GL46C.glBindVertexArray(vao.get())
-    glLog(ObjectBound, VArray, "Bound vertex array $vao")
     glCheckForErrors()
 }
 
 /** TODO */
 context (GLContext, GLDebugger.Context)
 fun glBindVertexArray() {
+    glLog(ObjectUnbound, VArray, "Unbinding vertex array")
     GL46C.glBindVertexArray(0)
-    glLog(ObjectUnbound, VArray, "Unbound vertex array")
     glCheckForErrors()
 }
 
 /** TODO */
 context (GLContext, GLDebugger.Context)
 fun <T> glBindVertexArray(vao: GLVertexArray, block: () -> T): T {
+    glLog(ObjectBound, VArray, "Binding vertex array $vao")
     GL46C.glBindVertexArray(vao.get())
-    glLog(ObjectBound, VArray, "Bound vertex array $vao")
     glCheckForErrors()
 
     try {
         return block()
     }
     finally {
+        glLog(ObjectUnbound, VArray, "Unbinding vertex array")
         GL46C.glBindVertexArray(0)
-        glLog(ObjectUnbound, VArray, "Unbound vertex array")
         glCheckForErrors()
     }
 }

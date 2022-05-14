@@ -13,8 +13,8 @@ context (GLContext, GLDebugger.Context)
 fun glLinkProgram(program: GLShaderProgram, validate: Boolean = true) {
     val programId = program.get()
 
+    glLog(Generic, Program, "Linking program $program")
     GL46C.glLinkProgram(programId)
-    glLog(Generic, Program, "Linked program $program")
 
     if (validate && GL46C.glGetProgrami(programId, GL46C.GL_LINK_STATUS) != GL46C.GL_TRUE) {
         val message = "Program link error:\n${GL46C.glGetProgramInfoLog(programId)}"

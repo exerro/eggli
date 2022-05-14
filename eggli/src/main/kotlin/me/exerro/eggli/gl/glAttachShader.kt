@@ -11,7 +11,7 @@ import org.lwjgl.opengl.GL46C
 /** TODO */
 context (GLContext, GLDebugger.Context)
 fun glAttachShader(program: GLShaderProgram, shader: GLShader) {
+    glLog(StateChanged, Program, "Attaching shader $shader to program $program")
     GL46C.glAttachShader(program.get(), shader.get())
-    glLog(StateChanged, Program, "Attached shader $shader to program $program")
     glCheckForErrors()
 }

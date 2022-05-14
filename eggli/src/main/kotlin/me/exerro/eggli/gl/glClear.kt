@@ -10,7 +10,7 @@ import org.lwjgl.opengl.GL46C
 /** TODO */
 context (GLContext, GLDebugger.Context)
 fun glClear(clearBits: GLClearBit) {
-    GL46C.glClear(clearBits.glValue)
     glLog(DrawCall, DrawTarget, "glClear($clearBits)")
+    GL46C.glClear(clearBits.glValue)
     glCheckForErrors()
 }

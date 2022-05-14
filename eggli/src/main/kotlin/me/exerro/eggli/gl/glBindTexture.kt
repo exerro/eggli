@@ -13,32 +13,32 @@ import org.lwjgl.opengl.GL46C
  *  https://www.khronos.org/opengl/wiki/GLAPI/glBindTexture */
 context (GLContext, GLDebugger.Context)
 fun glBindTexture(target: GLTextureTarget, texture: GLTexture) {
+    glLog(ObjectBound, Texture, "Binding texture $texture as $target")
     GL46C.glBindTexture(target.glValue, texture.get())
-    glLog(ObjectBound, Texture, "Bound texture $texture as $target")
     glCheckForErrors()
 }
 
 /** TODO */
 context (GLContext, GLDebugger.Context)
 fun glBindTexture(target: GLTextureTarget) {
+    glLog(ObjectUnbound, Texture, "Unbinding texture as $target")
     GL46C.glBindTexture(target.glValue, 0)
-    glLog(ObjectUnbound, Texture, "Unbound texture as $target")
     glCheckForErrors()
 }
 
 /** TODO */
 context (GLContext, GLDebugger.Context)
 fun <T> glBindTexture(target: GLTextureTarget, texture: GLTexture, block: () -> T): T {
+    glLog(ObjectBound, Texture, "Binding texture $texture as $target")
     GL46C.glBindTexture(target.glValue, texture.get())
-    glLog(ObjectBound, Texture, "Bound texture $texture as $target")
     glCheckForErrors()
 
     try {
         return block()
     }
     finally {
+        glLog(ObjectUnbound, Texture, "Unbinding texture as $target")
         GL46C.glBindTexture(target.glValue, 0)
-        glLog(ObjectUnbound, Texture, "Unbound texture as $target")
         glCheckForErrors()
     }
 }

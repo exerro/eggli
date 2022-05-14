@@ -10,7 +10,7 @@ import org.lwjgl.opengl.GL46C
 /** TODO */
 context (GLContext, GLDebugger.Context)
 fun glShaderSource(shader: GLShader, source: CharSequence) {
+    glLog(Generic, Shader, "Setting shader source for shader $shader to\n$source")
     GL46C.glShaderSource(shader.get(), source)
-    glLog(Generic, Shader, "Set shader source for shader $shader to\n$source")
     glCheckForErrors()
 }

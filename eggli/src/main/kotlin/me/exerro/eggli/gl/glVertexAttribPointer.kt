@@ -18,7 +18,7 @@ fun glVertexAttribPointer(
     stride: Int = 0,
     pointer: Long = 0L,
 ) {
-    GL46C.glVertexAttribPointer(index, size, type.glValue, normalized, stride, pointer)
     glLog(StateChanged, VArray, "setVertexAttribPointer($index, $size, $type, $normalized, $stride, $pointer)")
+    GL46C.glVertexAttribPointer(index, size, type.glValue, normalized, stride, pointer)
     glCheckForErrors()
 }

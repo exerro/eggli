@@ -17,8 +17,8 @@ fun glCreateProgram(): GL<GLShaderProgram> = GL {
     glLog(ObjectCreated, Program, "Created shader program $programId")
     glCheckForErrors()
     GLResource(programId) {
+        glLog(ObjectDestroyed, Program, "Destroying shader program $programId")
         GL46C.glDeleteProgram(it)
-        glLog(ObjectDestroyed, Program, "Destroyed shader program $programId")
         glCheckForErrors()
     }
 }

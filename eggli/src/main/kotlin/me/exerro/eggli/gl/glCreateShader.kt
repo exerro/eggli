@@ -18,8 +18,8 @@ fun glCreateShader(type: GLShaderType): GL<GLShader> = GL {
     glLog(ObjectCreated, Shader, "Created shader $shaderId of type $type")
     glCheckForErrors()
     GLResource(shaderId) {
+        glLog(ObjectDestroyed, Shader, "Destroying shader $shaderId of type $type")
         GL46C.glDeleteShader(it)
-        glLog(ObjectDestroyed, Shader, "Destroyed shader $shaderId of type $type")
         glCheckForErrors()
     }
 }
