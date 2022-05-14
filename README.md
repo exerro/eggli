@@ -62,6 +62,21 @@ Objects allocated are wrapped in a `GLResource<T>` which lets you safely access
 the value within (ensuring it's not been destroyed) and explicitly destroy it if
 required.
 
+## Repository structure
+
+* `eggli` - library source code
+* `eggli-gen` - code generator to write GLenum content
+* `eggli-examples` - example code
+
+### Examples
+
+Please use the
+[examples](https://github.com/exerro/eggli/tree/main/eggli-examples/src/main/kotlin)
+as a reference for how to do things, both with Eggli and  just in general with
+OpenGL.
+
+![Screenshot of example showing a textured cube.](eggli-examples/src/main/kotlin/03_textured_cube/screenshot.png)
+
 ## Installation
 
 Check out the [releases](https://github.com/exerro/eggli/releases), or
@@ -78,7 +93,9 @@ repositories {
 }
 
 dependencies {
-    implementation("me.exerro:eggli:0.1.0")
+    // implementation("me.exerro:eggli:0.1.0")
+    // while in development, use this instead:
+    implementation("me.exerro:eggli:main-SNAPSHOT")
 }
 ```
 
@@ -95,7 +112,9 @@ dependencies {
 <dependency>
   <groupId>me.exerro</groupId>
   <artifactId>eggli</artifactId>
-  <version>0.1.0</version>
+  <!--<version>0.1.0</version>-->
+  // while in development, use this instead:
+  <!--<version>main-SNAPSHOT</version>-->
 </dependency>
 ```
 
@@ -105,6 +124,9 @@ To use Eggli in your projects, you'll need LWJGL. Check out
 [lwjgl.org/customize](https://www.lwjgl.org/customize) for instructions, and/or
 look at the `eggli-examples/build.gradle.kts` file to see a working example
 (specifically the `[LWJGL]` commented sections.)
+
+TODO: VM option `-javaagent:lib/lwjglx-debug-1.0.0.jar` seems to do debugging
+stuff
 
 ## Testing the build before release
 
