@@ -15,7 +15,7 @@ fun glNamedFramebufferDrawBuffers(
     framebuffer: GLFramebuffer,
     buffers: Iterable<GLDrawBuffer>,
 ) {
-    glLog(StateChanged, State, "Setting framebuffer draw buffers to [${buffers}]")
+    glLog(StateChanged, State, "Setting framebuffer draw buffers to $buffers")
     GL46C.glNamedFramebufferDrawBuffers(framebuffer.get(), buffers.map { it.glValue } .toIntArray())
     glCheckForErrors()
 }

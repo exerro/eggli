@@ -82,7 +82,8 @@ OpenGL.
 Check out the [releases](https://github.com/exerro/eggli/releases), or
 using a build system...
 
-> Note you'll also [need LWJGL to run](#installing-lwjgl).
+> Note you'll also [need LWJGL to run](#installing-lwjgl), as well as
+> [lifetimes-kt](https://github.com/exerro/lifetimes-kt)
 
 ### Gradle (`build.gradle.kts`)
 

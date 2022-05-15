@@ -79,6 +79,7 @@ class GLWorker private constructor(
     private var running = true
     private val workQueue = ArrayBlockingQueue<context (GLContext) () -> Unit>(queueCapacity)
     private val context = GLContext(this)
+    private val waitToFinish = CountDownLatch(1)
     private val glThread = thread(
         name = threadName,
         start = true,
@@ -92,12 +93,15 @@ class GLWorker private constructor(
             }
             catch (e: InterruptedException) { /* do nothing */ }
         }
+
+        waitToFinish.countDown()
     }
 
     init {
         onLifetimeEnded {
             running = false
             glThread.interrupt()
+            waitToFinish.await()
         }
     }
 

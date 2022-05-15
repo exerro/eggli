@@ -28,6 +28,7 @@ fun createRenderLoop(
     val isRunning = AtomicBoolean(true)
     val completion = CountDownLatch(1)
     val continuations = mutableListOf<Continuation<Unit>>()
+    // TODO: run continuations! they're ignored rn
 
     fun renderFrameQueued(context: GLContext) {
         renderFrame(context)

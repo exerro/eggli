@@ -26,8 +26,8 @@ plugins {
 
 dependencies {
     implementation(kotlin("stdlib"))
-    implementation("me.exerro:lifetimes-kt:1.1.0")
     implementation(project(":eggli"))
+    implementation("me.exerro:lifetimes-kt:1.2.0")
 
     // [LWJGL]
     implementation(platform("org.lwjgl:lwjgl-bom:3.3.1-SNAPSHOT"))

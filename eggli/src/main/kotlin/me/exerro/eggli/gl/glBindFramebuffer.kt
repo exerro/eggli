@@ -7,15 +7,14 @@ import me.exerro.eggli.GLDebugger.LogAction.ObjectUnbound
 import me.exerro.eggli.GLDebugger.LogEntity.FBuffer
 import me.exerro.eggli.enum.GLFramebufferTarget
 import me.exerro.eggli.types.GLFramebuffer
-import me.exerro.eggli.types.GLVertexArray
 import org.lwjgl.opengl.GL46C
 
 /** TODO
  *  https://www.khronos.org/opengl/wiki/GLAPI/glBindFramebuffer */
 context (GLContext, GLDebugger.Context)
-fun glBindFramebuffer(target: GLFramebufferTarget, vao: GLFramebuffer) {
-    glLog(ObjectBound, FBuffer, "Binding framebuffer $vao as $target")
-    GL46C.glBindFramebuffer(target.glValue, vao.get())
+fun glBindFramebuffer(target: GLFramebufferTarget, framebuffer: GLFramebuffer) {
+    glLog(ObjectBound, FBuffer, "Binding framebuffer $framebuffer as $target")
+    GL46C.glBindFramebuffer(target.glValue, framebuffer.get())
     glCheckForErrors()
 }
 
@@ -29,9 +28,9 @@ fun glBindFramebuffer(target: GLFramebufferTarget) {
 
 /** TODO */
 context (GLContext, GLDebugger.Context)
-fun <T> glBindFramebuffer(target: GLFramebufferTarget, vao: GLFramebuffer, block: () -> T): T {
-    glLog(ObjectBound, FBuffer, "Binding framebuffer $vao as $target")
-    GL46C.glBindFramebuffer(target.glValue, vao.get())
+fun <T> glBindFramebuffer(target: GLFramebufferTarget, framebuffer: GLFramebuffer, block: () -> T): T {
+    glLog(ObjectBound, FBuffer, "Binding framebuffer $framebuffer as $target")
+    GL46C.glBindFramebuffer(target.glValue, framebuffer.get())
     glCheckForErrors()
 
     try {
