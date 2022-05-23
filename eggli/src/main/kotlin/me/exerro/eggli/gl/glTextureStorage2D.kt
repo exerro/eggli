@@ -13,7 +13,7 @@ context (GLContext, GLDebugger.Context)
 fun glTextureStorage2D(
     texture: GLTexture,
     levels: Int = 1,
-    internalFormat: GLTextureImageInternalFormat = GL_RGBA8,
+    internalFormat: GLTextureStorage2DInternalFormat = GL_RGBA8,
     width: Int,
     height: Int,
 ) {

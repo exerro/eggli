@@ -25,7 +25,8 @@ class MultipleRenderTargetsExample: BaseExample<MultipleRenderTargetsExampleData
         val projectionMatrix = createPerspectiveProjectionMatrixValues(
             fov = 1.5f,
             aspectRatio = WINDOW_WIDTH.toFloat() / WINDOW_HEIGHT,
-            far = 5f
+            near = 0.6f,
+            far = 5f,
         )
         val (modelShaderProgram) = createShaderProgram(
             createModelVertexShaderSource(
@@ -71,7 +72,7 @@ class MultipleRenderTargetsExample: BaseExample<MultipleRenderTargetsExampleData
         val (depthTexture) = glCreateTextures(GL_TEXTURE_2D)
         glTextureParameter(depthTexture, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
         glTextureParameter(depthTexture, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
-        glTextureStorage2D(depthTexture, internalFormat = GL_DEPTH_COMPONENT24, width = FRAMEBUFFER_WIDTH, height = FRAMEBUFFER_HEIGHT)
+        glTextureStorage2D(depthTexture, internalFormat = GL_DEPTH_COMPONENT32F, width = FRAMEBUFFER_WIDTH, height = FRAMEBUFFER_HEIGHT)
 
         glUseProgram(modelShaderProgram) {
             glUniformMatrix4fv(projectionLocation, projectionMatrix)

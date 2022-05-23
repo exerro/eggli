@@ -38,3 +38,31 @@ fun glUniform4f(location: GLUniformLocation, v0: Float, v1: Float, v2: Float, v3
     GL46C.glUniform4f(location, v0, v1, v2, v3)
     glCheckForErrors()
 }
+
+/** TODO */
+context (GLContext, GLDebugger.Context)
+fun glUniform1fv(location: GLUniformLocation, values: FloatArray) {
+    GL46C.glUniform1fv(location, values)
+    glCheckForErrors()
+}
+
+/** TODO */
+context (GLContext, GLDebugger.Context)
+fun glUniform2fv(location: GLUniformLocation, values: FloatArray) {
+    GL46C.glUniform2fv(location, values)
+    glCheckForErrors()
+}
+
+/** TODO */
+context (GLContext, GLDebugger.Context)
+fun glUniform3fv(location: GLUniformLocation, values: FloatArray) {
+    GL46C.glUniform3fv(location, values)
+    glCheckForErrors()
+}
+
+/** TODO */
+context (GLContext, GLDebugger.Context)
+fun glUniform4fv(location: GLUniformLocation, values: FloatArray) {
+    GL46C.glUniform4fv(location, values)
+    glCheckForErrors()
+}

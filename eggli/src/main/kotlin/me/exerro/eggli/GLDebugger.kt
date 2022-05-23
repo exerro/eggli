@@ -194,7 +194,7 @@ interface GLDebugger {
                 val ms = dt % 1000
                 val s = dt / 1000 % 60
                 val m = dt / 60000 % 60
-                val h = dt / 60000 % 60
+                val h = dt / 3600000 % 60
 
                 val format = if (ansiColouring) colouredLogFormat else logFormat
                 val msg = message.replace("\n", "\n" + " ".repeat(logMessageIndentation))

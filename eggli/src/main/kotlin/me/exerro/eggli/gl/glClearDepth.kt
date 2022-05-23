@@ -6,10 +6,11 @@ import me.exerro.eggli.GLDebugger.LogAction.StateChanged
 import me.exerro.eggli.GLDebugger.LogEntity.State
 import org.lwjgl.opengl.GL46C
 
-/** @see <a href="https://docs.gl/gl4/glStencilMask">Reference Page</a> */
+/**
+ * @see <a href="https://docs.gl/gl4/glClearDepth">Reference Page</a>
+ */
 context (GLContext, GLDebugger.Context)
-fun glStencilMask(mask: Int) {
-    glLog(StateChanged, State, "Setting stencil mask to $mask")
-    GL46C.glStencilMask(mask)
+fun glClearDepth(depth: Float) {
+    GL46C.glClearDepthf(depth)
     glCheckForErrors()
 }

@@ -352,12 +352,6 @@ private val enumData = createEnumData {
         val GL_RGB by noDocumentation
         val GL_RGBA by noDocumentation
 
-        // TODO: these might not be supported for glTexImage2D idk
-        val GL_DEPTH_COMPONENT16 by noDocumentation
-        val GL_DEPTH_COMPONENT24 by noDocumentation
-        val GL_DEPTH_COMPONENT32 by noDocumentation
-        val GL_DEPTH_COMPONENT32F by noDocumentation
-
         val GL_R8 by noDocumentation
         val GL_R8_SNORM by noDocumentation
         val GL_R16 by noDocumentation
@@ -562,6 +556,94 @@ private val enumData = createEnumData {
         val GL_MIRROR_CLAMP_TO_EDGE by noDocumentation
 
         noDocumentation
+    }
+
+    val GLTextureStorage2DInternalFormat by options {
+        val GL_DEPTH_COMPONENT16 by noDocumentation
+        val GL_DEPTH_COMPONENT24 by noDocumentation
+        val GL_DEPTH_COMPONENT32F by noDocumentation
+
+        val GL_DEPTH32F_STENCIL8 by noDocumentation
+        val GL_DEPTH24_STENCIL8 by noDocumentation
+        val GL_STENCIL_INDEX8 by noDocumentation
+
+        val GL_R8 by noDocumentation
+        val GL_R8_SNORM by noDocumentation
+        val GL_R16 by noDocumentation
+        val GL_R16_SNORM by noDocumentation
+        val GL_RG8 by noDocumentation
+        val GL_RG8_SNORM by noDocumentation
+        val GL_RG16 by noDocumentation
+        val GL_RG16_SNORM by noDocumentation
+        val GL_R3_G3_B2 by noDocumentation
+        val GL_RGB4 by noDocumentation
+        val GL_RGB5 by noDocumentation
+        val GL_RGB8 by noDocumentation
+        val GL_RGB8_SNORM by noDocumentation
+        val GL_RGB10 by noDocumentation
+        val GL_RGB12 by noDocumentation
+        val GL_RGB16_SNORM by noDocumentation
+        val GL_RGBA2 by noDocumentation
+        val GL_RGBA4 by noDocumentation
+        val GL_RGB5_A1 by noDocumentation
+        val GL_RGBA8 by noDocumentation
+        val GL_RGBA8_SNORM by noDocumentation
+        val GL_RGB10_A2 by noDocumentation
+        val GL_RGB10_A2UI by noDocumentation
+        val GL_RGBA12 by noDocumentation
+        val GL_RGBA16 by noDocumentation
+        val GL_SRGB8 by noDocumentation
+        val GL_SRGB8_ALPHA8 by noDocumentation
+        val GL_R16F by noDocumentation
+        val GL_RG16F by noDocumentation
+        val GL_RGB16F by noDocumentation
+        val GL_RGBA16F by noDocumentation
+        val GL_R32F by noDocumentation
+        val GL_RG32F by noDocumentation
+        val GL_RGB32F by noDocumentation
+        val GL_RGBA32F by noDocumentation
+        val GL_R11F_G11F_B10F by noDocumentation
+        val GL_RGB9_E5 by noDocumentation
+        val GL_R8I by noDocumentation
+        val GL_R8UI by noDocumentation
+        val GL_R16I by noDocumentation
+        val GL_R16UI by noDocumentation
+        val GL_R32I by noDocumentation
+        val GL_R32UI by noDocumentation
+        val GL_RG8I by noDocumentation
+        val GL_RG8UI by noDocumentation
+        val GL_RG16I by noDocumentation
+        val GL_RG16UI by noDocumentation
+        val GL_RG32I by noDocumentation
+        val GL_RG32UI by noDocumentation
+        val GL_RGB8I by noDocumentation
+        val GL_RGB8UI by noDocumentation
+        val GL_RGB16I by noDocumentation
+        val GL_RGB16UI by noDocumentation
+        val GL_RGB32I by noDocumentation
+        val GL_RGB32UI by noDocumentation
+        val GL_RGBA8I by noDocumentation
+        val GL_RGBA8UI by noDocumentation
+        val GL_RGBA16I by noDocumentation
+        val GL_RGBA16UI by noDocumentation
+        val GL_RGBA32I by noDocumentation
+        val GL_RGBA32UI by noDocumentation
+        val GL_COMPRESSED_RED by noDocumentation
+        val GL_COMPRESSED_RG by noDocumentation
+        val GL_COMPRESSED_RGB by noDocumentation
+        val GL_COMPRESSED_RGBA by noDocumentation
+        val GL_COMPRESSED_SRGB by noDocumentation
+        val GL_COMPRESSED_SRGB_ALPHA by noDocumentation
+        val GL_COMPRESSED_RED_RGTC1 by noDocumentation
+        val GL_COMPRESSED_SIGNED_RED_RGTC1 by noDocumentation
+        val GL_COMPRESSED_RG_RGTC2 by noDocumentation
+        val GL_COMPRESSED_SIGNED_RG_RGTC2 by noDocumentation
+        val GL_COMPRESSED_RGBA_BPTC_UNORM by noDocumentation
+        val GL_COMPRESSED_SRGB_ALPHA_BPTC_UNORM by noDocumentation
+        val GL_COMPRESSED_RGB_BPTC_SIGNED_FLOAT by noDocumentation
+        val GL_COMPRESSED_RGB_BPTC_UNSIGNED_FLOAT by noDocumentation
+
+        "If an application wants to store the texture at a certain resolution or in a certain format, it can request the resolution and format with internalformat. The GL will choose an internal representation that closely approximates that requested by internalformat, but it may not match exactly."
     }
 
     val GLTextureTarget by options {

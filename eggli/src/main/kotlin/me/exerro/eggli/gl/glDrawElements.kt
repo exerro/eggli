@@ -12,7 +12,7 @@ context (GLContext, GLDebugger.Context)
 fun glDrawElements(
     mode: GLDrawMode = GLDrawMode.Triangles,
     count: Int,
-    type: Int = GL46C.GL_UNSIGNED_INT,
+    type: Int = GL46C.GL_UNSIGNED_INT, // TODO!
     indices: Long = 0L
 ) {
     glLog(DrawCall, DrawTarget, "glDrawElements($mode, $count, $type, $indices)")
