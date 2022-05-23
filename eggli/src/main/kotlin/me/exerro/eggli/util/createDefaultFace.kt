@@ -4,8 +4,7 @@ import me.exerro.eggli.GL
 import me.exerro.eggli.GLContext
 import me.exerro.eggli.GLDebugger
 import me.exerro.eggli.GLResource
-import me.exerro.eggli.enum.GLBufferTarget
-import me.exerro.eggli.enum.GLType
+import me.exerro.eggli.enum.*
 import me.exerro.eggli.gl.*
 import me.exerro.eggli.types.GLBuffer
 import me.exerro.eggli.util.SimpleMesh.Companion.COLOUR_ATTRIBUTE
@@ -60,24 +59,24 @@ fun createDefaultFace(
     if (useElements) glNamedBufferData(elementBuffer, FACE_ELEMENTS)
 
     glBindVertexArray(vertexArray) {
-        glBindBuffer(GLBufferTarget.ArrayBuffer, positionBuffer) {
-            glVertexAttribPointer(POSITION_ATTRIBUTE, POSITION_COMPONENTS, GLType.Float)
+        glBindBuffer(GL_ARRAY_BUFFER, positionBuffer) {
+            glVertexAttribPointer(POSITION_ATTRIBUTE, POSITION_COMPONENTS, GL_FLOAT)
         }
 
-        if (includeUVs) glBindBuffer(GLBufferTarget.ArrayBuffer, uvBuffer) {
-            glVertexAttribPointer(UV_ATTRIBUTE, UV_COMPONENTS, GLType.Float)
+        if (includeUVs) glBindBuffer(GL_ARRAY_BUFFER, uvBuffer) {
+            glVertexAttribPointer(UV_ATTRIBUTE, UV_COMPONENTS, GL_FLOAT)
         }
 
-        if (includeNormals) glBindBuffer(GLBufferTarget.ArrayBuffer, normalBuffer) {
-            glVertexAttribPointer(NORMAL_ATTRIBUTE, NORMAL_COMPONENTS, GLType.Float)
+        if (includeNormals) glBindBuffer(GL_ARRAY_BUFFER, normalBuffer) {
+            glVertexAttribPointer(NORMAL_ATTRIBUTE, NORMAL_COMPONENTS, GL_FLOAT)
         }
 
-        if (includeColours) glBindBuffer(GLBufferTarget.ArrayBuffer, colourBuffer) {
-            glVertexAttribPointer(COLOUR_ATTRIBUTE, COLOUR_COMPONENTS, GLType.Float)
+        if (includeColours) glBindBuffer(GL_ARRAY_BUFFER, colourBuffer) {
+            glVertexAttribPointer(COLOUR_ATTRIBUTE, COLOUR_COMPONENTS, GL_FLOAT)
         }
 
         if (useElements) {
-            glBindBuffer(GLBufferTarget.ElementArrayBuffer, elementBuffer)
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBuffer)
         }
     }
 
