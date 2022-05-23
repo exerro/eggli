@@ -11,7 +11,7 @@ import org.lwjgl.opengl.KHRDebug
 context (Lifetime)
 fun glGenVertexArrays(label: String? = null): GL<GLVertexArray> = GL {
     val vaoId = GL46C.glGenVertexArrays()
-    if (label != null) KHRDebug.glObjectLabel(GL46C.GL_DEBUG_SOURCE_APPLICATION, vaoId, label)
+    if (label != null) KHRDebug.glObjectLabel(GL46C.GL_VERTEX_ARRAY, vaoId, label)
     glCheckForErrors()
     GLResource(vaoId) {
         GL46C.glDeleteVertexArrays(it)

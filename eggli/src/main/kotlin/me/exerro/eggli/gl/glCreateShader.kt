@@ -12,7 +12,7 @@ import org.lwjgl.opengl.KHRDebug
 context (Lifetime)
 fun glCreateShader(type: GLShaderType, label: String? = null): GL<GLShader> = GL {
     val shaderId = GL46C.glCreateShader(type.glValue)
-    if (label != null) KHRDebug.glObjectLabel(GL46C.GL_DEBUG_SOURCE_APPLICATION, shaderId, label)
+    if (label != null) KHRDebug.glObjectLabel(GL46C.GL_SHADER, shaderId, label)
     glCheckForErrors()
     GLResource(shaderId) {
         GL46C.glDeleteShader(it)

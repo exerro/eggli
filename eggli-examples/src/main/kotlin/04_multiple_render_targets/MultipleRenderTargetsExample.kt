@@ -53,7 +53,7 @@ class MultipleRenderTargetsExample: BaseExample<MultipleRenderTargetsExampleData
         val modelLocation = glGetUniformLocation(modelShaderProgram, "u_modelMatrix")
         val (framebuffer) = glGenFramebuffers()
 
-        val (albedoTexture) = glCreateTextures(GL_TEXTURE_2D)
+        val (albedoTexture) = glCreateTextures(GL_TEXTURE_2D, label = "Albedo texture")
         glTextureParameter(albedoTexture, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
         glTextureParameter(albedoTexture, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
         glTextureStorage2D(albedoTexture, internalFormat = GL_RGBA8, width = FRAMEBUFFER_WIDTH, height = FRAMEBUFFER_HEIGHT)

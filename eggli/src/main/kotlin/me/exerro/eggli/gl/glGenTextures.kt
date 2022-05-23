@@ -11,7 +11,7 @@ import org.lwjgl.opengl.KHRDebug
 context (Lifetime)
 fun glGenTextures(label: String? = null): GL<GLTexture> = GL {
     val textureId = GL46C.glGenTextures()
-    if (label != null) KHRDebug.glObjectLabel(GL46C.GL_DEBUG_SOURCE_APPLICATION, textureId, label)
+    if (label != null) KHRDebug.glObjectLabel(GL46C.GL_TEXTURE, textureId, label)
     glCheckForErrors()
     GLResource(textureId) {
         GL46C.glDeleteTextures(it)

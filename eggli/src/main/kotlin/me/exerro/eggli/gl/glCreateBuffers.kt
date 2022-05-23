@@ -11,7 +11,7 @@ import org.lwjgl.opengl.KHRDebug
 context (Lifetime)
 fun glCreateBuffers(label: String? = null): GL<GLBuffer> = GL {
     val bufferId = GL46C.glCreateBuffers()
-    if (label != null) KHRDebug.glObjectLabel(GL46C.GL_DEBUG_SOURCE_APPLICATION, bufferId, label)
+    if (label != null) KHRDebug.glObjectLabel(GL46C.GL_BUFFER, bufferId, label)
     glCheckForErrors()
     GLResource(bufferId) {
         GL46C.glDeleteBuffers(it)

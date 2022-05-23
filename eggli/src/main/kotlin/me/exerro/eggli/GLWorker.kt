@@ -30,7 +30,7 @@ class GLWorker private constructor(
     /** TODO */
     suspend fun <T> evaluate(
         gl: GL<T>
-    ) = suspendCoroutine { cont ->
+    ) = suspendCoroutine<T> { cont ->
         runLater {
             cont.resume(gl.evaluate())
         }
@@ -52,7 +52,7 @@ class GLWorker private constructor(
     }
 
     /** TODO */
-    suspend fun run() = suspendCoroutine { cont ->
+    suspend fun run() = suspendCoroutine<Unit> { cont ->
         runLater { cont.resume(Unit) }
     }
 

@@ -11,7 +11,7 @@ import org.lwjgl.opengl.KHRDebug
 context (Lifetime)
 fun glGenFramebuffers(label: String? = null): GL<GLFramebuffer> = GL {
     val framebufferId = GL46C.glGenFramebuffers()
-    if (label != null) KHRDebug.glObjectLabel(GL46C.GL_DEBUG_SOURCE_APPLICATION, framebufferId, label)
+    if (label != null) KHRDebug.glObjectLabel(GL46C.GL_FRAMEBUFFER, framebufferId, label)
     glCheckForErrors()
     GLResource(framebufferId) {
         GL46C.glDeleteFramebuffers(it)

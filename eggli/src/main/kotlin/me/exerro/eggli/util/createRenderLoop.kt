@@ -49,7 +49,7 @@ fun createRenderLoop(
         override suspend fun stop() {
             isRunning.set(false)
 
-            suspendCoroutine { cont ->
+            suspendCoroutine<Unit> { cont ->
                 synchronized(completion) {
                     if (completion.count > 0L)
                         continuations.add(cont)

@@ -11,7 +11,7 @@ import org.lwjgl.opengl.KHRDebug
 context (Lifetime)
 fun glCreateProgram(label: String? = null): GL<GLShaderProgram> = GL {
     val programId = GL46C.glCreateProgram()
-    if (label != null) KHRDebug.glObjectLabel(GL46C.GL_DEBUG_SOURCE_APPLICATION, programId, label)
+    if (label != null) KHRDebug.glObjectLabel(GL46C.GL_PROGRAM, programId, label)
     glCheckForErrors()
     GLResource(programId) {
         GL46C.glDeleteProgram(it)
