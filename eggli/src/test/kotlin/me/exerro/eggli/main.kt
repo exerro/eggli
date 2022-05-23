@@ -1,7 +1,5 @@
 package me.exerro.eggli
 
-import me.exerro.eggli.GLDebugger.LogAction.*
-import me.exerro.eggli.GLDebugger.LogEntity.Shader
 import me.exerro.eggli.enum.*
 import me.exerro.eggli.gl.*
 import me.exerro.eggli.types.GLFramebuffer
@@ -73,7 +71,7 @@ void main() {
 }
 """
 
-context (Lifetime, GLDebugger.Context)
+context (Lifetime)
 fun createRenderingObjects() = GL {
     val useElements = false
     val (shaderProgram) = createShaderProgram(
@@ -170,7 +168,7 @@ fun createRenderingObjects() = GL {
     )
 }
 
-context (GLContext, GLDebugger.Context)
+context (GLContext)
 fun renderFrame(glObjects: GLObjects, t: Float) {
     glUseProgram(glObjects.modelShaderProgram) {
         val rotation = createYRotationMatrixValues(t)
@@ -213,7 +211,7 @@ fun renderFrame(glObjects: GLObjects, t: Float) {
     }
 }
 
-context (Lifetime, GLDebugger.Context)
+context (Lifetime)
 fun runWindow() {
     val (windowId, worker) = createGLFWWindowWithWorker(
         width = WINDOW_WIDTH,
@@ -221,18 +219,9 @@ fun runWindow() {
         title = "Eggli Test Window",
     )
     val glObjects = worker.evaluateBlocking(createRenderingObjects())
-    val renderingDebugger = glDebugger
-        .ignoringAction(ObjectBound)
-        .ignoringAction(ObjectUnbound)
-        .ignoringAction(DrawCall)
-        .ignoringAction(StateChanged)
-        .ignoring(Info, Shader)
-        .ignoring(UniformChanged, Shader)
     val t0 = System.currentTimeMillis()
-    val renderLoopHandle = withDebugContext(renderingDebugger) {
-        createRenderLoop(windowId, worker) {
-            renderFrame(glObjects, (System.currentTimeMillis() - t0) / 1000f)
-        }
+    val renderLoopHandle = createRenderLoop(windowId, worker) {
+        renderFrame(glObjects, (System.currentTimeMillis() - t0) / 1000f)
     }
 
     while (!GLFW.glfwWindowShouldClose(windowId)) {
@@ -245,13 +234,7 @@ fun runWindow() {
 fun main() {
     GLFW.glfwInit()
 
-    val debugger = GLDebugger
-        .createDefault()
-        .ansiColoured()
-
     withLifetime {
-        withDebugContext(debugger) {
-            runWindow()
-        }
+        runWindow()
     }
 }

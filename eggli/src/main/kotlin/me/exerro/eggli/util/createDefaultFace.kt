@@ -2,7 +2,6 @@ package me.exerro.eggli.util
 
 import me.exerro.eggli.GL
 import me.exerro.eggli.GLContext
-import me.exerro.eggli.GLDebugger
 import me.exerro.eggli.GLResource
 import me.exerro.eggli.enum.*
 import me.exerro.eggli.gl.*
@@ -18,7 +17,7 @@ import me.exerro.eggli.util.SimpleMesh.Companion.UV_COMPONENTS
 import me.exerro.lifetimes.Lifetime
 
 /** TODO */
-context (Lifetime, GLDebugger.Context)
+context (Lifetime)
 fun createDefaultFace(
     includeUVs: Boolean = true,
     includeNormals: Boolean = true,
@@ -94,7 +93,7 @@ fun createDefaultFace(
     )
 }
 
-context (GLContext, Lifetime, GLDebugger.Context)
+context (GLContext, Lifetime)
 private fun createBuffer(include: Boolean): GL<GLBuffer> =
     when (include) {
         true -> glCreateBuffers()

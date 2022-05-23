@@ -1,9 +1,6 @@
 package me.exerro.eggli.gl
 
 import me.exerro.eggli.GLContext
-import me.exerro.eggli.GLDebugger
-import me.exerro.eggli.GLDebugger.LogAction.*
-import me.exerro.eggli.GLDebugger.LogEntity.Texture
 import me.exerro.eggli.enum.*
 import org.lwjgl.opengl.GL46C
 
@@ -19,11 +16,10 @@ import org.lwjgl.opengl.GL46C
  * [GL_TEXTURE_2D_ARRAY],
  * [GL_TEXTURE_CUBE_MAP]
  */
-context (GLContext, GLDebugger.Context)
+context (GLContext)
 fun glGenerateMipmap(
     target: GLTextureTarget,
 ) {
-    glLog(StateChanged, Texture, "Generating mipmaps for texture $target")
     GL46C.glGenerateMipmap(target.glValue)
     glCheckForErrors()
 }

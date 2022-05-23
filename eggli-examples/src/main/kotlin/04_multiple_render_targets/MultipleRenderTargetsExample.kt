@@ -5,7 +5,6 @@ import WINDOW_HEIGHT
 import WINDOW_WIDTH
 import me.exerro.eggli.GL
 import me.exerro.eggli.GLContext
-import me.exerro.eggli.GLDebugger
 import me.exerro.eggli.enum.*
 import me.exerro.eggli.gl.*
 import me.exerro.eggli.util.*
@@ -19,7 +18,7 @@ class MultipleRenderTargetsExample: BaseExample<MultipleRenderTargetsExampleData
     private val FRAMEBUFFER_WIDTH = 800
     private val FRAMEBUFFER_HEIGHT = 600
 
-    context (Lifetime, GLDebugger.Context)
+    context (Lifetime)
     override fun createData(): GL<MultipleRenderTargetsExampleData> = GL {
         val (modelTexture) = createDebugTexture(divisions = 3, c0 = 0xfafafa, c1 = 0x444444)
         val projectionMatrix = createPerspectiveProjectionMatrixValues(
@@ -108,7 +107,7 @@ class MultipleRenderTargetsExample: BaseExample<MultipleRenderTargetsExampleData
         )
     }
 
-    context (GLContext, GLDebugger.Context)
+    context (GLContext)
     override fun renderFrame(data: MultipleRenderTargetsExampleData, time: Float) {
         val mesh = data.modelMesh.get()
         val topLeftQuad = data.topLeftQuad.get()
@@ -119,6 +118,7 @@ class MultipleRenderTargetsExample: BaseExample<MultipleRenderTargetsExampleData
         val translation = createTranslationMatrixValues(dz = -2f)
         val transform = multiplyMatrixValues(translation, rotation)
 
+        glPushDebugGroupKHR(message = "Geometry pass")
         glBindFramebuffer(GL_FRAMEBUFFER, data.framebuffer) {
             glViewport(w = FRAMEBUFFER_WIDTH, h = FRAMEBUFFER_HEIGHT)
             glClearColor(0f, 0f, 0f)
@@ -139,36 +139,47 @@ class MultipleRenderTargetsExample: BaseExample<MultipleRenderTargetsExampleData
                 }
             }
         }
+        glPopDebugGroupKHR()
 
+        glPushDebugGroupKHR(message = "Screen draw pass")
         glViewport(w = WINDOW_WIDTH, h = WINDOW_HEIGHT)
         glClearColor(0.1f, 0.12f, 0.13f)
         glDisable(GL_DEPTH_TEST)
         glClear(GL_COLOR_BUFFER_BIT)
 
         glUseProgram(data.screenShaderProgram) {
-            glBindTexture(GL_TEXTURE_2D, data.albedoTexture) {
-                glBindVertexArray(topLeftQuad.vertexArray) {
-                    glDrawArrays(count = topLeftQuad.vertices)
+            glPushDebugGroupKHR(message = "Albedo texture") {
+                glBindTexture(GL_TEXTURE_2D, data.albedoTexture) {
+                    glBindVertexArray(topLeftQuad.vertexArray) {
+                        glDrawArrays(count = topLeftQuad.vertices)
+                    }
                 }
             }
 
-            glBindTexture(GL_TEXTURE_2D, data.positionTexture) {
-                glBindVertexArray(topRightQuad.vertexArray) {
-                    glDrawArrays(count = topRightQuad.vertices)
+            glPushDebugGroupKHR(message = "Position texture") {
+                glBindTexture(GL_TEXTURE_2D, data.positionTexture) {
+                    glBindVertexArray(topRightQuad.vertexArray) {
+                        glDrawArrays(count = topRightQuad.vertices)
+                    }
                 }
             }
 
-            glBindTexture(GL_TEXTURE_2D, data.normalTexture) {
-                glBindVertexArray(bottomLeftQuad.vertexArray) {
-                    glDrawArrays(count = bottomLeftQuad.vertices)
+            glPushDebugGroupKHR(message = "Normal texture") {
+                glBindTexture(GL_TEXTURE_2D, data.normalTexture) {
+                    glBindVertexArray(bottomLeftQuad.vertexArray) {
+                        glDrawArrays(count = bottomLeftQuad.vertices)
+                    }
                 }
             }
 
-            glBindTexture(GL_TEXTURE_2D, data.depthTexture) {
-                glBindVertexArray(bottomRightQuad.vertexArray) {
-                    glDrawArrays(count = bottomRightQuad.vertices)
+            glPushDebugGroupKHR(message = "Depth texture") {
+                glBindTexture(GL_TEXTURE_2D, data.depthTexture) {
+                    glBindVertexArray(bottomRightQuad.vertexArray) {
+                        glDrawArrays(count = bottomRightQuad.vertices)
+                    }
                 }
             }
         }
+        glPopDebugGroupKHR()
     }
 }

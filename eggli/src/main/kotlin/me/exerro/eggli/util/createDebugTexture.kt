@@ -1,13 +1,12 @@
 package me.exerro.eggli.util
 
 import me.exerro.eggli.GL
-import me.exerro.eggli.GLDebugger
 import me.exerro.eggli.enum.*
 import me.exerro.eggli.gl.*
 import me.exerro.lifetimes.Lifetime
 
 /** TODO */
-context (Lifetime, GLDebugger.Context)
+context (Lifetime)
 fun createDebugTexture(
     width: Int = 64,
     height: Int = 64,

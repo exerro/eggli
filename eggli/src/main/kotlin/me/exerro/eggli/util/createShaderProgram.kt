@@ -1,7 +1,6 @@
 package me.exerro.eggli.util
 
 import me.exerro.eggli.GL
-import me.exerro.eggli.GLDebugger
 import me.exerro.eggli.enum.GLShaderType
 import me.exerro.eggli.enum.GL_FRAGMENT_SHADER
 import me.exerro.eggli.enum.GL_VERTEX_SHADER
@@ -10,7 +9,7 @@ import me.exerro.lifetimes.Lifetime
 import me.exerro.lifetimes.withLifetime
 
 /** TODO */
-context (Lifetime, GLDebugger.Context)
+context (Lifetime)
 fun createShaderProgram(
     vertex: String,
     fragment: String
@@ -20,13 +19,13 @@ fun createShaderProgram(
 )
 
 /** TODO */
-context (Lifetime, GLDebugger.Context)
+context (Lifetime)
 fun createShaderProgram(
     vararg shaders: Pair<GLShaderType, String>,
 ) = createShaderProgram(shaders.toList())
 
 /** @see createShaderProgram */
-context (Lifetime, GLDebugger.Context)
+context (Lifetime)
 fun createShaderProgram(
     shaders: Iterable<Pair<GLShaderType, String>>,
 ) = GL {

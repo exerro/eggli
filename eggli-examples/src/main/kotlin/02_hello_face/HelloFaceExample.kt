@@ -3,7 +3,6 @@ package `02_hello_face`
 import BaseExample
 import me.exerro.eggli.GL
 import me.exerro.eggli.GLContext
-import me.exerro.eggli.GLDebugger
 import me.exerro.eggli.enum.*
 import me.exerro.eggli.gl.*
 import me.exerro.eggli.util.createDefaultFace
@@ -21,7 +20,7 @@ import runExample
  * continuously.
  */
 class HelloFaceExample: BaseExample<HelloFaceExampleData>() {
-    context (Lifetime, GLDebugger.Context)
+    context (Lifetime)
     override fun createData(): GL<HelloFaceExampleData> = GL {
         /**
          * Create our shader program using the utility [createShaderProgram]
@@ -72,7 +71,7 @@ class HelloFaceExample: BaseExample<HelloFaceExampleData>() {
         )
     }
 
-    context (GLContext, GLDebugger.Context)
+    context (GLContext)
     override fun renderFrame(data: HelloFaceExampleData, time: Float) {
         /**
          * Get our mesh data. [data.mesh] is a [GLResource], meaning we need to

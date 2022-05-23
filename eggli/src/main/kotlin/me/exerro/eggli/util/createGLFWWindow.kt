@@ -1,9 +1,5 @@
 package me.exerro.eggli.util
 
-import me.exerro.eggli.GLDebugger
-import me.exerro.eggli.GLDebugger.LogAction.ObjectCreated
-import me.exerro.eggli.GLDebugger.LogAction.ObjectDestroyed
-import me.exerro.eggli.GLDebugger.LogEntity.Window
 import me.exerro.eggli.GLWorker
 import me.exerro.lifetimes.Lifetime
 import org.lwjgl.glfw.GLFW
@@ -17,7 +13,7 @@ import org.lwjgl.system.MemoryUtil.NULL
  * up for verbose debugging and is not fullscreen on any monitor. When the
  * surrounding lifetime ends, the window will be destroyed.
  */
-context (Lifetime, GLDebugger.Context)
+context (Lifetime)
 fun createGLFWWindow(
     width: Int = 1080,
     height: Int = 720,
@@ -28,7 +24,6 @@ fun createGLFWWindow(
 ): Long {
     val windowId = GLFW.glfwCreateWindow(width, height, title, monitor, share)
     assert(windowId != NULL) { "Failed to create GLFW window. Make sure glfwInit has been called!" }
-    glLog(ObjectCreated, Window, "Created window $windowId ('$title')")
 
     if (debug) {
         GLFWErrorCallback.createPrint().set()
@@ -38,7 +33,6 @@ fun createGLFWWindow(
     GLFW.glfwMakeContextCurrent(NULL)
     onLifetimeEnded {
         GLFW.glfwDestroyWindow(windowId)
-        glLog(ObjectDestroyed, Window, "Destroyed window $windowId")
     }
     return windowId
 }
@@ -52,7 +46,7 @@ fun createGLFWWindow(
  *
  * @see createGLFWWindow
  */
-context (Lifetime, GLDebugger.Context)
+context (Lifetime)
 fun createGLFWWindowWithWorker(
     width: Int = 1080,
     height: Int = 720,

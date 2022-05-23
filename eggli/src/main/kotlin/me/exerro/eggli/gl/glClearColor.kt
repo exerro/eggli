@@ -1,9 +1,6 @@
 package me.exerro.eggli.gl
 
 import me.exerro.eggli.GLContext
-import me.exerro.eggli.GLDebugger
-import me.exerro.eggli.GLDebugger.LogAction.StateChanged
-import me.exerro.eggli.GLDebugger.LogEntity.State
 import org.lwjgl.opengl.GL46C
 
 /**
@@ -13,17 +10,15 @@ import org.lwjgl.opengl.GL46C
  *
  * @see <a href="https://docs.gl/gl4/glClearColor">Reference Page</a>
  */
-context (GLContext, GLDebugger.Context)
+context (GLContext)
 fun glClearColor(red: Float, green: Float, blue: Float, alpha: Float = 1f) {
-    glLog(StateChanged, State, "glClearColor($red, $green, $blue, $alpha)")
     GL46C.glClearColor(red, green, blue, alpha)
     glCheckForErrors()
 }
 
 /** TODO */
-context (GLContext, GLDebugger.Context)
+context (GLContext)
 fun glClearColor(rgb: Float, alpha: Float = 1f) {
-    glLog(StateChanged, State, "glClearColor($rgb, $rgb, $rgb, $alpha)")
     GL46C.glClearColor(rgb, rgb, rgb, alpha)
     glCheckForErrors()
 }

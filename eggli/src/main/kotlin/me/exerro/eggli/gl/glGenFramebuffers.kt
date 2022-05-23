@@ -1,23 +1,19 @@
 package me.exerro.eggli.gl
 
 import me.exerro.eggli.GL
-import me.exerro.eggli.GLDebugger
-import me.exerro.eggli.GLDebugger.LogAction.ObjectCreated
-import me.exerro.eggli.GLDebugger.LogAction.ObjectDestroyed
-import me.exerro.eggli.GLDebugger.LogEntity.FBuffer
 import me.exerro.eggli.GLResource
 import me.exerro.eggli.types.GLFramebuffer
 import me.exerro.lifetimes.Lifetime
 import org.lwjgl.opengl.GL46C
+import org.lwjgl.opengl.KHRDebug
 
 /** TODO */
-context (Lifetime, GLDebugger.Context)
-fun glGenFramebuffers(): GL<GLFramebuffer> = GL {
+context (Lifetime)
+fun glGenFramebuffers(label: String? = null): GL<GLFramebuffer> = GL {
     val framebufferId = GL46C.glGenFramebuffers()
-    glLog(ObjectCreated, FBuffer, "Created framebuffer $framebufferId")
+    if (label != null) KHRDebug.glObjectLabel(GL46C.GL_DEBUG_SOURCE_APPLICATION, framebufferId, label)
     glCheckForErrors()
     GLResource(framebufferId) {
-        glLog(ObjectDestroyed, FBuffer, "Destroying framebuffer $framebufferId")
         GL46C.glDeleteFramebuffers(it)
         glCheckForErrors()
     }

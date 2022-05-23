@@ -1,7 +1,6 @@
 package me.exerro.eggli.util
 
 import me.exerro.eggli.GLContext
-import me.exerro.eggli.GLDebugger
 import me.exerro.eggli.GLResource
 import me.exerro.eggli.types.GLBuffer
 import me.exerro.eggli.types.GLVertexArray
@@ -43,7 +42,7 @@ data class SimpleMesh(
         const val COLOUR_COMPONENTS = 4
 
         /** TODO */
-        context (GLContext, Lifetime, GLDebugger.Context)
+        context (GLContext, Lifetime)
         fun createGLResource(
             vertices: Int,
             vertexArray: GLVertexArray,

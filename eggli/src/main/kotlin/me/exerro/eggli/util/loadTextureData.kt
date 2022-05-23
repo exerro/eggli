@@ -1,7 +1,6 @@
 package me.exerro.eggli.util
 
 import me.exerro.eggli.GLContext
-import me.exerro.eggli.GLDebugger
 import me.exerro.eggli.enum.GL_RGBA
 import me.exerro.eggli.enum.GL_UNSIGNED_BYTE
 import me.exerro.eggli.gl.glTextureStorage2D
@@ -19,7 +18,7 @@ import java.io.InputStream
  * Note: The byte array can be obtained from [ClassLoader.getResourceAsStream] .
  * [readBytes][InputStream.readBytes]
  */
-context (GLContext, GLDebugger.Context)
+context (GLContext)
 fun loadTextureData(
     texture: GLTexture,
     bytes: ByteArray,

@@ -5,7 +5,6 @@ import WINDOW_HEIGHT
 import WINDOW_WIDTH
 import me.exerro.eggli.GL
 import me.exerro.eggli.GLContext
-import me.exerro.eggli.GLDebugger
 import me.exerro.eggli.enum.*
 import me.exerro.eggli.gl.*
 import me.exerro.eggli.util.*
@@ -22,7 +21,7 @@ import runExample
  * continuously.
  */
 class TexturedCubeExample: BaseExample<TexturedCubeExampleData>() {
-    context (Lifetime, GLDebugger.Context)
+    context (Lifetime)
     override fun createData(): GL<TexturedCubeExampleData> = GL {
         /**
          * Create a debug texture. This function creates a checkerboard pattern
@@ -52,7 +51,7 @@ class TexturedCubeExample: BaseExample<TexturedCubeExampleData>() {
         )
     }
 
-    context (GLContext, GLDebugger.Context)
+    context (GLContext)
     override fun renderFrame(data: TexturedCubeExampleData, time: Float) {
         val mesh = data.mesh.get()
 

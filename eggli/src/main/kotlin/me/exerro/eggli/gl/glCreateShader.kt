@@ -1,24 +1,20 @@
 package me.exerro.eggli.gl
 
 import me.exerro.eggli.GL
-import me.exerro.eggli.GLDebugger
-import me.exerro.eggli.GLDebugger.LogAction.ObjectCreated
-import me.exerro.eggli.GLDebugger.LogAction.ObjectDestroyed
-import me.exerro.eggli.GLDebugger.LogEntity.Shader
 import me.exerro.eggli.GLResource
 import me.exerro.eggli.enum.GLShaderType
 import me.exerro.eggli.types.GLShader
 import me.exerro.lifetimes.Lifetime
 import org.lwjgl.opengl.GL46C
+import org.lwjgl.opengl.KHRDebug
 
 /** TODO */
-context (Lifetime, GLDebugger.Context)
-fun glCreateShader(type: GLShaderType): GL<GLShader> = GL {
+context (Lifetime)
+fun glCreateShader(type: GLShaderType, label: String? = null): GL<GLShader> = GL {
     val shaderId = GL46C.glCreateShader(type.glValue)
-    glLog(ObjectCreated, Shader, "Created shader $shaderId of type $type")
+    if (label != null) KHRDebug.glObjectLabel(GL46C.GL_DEBUG_SOURCE_APPLICATION, shaderId, label)
     glCheckForErrors()
     GLResource(shaderId) {
-        glLog(ObjectDestroyed, Shader, "Destroying shader $shaderId of type $type")
         GL46C.glDeleteShader(it)
         glCheckForErrors()
     }

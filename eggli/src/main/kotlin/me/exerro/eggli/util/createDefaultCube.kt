@@ -2,9 +2,7 @@ package me.exerro.eggli.util
 
 import me.exerro.eggli.GL
 import me.exerro.eggli.GLContext
-import me.exerro.eggli.GLDebugger
 import me.exerro.eggli.GLResource
-import me.exerro.eggli.enum.GLBufferTarget
 import me.exerro.eggli.enum.GL_ARRAY_BUFFER
 import me.exerro.eggli.enum.GL_ELEMENT_ARRAY_BUFFER
 import me.exerro.eggli.enum.GL_FLOAT
@@ -21,7 +19,7 @@ import me.exerro.eggli.util.SimpleMesh.Companion.UV_COMPONENTS
 import me.exerro.lifetimes.Lifetime
 
 /** TODO */
-context (Lifetime, GLDebugger.Context)
+context (Lifetime)
 fun createDefaultCube(
     includeUVs: Boolean = true,
     includeNormals: Boolean = true,
@@ -101,7 +99,7 @@ fun createDefaultCube(
     )
 }
 
-context (GLContext, Lifetime, GLDebugger.Context)
+context (GLContext, Lifetime)
 private fun createBuffer(include: Boolean): GL<GLBuffer> =
     when (include) {
         true -> glCreateBuffers()
