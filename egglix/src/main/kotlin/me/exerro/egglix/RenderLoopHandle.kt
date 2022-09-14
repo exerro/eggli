@@ -1,4 +1,4 @@
-package me.exerro.eggli.util
+package me.exerro.egglix
 
 /**
  * A handle to control whether a render loop continues running.

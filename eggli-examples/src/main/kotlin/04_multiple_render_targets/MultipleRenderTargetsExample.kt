@@ -7,7 +7,10 @@ import me.exerro.eggli.GL
 import me.exerro.eggli.GLContext
 import me.exerro.eggli.enum.*
 import me.exerro.eggli.gl.*
-import me.exerro.eggli.util.*
+import me.exerro.egglix.math.*
+import me.exerro.egglix.mesh.*
+import me.exerro.egglix.shader.*
+import me.exerro.egglix.texture.*
 import me.exerro.lifetimes.Lifetime
 import org.lwjgl.opengl.GL46C
 

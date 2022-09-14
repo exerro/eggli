@@ -1,4 +1,4 @@
-package me.exerro.eggli.util
+package me.exerro.egglix.mesh
 
 import me.exerro.eggli.GL
 import me.exerro.eggli.GLContext
@@ -8,14 +8,14 @@ import me.exerro.eggli.enum.GL_ELEMENT_ARRAY_BUFFER
 import me.exerro.eggli.enum.GL_FLOAT
 import me.exerro.eggli.gl.*
 import me.exerro.eggli.types.GLBuffer
-import me.exerro.eggli.util.SimpleMesh.Companion.COLOUR_ATTRIBUTE
-import me.exerro.eggli.util.SimpleMesh.Companion.COLOUR_COMPONENTS
-import me.exerro.eggli.util.SimpleMesh.Companion.NORMAL_ATTRIBUTE
-import me.exerro.eggli.util.SimpleMesh.Companion.NORMAL_COMPONENTS
-import me.exerro.eggli.util.SimpleMesh.Companion.POSITION_ATTRIBUTE
-import me.exerro.eggli.util.SimpleMesh.Companion.POSITION_COMPONENTS
-import me.exerro.eggli.util.SimpleMesh.Companion.UV_ATTRIBUTE
-import me.exerro.eggli.util.SimpleMesh.Companion.UV_COMPONENTS
+import me.exerro.egglix.mesh.SimpleMesh.Companion.COLOUR_ATTRIBUTE
+import me.exerro.egglix.mesh.SimpleMesh.Companion.COLOUR_COMPONENTS
+import me.exerro.egglix.mesh.SimpleMesh.Companion.NORMAL_ATTRIBUTE
+import me.exerro.egglix.mesh.SimpleMesh.Companion.NORMAL_COMPONENTS
+import me.exerro.egglix.mesh.SimpleMesh.Companion.POSITION_ATTRIBUTE
+import me.exerro.egglix.mesh.SimpleMesh.Companion.POSITION_COMPONENTS
+import me.exerro.egglix.mesh.SimpleMesh.Companion.UV_ATTRIBUTE
+import me.exerro.egglix.mesh.SimpleMesh.Companion.UV_COMPONENTS
 import me.exerro.lifetimes.Lifetime
 
 /** TODO */

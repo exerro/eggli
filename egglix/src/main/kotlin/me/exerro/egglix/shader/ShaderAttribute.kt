@@ -1,6 +1,7 @@
-package me.exerro.eggli.util
+package me.exerro.egglix.shader
 
 import me.exerro.eggli.types.GLAttributeIndex
+import me.exerro.egglix.mesh.SimpleMesh
 
 /** TODO */
 data class ShaderAttribute(

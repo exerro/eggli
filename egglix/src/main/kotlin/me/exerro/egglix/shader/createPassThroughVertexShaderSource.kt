@@ -1,4 +1,4 @@
-package me.exerro.eggli.util
+package me.exerro.egglix.shader
 
 import me.exerro.eggli.types.GLAttributeIndex
 

@@ -1,4 +1,4 @@
-package me.exerro.eggli.util
+package me.exerro.egglix.math
 
 import kotlin.math.sin
 import kotlin.math.cos

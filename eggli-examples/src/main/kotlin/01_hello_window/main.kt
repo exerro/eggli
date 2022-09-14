@@ -4,8 +4,8 @@ import me.exerro.eggli.GLWorker
 import me.exerro.eggli.enum.GL_COLOR_BUFFER_BIT
 import me.exerro.eggli.gl.glClear
 import me.exerro.eggli.gl.glClearColor
-import me.exerro.eggli.util.createGLFWWindowWithWorker
-import me.exerro.eggli.util.createRenderLoop
+import me.exerro.egglix.createGLFWWindowWithWorker
+import me.exerro.egglix.createRenderLoop
 import me.exerro.lifetimes.Lifetime
 import me.exerro.lifetimes.withLifetime
 import org.lwjgl.glfw.GLFW

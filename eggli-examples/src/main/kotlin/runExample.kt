@@ -1,7 +1,7 @@
 import me.exerro.eggli.GL
-import me.exerro.eggli.util.RenderLoopHandle
-import me.exerro.eggli.util.createGLFWWindowWithWorker
-import me.exerro.eggli.util.createRenderLoop
+import me.exerro.egglix.RenderLoopHandle
+import me.exerro.egglix.createGLFWWindowWithWorker
+import me.exerro.egglix.createRenderLoop
 import me.exerro.lifetimes.withLifetime
 import org.lwjgl.glfw.GLFW
 

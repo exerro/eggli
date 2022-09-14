@@ -11,7 +11,7 @@ nicer and a bit more Kotlin-like.
 
 ### Utility functions
 
-The package `me.exerro.eggli.util` contains a whole load of functionality which
+The package `me.exerro.egglix` contains a whole load of functionality which
 builds on top of the rest of the library. It can be used as reference when
 implementing similar functionality, or used to simplify common tasks. For
 example, there's a method to produce a cube mesh complete with UVs and per-face

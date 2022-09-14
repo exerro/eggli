@@ -1,4 +1,4 @@
-package me.exerro.eggli.util
+package me.exerro.egglix.math
 
 /** TODO */
 fun createIdentityMatrixValues() = floatArrayOf(

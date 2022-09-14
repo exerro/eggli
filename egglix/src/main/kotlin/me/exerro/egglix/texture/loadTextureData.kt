@@ -1,4 +1,4 @@
-package me.exerro.eggli.util
+package me.exerro.egglix.texture
 
 import me.exerro.eggli.GLContext
 import me.exerro.eggli.enum.GL_RGBA

@@ -1,4 +1,4 @@
-package me.exerro.eggli.util
+package me.exerro.egglix.mesh
 
 import me.exerro.eggli.GLContext
 import me.exerro.eggli.GLResource
@@ -49,13 +49,15 @@ data class SimpleMesh(
             dataBuffers: List<GLBuffer>,
             elementBuffer: GLBuffer,
             usesElementBuffer: Boolean,
-        ) = GLResource(SimpleMesh(
+        ) = GLResource(
+            SimpleMesh(
             vertices = vertices,
             vertexArray = vertexArray,
             dataBuffers = dataBuffers,
             elementBuffer = elementBuffer,
             usesElementBuffer = usesElementBuffer,
-        )) {
+        )
+        ) {
             it.vertexArray.destroy()
             it.dataBuffers.forEach { b -> b.destroy() }
             it.elementBuffer.destroy()

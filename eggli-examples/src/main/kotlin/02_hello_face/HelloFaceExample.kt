@@ -5,8 +5,8 @@ import me.exerro.eggli.GL
 import me.exerro.eggli.GLContext
 import me.exerro.eggli.enum.*
 import me.exerro.eggli.gl.*
-import me.exerro.eggli.util.createDefaultFace
-import me.exerro.eggli.util.createShaderProgram
+import me.exerro.egglix.mesh.createDefaultFace
+import me.exerro.egglix.shader.createShaderProgram
 import me.exerro.lifetimes.Lifetime
 import runExample
 

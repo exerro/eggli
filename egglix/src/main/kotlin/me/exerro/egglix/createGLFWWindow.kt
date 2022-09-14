@@ -1,4 +1,4 @@
-package me.exerro.eggli.util
+package me.exerro.egglix
 
 import me.exerro.eggli.GLWorker
 import me.exerro.lifetimes.Lifetime

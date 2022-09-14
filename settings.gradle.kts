@@ -1,5 +1,5 @@
 rootProject.name = "eggli"
-val eggliVersion = "0.1.2"
+val eggliVersion = "0.2.0"
 
 val extra = (gradle as ExtensionAware).extra
 extra["eggliVersion"] = eggliVersion
