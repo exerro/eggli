@@ -4,8 +4,8 @@ plugins {
 }
 
 dependencies {
-    implementation("com.google.devtools.ksp:symbol-processing-api:1.6.20-1.0.5")
-    implementation("com.squareup:kotlinpoet:1.11.0")
+    implementation("com.google.devtools.ksp:symbol-processing-api:1.7.20-RC-1.0.6")
+    implementation("com.squareup:kotlinpoet:1.12.0")
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
