@@ -9,6 +9,9 @@
 Eggli is a lightweight wrapper around OpenGL, aiming to make graphics a bit
 nicer and a bit more Kotlin-like.
 
+Eggli also adds some higher level features as extensions on top of the core
+functionality, for example an FXAA implementation.
+
 ### Utility functions
 
 The package `me.exerro.egglix` contains a whole load of functionality which
@@ -16,6 +19,9 @@ builds on top of the rest of the library. It can be used as reference when
 implementing similar functionality, or used to simplify common tasks. For
 example, there's a method to produce a cube mesh complete with UVs and per-face
 colours, as well as a helper that simplifies shader compilation.
+
+As well as simpler utilities, this package adds things like an FXAA
+implementation.
 
 ### GL contexts
 
@@ -54,13 +60,13 @@ required.
 ## Repository structure
 
 * `eggli` - library source code
-* `eggli-gen` - code generator to write GLenum content
-* `eggli-examples` - example code
+* `eggli/codegen` - code generator to write GLenum content
+* `examples` - example code
 
 ### Examples
 
 Please use the
-[examples](https://github.com/exerro/eggli/tree/main/eggli-examples/src/main/kotlin)
+[examples](https://github.com/exerro/eggli/tree/main/examples/src/main/kotlin)
 as a reference for how to do things, both with Eggli and  just in general with
 OpenGL.
 
@@ -71,9 +77,6 @@ OpenGL.
 Check out the [releases](https://github.com/exerro/eggli/releases), or
 using a build system...
 
-> Note you'll also [need LWJGL to run](#installing-lwjgl), as well as
-> [lifetimes-kt](https://github.com/exerro/lifetimes-kt)
-
 ### Gradle (`build.gradle.kts`)
 
 ```kotlin
@@ -83,7 +86,7 @@ repositories {
 }
 
 dependencies {
-    // implementation("me.exerro:eggli:0.1.0")
+    // implementation("me.exerro:eggli:0.2.0")
     // while in development, use this instead:
     implementation("me.exerro:eggli:main-SNAPSHOT")
 }
@@ -102,18 +105,11 @@ dependencies {
 <dependency>
   <groupId>me.exerro</groupId>
   <artifactId>eggli</artifactId>
-  <!--<version>0.1.0</version>-->
-  // while in development, use this instead:
-  <!--<version>main-SNAPSHOT</version>-->
+  <!--<version>0.2.0</version>-->
+  <!--while in development, use this instead:-->
+  <version>main-SNAPSHOT</version>
 </dependency>
 ```
-
-## Installing LWJGL
-
-To use Eggli in your projects, you'll need LWJGL. Check out
-[lwjgl.org/customize](https://www.lwjgl.org/customize) for instructions, and/or
-look at the `eggli-examples/build.gradle.kts` file to see a working example
-(specifically the `[LWJGL]` commented sections.)
 
 TODO: VM option `-javaagent:lib/lwjglx-debug-1.0.0.jar` seems to do debugging
 stuff

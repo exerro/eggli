@@ -66,6 +66,9 @@ class GLWorker private constructor(
      * Note that execution happens in-order, so if two blocks are submitted to
      * run, the one submitted second will run after the first.
      *
+     * Note, this function can block if the [GLWorker]'s internal queue of tasks
+     * is full.
+     *
      * @param runIfStopped even if this worker has been stopped, queue [fn] to
      *                     be run (e.g. for calling a destructor)
      */
@@ -73,7 +76,7 @@ class GLWorker private constructor(
         runIfStopped: Boolean = false,
         fn: context (GLContext) () -> Unit,
     ) {
-        if (running || runIfStopped) workQueue.add(fn)
+        if (running || runIfStopped) workQueue.put(fn)
     }
 
     private var running = true

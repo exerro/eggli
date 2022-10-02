@@ -4,6 +4,7 @@ import me.exerro.eggli.GLWorker
 import me.exerro.eggli.enum.GL_COLOR_BUFFER_BIT
 import me.exerro.eggli.gl.glClear
 import me.exerro.eggli.gl.glClearColor
+import me.exerro.egglix.createGLFWRenderLoop
 import me.exerro.egglix.createGLFWWindowWithWorker
 import me.exerro.egglix.createRenderLoop
 import me.exerro.lifetimes.Lifetime
@@ -70,7 +71,7 @@ fun main() {
          * Here, we introduce the rendering debug context, and start our
          * render loop which clears the screen's colour buffer.
          */
-        val renderLoopHandle = createRenderLoop(windowId, worker) {
+        val renderLoopHandle = createGLFWRenderLoop(windowId, worker) {
             glClear(GL_COLOR_BUFFER_BIT)
         }
 

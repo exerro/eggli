@@ -17,7 +17,7 @@ open class GLResource<out T>(
     fun get() = synchronized(lock) {
         if (!isDestroyed) value
         else throw DestroyedResourceException(
-            "Attempt to access destroyed resource ($this): $value"
+            "Attempt to access destroyed resource (${super.toString()}): $value"
         )
     }
 

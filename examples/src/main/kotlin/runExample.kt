@@ -1,7 +1,7 @@
 import me.exerro.eggli.GL
 import me.exerro.egglix.RenderLoopHandle
+import me.exerro.egglix.createGLFWRenderLoop
 import me.exerro.egglix.createGLFWWindowWithWorker
-import me.exerro.egglix.createRenderLoop
 import me.exerro.lifetimes.withLifetime
 import org.lwjgl.glfw.GLFW
 
@@ -43,7 +43,7 @@ inline fun <reified E: BaseExample<*>> runExample() {
             val t0 = System.currentTimeMillis()
             lateinit var renderLoopHandle: RenderLoopHandle
 
-            renderLoopHandle = createRenderLoop(windowId, worker) {
+            renderLoopHandle = createGLFWRenderLoop(windowId, worker) {
                 /**
                  * Try rendering a frame. If an exception is thrown,
                  * stop the rendering loop and close the window.

@@ -87,3 +87,23 @@ tasks.create<Jar>("jar_04_multiple_render_targets_complete") {
     from(sources)
     with(tasks["jar"] as CopySpec)
 }
+
+////////////////////////////////////////////////////////////////////////////////
+
+task<JavaExec>("05_fxaa") {
+    group = "examples"
+    description = "Run the 05_fxaa example"
+    classpath = sourceSets.main.get().runtimeClasspath
+    mainClass.set("05_fxaa.MainKt")
+}
+
+tasks.create<Jar>("jar_05_fxaa_complete") {
+    archiveBaseName.set("05_fxaa_complete")
+    manifest { attributes["Main-Class"] = "05_fxaa.MainKt" }
+    group = "build"
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    val sourcesMain = sourceSets.main.get()
+    val sources = configurations["runtimeClasspath"].map { if (it.isDirectory) it else zipTree(it) } + sourcesMain.output
+    from(sources)
+    with(tasks["jar"] as CopySpec)
+}
