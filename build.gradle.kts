@@ -23,12 +23,19 @@ val lwjglNatives = run {
 }
 
 plugins {
-    kotlin("jvm")
+    kotlin("jvm") version "1.7.20"
 }
 
 allprojects {
     val lwjglApi by configurations.creating
     val lwjglRuntimeOnly by configurations.creating
+
+    repositories {
+        google()
+        mavenCentral()
+        maven { url = uri("https://jitpack.io") }
+        maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots/") }
+    }
 
     dependencies {
         lwjglApi(platform("org.lwjgl:lwjgl-bom:$lwjglVersion"))

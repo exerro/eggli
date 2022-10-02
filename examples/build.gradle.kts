@@ -1,14 +1,11 @@
 
-val lwjglNatives: String by (gradle as ExtensionAware).extra
-
 plugins {
     kotlin("jvm")
 }
 
 dependencies {
     implementation(kotlin("stdlib"))
-    implementation("me.exerro:eggli:0.1.2")
-    implementation("me.exerro:egglix:0.1.2")
+    implementation(project(":eggli"))
 }
 
 ////////////////////////////////////////////////////////////////////////////////

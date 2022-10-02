@@ -1,12 +1,14 @@
 
+val eggliVersion = "0.2.0"
+
 plugins {
     kotlin("jvm")
     `maven-publish`
-    id("com.google.devtools.ksp")
+    id("com.google.devtools.ksp") version "1.7.20-1.0.6"
 }
 
 dependencies {
-    ksp(project(":eggli-gen"))
+    ksp(project(":eggli:codegen"))
 
     implementation(kotlin("stdlib"))
     api("me.exerro:lifetimes-kt:1.2.0")
@@ -22,8 +24,6 @@ configurations {
 publishing {
     publications {
         create<MavenPublication>("maven") {
-            val eggliVersion: String by (gradle as ExtensionAware).extra
-
             groupId = "me.exerro"
             artifactId = "eggli"
             version = eggliVersion

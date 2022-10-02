@@ -17,13 +17,13 @@ class GL<T> internal constructor(
 
     /** TODO */
     fun <R> map(fn: (T) -> R) = GL {
-        val (value) = this@GL
+        val (value) = this
         fn(value)
     }
 
     /** TODO */
     fun <R> flatMap(fn: (T) -> GL<R>) = GL {
-        val (value) = this@GL
+        val (value) = this
         val (result) = fn(value)
         result
     }
