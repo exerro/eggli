@@ -17,27 +17,25 @@ import kotlin.coroutines.suspendCoroutine
  * is done on the thread between renders.
  *
  * The [RenderLoopHandle] returned can be used to stop the loop from running.
- *
- * @param glfwWindowId window ID used to swap buffers after each render
  */
 fun createRenderLoop(
-    glfwWindowId: Long,
     worker: GLWorker,
     renderFrame: context (GLContext) () -> Unit
 ): RenderLoopHandle {
     val isRunning = AtomicBoolean(true)
     val completion = CountDownLatch(1)
     val continuations = mutableListOf<Continuation<Unit>>()
-    // TODO: run continuations! they're ignored rn
 
     fun renderFrameQueued(context: GLContext) {
         renderFrame(context)
-        GLFW.glfwSwapBuffers(glfwWindowId)
         if (isRunning.get()) worker.runLater(fn = ::renderFrameQueued)
         else {
             synchronized(completion) {
                 completion.countDown()
             }
+
+            for (cont in continuations)
+                cont.resume(Unit)
         }
     }
 
@@ -69,3 +67,26 @@ fun createRenderLoop(
         }
     }
 }
+
+/**
+ * Create a "render loop" which continuously runs [renderFrame] on the OpenGL
+ * thread by submitting it to [worker]. To avoid blocking other tasks from
+ * running on the thread, this function repeatedly queues [renderFrame] to run
+ * after each successive render with no delay. Delays may occur when other work
+ * is done on the thread between renders.
+ *
+ * The [RenderLoopHandle] returned can be used to stop the loop from running.
+ *
+ * @param glfwWindowId window ID used to swap buffers after each render
+ */
+fun createGLFWRenderLoop(
+    glfwWindowId: Long,
+    worker: GLWorker,
+    renderFrame: context (GLContext) () -> Unit
+) = createRenderLoop(worker) {
+    renderFrame(getGLContext)
+    GLFW.glfwSwapBuffers(glfwWindowId)
+}
+
+context (GLContext)
+private val getGLContext get() = this@GLContext
