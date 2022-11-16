@@ -133,12 +133,7 @@ class MultipleRenderTargetsExample: BaseExample<MultipleRenderTargetsExampleData
                 glUniformMatrix4fv(data.modelMatrixUniformLocation, transform)
 
                 glBindTexture(GL_TEXTURE_2D, data.modelTexture) {
-                    glBindVertexArray(mesh.vertexArray) {
-                        if (mesh.usesElementBuffer)
-                            glDrawElements(count = mesh.vertices)
-                        else
-                            glDrawArrays(count = mesh.vertices)
-                    }
+                    mesh.draw()
                 }
             }
         }
@@ -153,33 +148,25 @@ class MultipleRenderTargetsExample: BaseExample<MultipleRenderTargetsExampleData
         glUseProgram(data.screenShaderProgram) {
             glPushDebugGroupKHR(message = "Albedo texture") {
                 glBindTexture(GL_TEXTURE_2D, data.albedoTexture) {
-                    glBindVertexArray(topLeftQuad.vertexArray) {
-                        glDrawArrays(count = topLeftQuad.vertices)
-                    }
+                    topLeftQuad.draw()
                 }
             }
 
             glPushDebugGroupKHR(message = "Position texture") {
                 glBindTexture(GL_TEXTURE_2D, data.positionTexture) {
-                    glBindVertexArray(topRightQuad.vertexArray) {
-                        glDrawArrays(count = topRightQuad.vertices)
-                    }
+                    topRightQuad.draw()
                 }
             }
 
             glPushDebugGroupKHR(message = "Normal texture") {
                 glBindTexture(GL_TEXTURE_2D, data.normalTexture) {
-                    glBindVertexArray(bottomLeftQuad.vertexArray) {
-                        glDrawArrays(count = bottomLeftQuad.vertices)
-                    }
+                    bottomLeftQuad.draw()
                 }
             }
 
             glPushDebugGroupKHR(message = "Depth texture") {
                 glBindTexture(GL_TEXTURE_2D, data.depthTexture) {
-                    glBindVertexArray(bottomRightQuad.vertexArray) {
-                        glDrawArrays(count = bottomRightQuad.vertices)
-                    }
+                    bottomRightQuad.draw()
                 }
             }
         }

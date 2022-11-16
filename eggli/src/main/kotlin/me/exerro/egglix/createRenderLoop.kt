@@ -84,9 +84,6 @@ fun createGLFWRenderLoop(
     worker: GLWorker,
     renderFrame: context (GLContext) () -> Unit
 ) = createRenderLoop(worker) {
-    renderFrame(getGLContext)
+    renderFrame(GLContext.get())
     GLFW.glfwSwapBuffers(glfwWindowId)
 }
-
-context (GLContext)
-private val getGLContext get() = this@GLContext

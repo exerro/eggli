@@ -4,16 +4,15 @@ import java.util.concurrent.CountDownLatch
 import java.util.concurrent.atomic.AtomicBoolean
 
 /** TODO */
-class GL<T> internal constructor(
-    internal val evaluater: context (GLContext) () -> T,
+class GL<out T> internal constructor(
+    internal val evaluator: context (GLContext) () -> T,
 ) {
     /** TODO */
     @Volatile
     var isEvaluated = false; private set
 
-    /** TODO */
     @Volatile
-    var value = null as T?; private set
+    var value = null as Any?; private set
 
     /** TODO */
     fun <R> map(fn: (T) -> R) = GL {
@@ -32,7 +31,7 @@ class GL<T> internal constructor(
     context (GLContext)
     internal fun evaluate(): T =
         if (!evaluating.getAndSet(true)) {
-            val evaluated = evaluater(this@GLContext)
+            val evaluated = evaluator(this@GLContext)
             value = evaluated
             isEvaluated = true
             evaluationLatch.countDown()
@@ -40,7 +39,8 @@ class GL<T> internal constructor(
         }
         else {
             evaluationLatch.await()
-            value!!
+            @Suppress("UNCHECKED_CAST")
+            (value as T?)!!
         }
 
     /** TODO */

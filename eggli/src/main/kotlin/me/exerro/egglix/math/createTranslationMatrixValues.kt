@@ -1,6 +1,9 @@
 package me.exerro.egglix.math
 
-/** TODO */
+/**
+ * Create a row major array of float values representing a 4x4 translation
+ * transform that translates vectors by ([dx], [dy], [dz]).
+ */
 fun createTranslationMatrixValues(
     dx: Float = 0f,
     dy: Float = 0f,

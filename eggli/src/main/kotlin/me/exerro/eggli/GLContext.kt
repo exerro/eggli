@@ -25,4 +25,14 @@ class GLContext internal constructor(
         GL46C.GL_STACK_OVERFLOW -> error("GL_STACK_OVERFLOW")
         else -> error("Unknown GL error")
     }
+
+    /** @see GLContext */
+    companion object {
+        /**
+         * Getter for the [GLContext] in scope, because Kotlin can be a pain
+         * with contexts sometimes.
+         */
+        context (GLContext)
+        fun get() = this@GLContext
+    }
 }

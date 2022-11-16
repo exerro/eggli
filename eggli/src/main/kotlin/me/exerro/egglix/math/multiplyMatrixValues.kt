@@ -1,6 +1,10 @@
 package me.exerro.egglix.math
 
-/** TODO */
+/**
+ * Takes two row major arrays of float values representing 4x4 transformations
+ * and returns a similar array representing the combined affect of applying [b]
+ * and then [a].
+ */
 fun multiplyMatrixValues(a: FloatArray, b: FloatArray): FloatArray {
     require(a.size == 16)
     require(b.size == 16)

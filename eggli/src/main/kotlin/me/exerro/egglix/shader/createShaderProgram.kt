@@ -12,24 +12,28 @@ import me.exerro.lifetimes.withLifetime
 context (Lifetime)
 fun createShaderProgram(
     vertex: String,
-    fragment: String
+    fragment: String,
+    label: String? = null,
 ) = createShaderProgram(
     GL_VERTEX_SHADER to vertex,
     GL_FRAGMENT_SHADER to fragment,
+    label = label,
 )
 
 /** TODO */
 context (Lifetime)
 fun createShaderProgram(
     vararg shaders: Pair<GLShaderType, String>,
-) = createShaderProgram(shaders.toList())
+    label: String? = null,
+) = createShaderProgram(shaders.toList(), label = label)
 
 /** @see createShaderProgram */
 context (Lifetime)
 fun createShaderProgram(
     shaders: Iterable<Pair<GLShaderType, String>>,
+    label: String? = null,
 ) = GL {
-    val (shaderProgram) = glCreateProgram()
+    val (shaderProgram) = glCreateProgram(label)
 
     // TODO: if the lifetime ends within this function, things will get weird
     //  should wrap in a lifetime.ifAlive kinda thing

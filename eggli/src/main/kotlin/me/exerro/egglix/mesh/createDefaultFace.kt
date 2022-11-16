@@ -16,7 +16,24 @@ import me.exerro.egglix.mesh.SimpleMesh.Companion.UV_ATTRIBUTE
 import me.exerro.egglix.mesh.SimpleMesh.Companion.UV_COMPONENTS
 import me.exerro.lifetimes.Lifetime
 
-/** TODO */
+/**
+ * Create a [SimpleMesh] resource representing a flat forward-facing (+Z) square.
+ *
+ * Note: using [useElements] will cause included normals and colours to be a bit
+ *       weird.
+ *
+ * @param includeUVs include UV coordinates for each vertex in the cube.
+ * @param includeNormals generate normal vectors for each vertex (face normals.)
+ * @param includeColours include a colour component for each vertex which gives
+ *                       each face a unique colour.
+ * @param useElements use 8 indexed vertices instead of 24 non-indexed vertices
+ *                    by using an element array buffer. See note below!
+ * @param width width of the cube (distance right-left X), defaults to 1
+ * @param height height of the cube (distance top-bottom Y), defaults to 1
+ * @param centreX centre X value of the cube, defaults to 0
+ * @param centreY centre Y value of the cube, defaults to 0
+ * @param centreZ centre Z value of the cube, defaults to -1
+ */
 context (Lifetime)
 fun createDefaultFace(
     includeUVs: Boolean = true,
@@ -29,7 +46,7 @@ fun createDefaultFace(
     centreY: Float = 0f,
     centreZ: Float = -1f,
 ) = GL {
-    // TODO: look into creating a single buffer!
+    // TODO: use a single buffer!
 
     val (vertexArray) = glGenVertexArrays()
     val (positionBuffer) = glCreateBuffers()
@@ -52,30 +69,30 @@ fun createDefaultFace(
     }
 
     glNamedBufferData(positionBuffer, positionData)
-    if (includeUVs) glNamedBufferData(uvBuffer, uvData)
-    if (includeNormals) glNamedBufferData(normalBuffer, normalData)
-    if (includeColours) glNamedBufferData(colourBuffer, colourData)
-    if (useElements) glNamedBufferData(elementBuffer, FACE_ELEMENTS)
+    if (includeUVs) glNamedBufferData(uvBuffer!!, uvData)
+    if (includeNormals) glNamedBufferData(normalBuffer!!, normalData)
+    if (includeColours) glNamedBufferData(colourBuffer!!, colourData)
+    if (useElements) glNamedBufferData(elementBuffer!!, FACE_ELEMENTS)
 
     glBindVertexArray(vertexArray) {
         glBindBuffer(GL_ARRAY_BUFFER, positionBuffer) {
             glVertexAttribPointer(POSITION_ATTRIBUTE, POSITION_COMPONENTS, GL_FLOAT)
         }
 
-        if (includeUVs) glBindBuffer(GL_ARRAY_BUFFER, uvBuffer) {
+        if (includeUVs) glBindBuffer(GL_ARRAY_BUFFER, uvBuffer!!) {
             glVertexAttribPointer(UV_ATTRIBUTE, UV_COMPONENTS, GL_FLOAT)
         }
 
-        if (includeNormals) glBindBuffer(GL_ARRAY_BUFFER, normalBuffer) {
+        if (includeNormals) glBindBuffer(GL_ARRAY_BUFFER, normalBuffer!!) {
             glVertexAttribPointer(NORMAL_ATTRIBUTE, NORMAL_COMPONENTS, GL_FLOAT)
         }
 
-        if (includeColours) glBindBuffer(GL_ARRAY_BUFFER, colourBuffer) {
+        if (includeColours) glBindBuffer(GL_ARRAY_BUFFER, colourBuffer!!) {
             glVertexAttribPointer(COLOUR_ATTRIBUTE, COLOUR_COMPONENTS, GL_FLOAT)
         }
 
         if (useElements) {
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBuffer)
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBuffer!!)
         }
     }
 
@@ -87,17 +104,16 @@ fun createDefaultFace(
     SimpleMesh.createGLResource(
         vertices = FACE_ELEMENTS.size,
         vertexArray = vertexArray,
-        dataBuffers = listOf(positionBuffer, uvBuffer, normalBuffer, colourBuffer),
+        dataBuffers = listOfNotNull(positionBuffer, uvBuffer, normalBuffer, colourBuffer),
         elementBuffer = elementBuffer,
-        usesElementBuffer = useElements,
     )
 }
 
 context (GLContext, Lifetime)
-private fun createBuffer(include: Boolean): GL<GLBuffer> =
+private fun createBuffer(include: Boolean): GL<GLBuffer?> =
     when (include) {
         true -> glCreateBuffers()
-        else -> GL { GLResource.createDestroyed() }
+        else -> GL { null }
     }
 
 private fun genFaceData(size: Int, data: FloatArray, elements: IntArray) =

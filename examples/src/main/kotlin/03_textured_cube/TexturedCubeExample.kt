@@ -15,13 +15,7 @@ import me.exerro.lifetimes.Lifetime
 import runExample
 
 /**
- * This example draws a coloured quad in the centre of the screen, fading in
- * and out. It uses some common code from [runExample] to avoid irrelevant
- * boilerplate which is demonstrated in the 01_hello_window example.
- *
- * The example is split into two parts: [createData] creates and sets up the
- * objects/state we'll use when rendering, and [renderFrame] renders each frame
- * continuously.
+ * This example draws a TODO
  */
 class TexturedCubeExample: BaseExample<TexturedCubeExampleData>() {
     context (Lifetime)
@@ -60,16 +54,11 @@ class TexturedCubeExample: BaseExample<TexturedCubeExampleData>() {
 
         glClear(GL_COLOR_BUFFER_BIT + GL_DEPTH_BUFFER_BIT)
 
-        glUseProgram(data.shaderProgram) {
-            glUniform1f(data.timeUniformLocation, time)
+        glProgramUniform1f(data.shaderProgram, data.timeUniformLocation, time)
 
+        glUseProgram(data.shaderProgram) {
             glBindTexture(GL_TEXTURE_2D, data.texture) {
-                glBindVertexArray(mesh.vertexArray) {
-                    if (mesh.usesElementBuffer)
-                        glDrawElements(count = mesh.vertices)
-                    else
-                        glDrawArrays(count = mesh.vertices)
-                }
+                mesh.draw()
             }
         }
     }

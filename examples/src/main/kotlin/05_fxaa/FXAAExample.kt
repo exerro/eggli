@@ -107,12 +107,7 @@ class FXAAExample: BaseExample<FXAAExampleData>() {
 
             glUseProgram(data.modelShaderProgram) {
                 for (mesh in data.objects.map { it.get() }) {
-                    glBindVertexArray(mesh.vertexArray) {
-                        if (mesh.usesElementBuffer)
-                            glDrawElements(count = mesh.vertices)
-                        else
-                            glDrawArrays(count = mesh.vertices)
-                    }
+                    mesh.draw()
                 }
             }
         }

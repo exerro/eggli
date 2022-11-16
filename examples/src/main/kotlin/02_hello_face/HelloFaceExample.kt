@@ -3,6 +3,7 @@ package `02_hello_face`
 import BaseExample
 import me.exerro.eggli.GL
 import me.exerro.eggli.GLContext
+import me.exerro.eggli.GLResource
 import me.exerro.eggli.enum.*
 import me.exerro.eggli.gl.*
 import me.exerro.egglix.mesh.createDefaultFace
@@ -89,27 +90,15 @@ class HelloFaceExample: BaseExample<HelloFaceExampleData>() {
          * shader within. Once the block has finished, the shader will be
          * unbound.
          */
+        /** Set the time uniform to the current time. */
+        glProgramUniform1f(data.shaderProgram, data.timeUniformLocation, time)
+
         glUseProgram(data.shaderProgram) {
-            /** Set the time uniform to the current time. */
-            glUniform1f(data.timeUniformLocation, time)
             /**
-             * Use our vertex array to draw. As an extension to the normal
-             * [glBindVertexArray], this version accepts a block parameter to
-             * use the vertex array within. Once the block has finished, the
-             * vertex array will be unbound.
+             * Draw the mesh. Note: this function is a shorthand to the typical
+             * `glBindVertexArray` + `glDrawElements` that we'd use.
              */
-            glBindVertexArray(mesh.vertexArray) {
-                /**
-                 * Depending on whether our mesh is using an element buffer,
-                 * call the appropriate draw method. Both glDrawX functions have
-                 * defaults for most parameters, allowing us to just pass in the
-                 * number of vertices.
-                 */
-                if (mesh.usesElementBuffer)
-                    glDrawElements(count = mesh.vertices)
-                else
-                    glDrawArrays(count = mesh.vertices)
-            }
+            mesh.draw()
         }
     }
 }

@@ -1,9 +1,13 @@
 package me.exerro.egglix.math
 
-import kotlin.math.sin
 import kotlin.math.cos
+import kotlin.math.sin
 
-/** TODO */
+/**
+ * Create a row major array of float values representing a 4x4 rotation
+ * transform that rotates vectors in the Y axis by [theta] radians
+ * counter-clockwise.
+ */
 fun createYRotationMatrixValues(
     theta: Float,
 ): FloatArray {

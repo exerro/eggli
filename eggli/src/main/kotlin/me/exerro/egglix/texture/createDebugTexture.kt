@@ -5,7 +5,11 @@ import me.exerro.eggli.enum.*
 import me.exerro.eggli.gl.*
 import me.exerro.lifetimes.Lifetime
 
-/** TODO */
+/**
+ * Create a [width]x[height] texture with [divisions]^2 blocks of colour. The
+ * default colours used are magenta ([c0]) and black ([c1]), but these can be
+ * changed to any RGB value encoded as a 24 bit integer.
+ */
 context (Lifetime)
 fun createDebugTexture(
     width: Int = 64,

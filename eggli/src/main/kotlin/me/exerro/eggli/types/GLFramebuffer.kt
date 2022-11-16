@@ -1,6 +1,10 @@
 package me.exerro.eggli.types
 
 import me.exerro.eggli.GLResource
+import me.exerro.eggli.gl.glGenFramebuffers
 
-/** TODO */
+/**
+ * An OpenGL framebuffer name.
+ * @see glGenFramebuffers
+ */
 typealias GLFramebuffer = GLResource<Int>
