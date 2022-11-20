@@ -61,17 +61,17 @@ class MultipleRenderTargetsExample: BaseExample<MultipleRenderTargetsExampleData
         glTextureParameter(albedoTexture, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
         glTextureStorage2D(albedoTexture, internalFormat = GL_RGBA8, width = FRAMEBUFFER_WIDTH, height = FRAMEBUFFER_HEIGHT)
 
-        val (positionTexture) = glCreateTextures(GL_TEXTURE_2D)
+        val (positionTexture) = glCreateTextures(GL_TEXTURE_2D, label = "Position texture")
         glTextureParameter(positionTexture, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
         glTextureParameter(positionTexture, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
         glTextureStorage2D(positionTexture, internalFormat = GL_RGB16F, width = FRAMEBUFFER_WIDTH, height = FRAMEBUFFER_HEIGHT)
 
-        val (normalTexture) = glCreateTextures(GL_TEXTURE_2D)
+        val (normalTexture) = glCreateTextures(GL_TEXTURE_2D, label = "Normal texture")
         glTextureParameter(normalTexture, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
         glTextureParameter(normalTexture, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
         glTextureStorage2D(normalTexture, internalFormat = GL_RGB32F, width = FRAMEBUFFER_WIDTH, height = FRAMEBUFFER_HEIGHT)
 
-        val (depthTexture) = glCreateTextures(GL_TEXTURE_2D)
+        val (depthTexture) = glCreateTextures(GL_TEXTURE_2D, label = "Depth texture")
         glTextureParameter(depthTexture, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
         glTextureParameter(depthTexture, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
         glTextureStorage2D(depthTexture, internalFormat = GL_DEPTH_COMPONENT32F, width = FRAMEBUFFER_WIDTH, height = FRAMEBUFFER_HEIGHT)

@@ -2,6 +2,7 @@ package me.exerro.egglix.postprocessing
 
 import me.exerro.eggli.GLContext
 import me.exerro.eggli.enum.GLActiveTexture
+import me.exerro.eggli.enum.GL_TEXTURE0
 import me.exerro.eggli.gl.*
 import me.exerro.eggli.types.GLShaderProgram
 import me.exerro.eggli.types.GLUniformLocation
@@ -12,23 +13,57 @@ import me.exerro.lifetimes.Lifetime
  * The [FXAA] class is a utility object that helps render "fast approximate anti
  * aliasing" aka FXAA as a shader pass using an aliased input texture.
  *
+ * see FXAA
+ * http://developer.download.nvidia.com/assets/gamedev/files/sdk/11/FXAA_WhitePaper.pdf
+ * http://iryoku.com/aacourse/downloads/09-FXAA-3.11-in-15-Slides.pdf
+ * http://horde3d.org/wiki/index.php5?title=Shading_Technique_-_FXAA
+ *
  * ```kotlin
- * glUseProgram(fxaa.shader) {
- *     // .. draw texture ..
+ * fxaa.shader.bind {
+ *     // .. draw texture using fullscreen quad ..
  * }
  * ```
  */
 class FXAA(
     val shader: GLShaderProgram,
-    val viewportSizeUniform: GLUniformLocation,
     val textureUniform: GLUniformLocation,
+    val viewportSizeUniform: GLUniformLocation,
     val showEdgesUniform: GLUniformLocation,
-    val fxaaOnUniform: GLUniformLocation,
     val lumaThresholdUniform: GLUniformLocation,
     val mulReduceUniform: GLUniformLocation,
     val minReduceUniform: GLUniformLocation,
     val maxSpanUniform: GLUniformLocation,
 ) {
+    /**
+     * Bind the effect ready for use. Should manually draw the region that has
+     * the effect applied.
+     */
+    context (GLContext)
+    fun bind() {
+        glUseProgram(shader)
+    }
+
+    /**
+     * Bind the effect ready for use within [fn], unbinding afterwards. Should
+     * manually draw the region that has the effect applied.
+     */
+    context (GLContext)
+    fun bind(fn: () -> Unit) {
+        glUseProgram(shader, fn)
+    }
+
+    /** Unbind the effect after [bind] was called. */
+    context (GLContext)
+    fun unbind() {
+        glUseProgram()
+    }
+
+    /** Set the texture read from when applying AA. */
+    context (GLContext)
+    fun setInputTexture(binding: GLActiveTexture) {
+        glProgramUniform1i(shader, textureUniform, binding.glValue - GL_TEXTURE0.glValue)
+    }
+
     /** TODO */
     context (GLContext)
     fun setViewportSize(width: Float, height: Float) {
@@ -42,20 +77,8 @@ class FXAA(
 
     /** TODO */
     context (GLContext)
-    fun setInputTexture(binding: GLActiveTexture) {
-        glProgramUniform1i(shader, textureUniform, binding.glValue)
-    }
-
-    /** TODO */
-    context (GLContext)
     fun setShowEdges(showEdges: Boolean) {
         glProgramUniform1i(shader, showEdgesUniform, showEdges)
-    }
-
-    /** TODO */
-    context (GLContext)
-    fun setEnabled(enabled: Boolean) {
-        glProgramUniform1i(shader, fxaaOnUniform, enabled)
     }
 
     /** TODO */
@@ -86,29 +109,49 @@ class FXAA(
     companion object {
         /** TODO */
         context (GLContext, Lifetime)
-        fun create(viewportWidth: Float, viewportHeight: Float): FXAA {
+        fun create(
+            viewportWidth: Float,
+            viewportHeight: Float,
+            showEdges: Boolean = false,
+            lumaThreshold: Float = 0.02f,
+            mulReduce: Float = 0.125f,
+            minReduce: Float = 0.5f, // 1/128f
+            maxSpan: Float = 8f,
+        ): FXAA {
             val (shader) = createShaderProgram(
                 vertex = VERTEX_FULLSCREEN_PASS_THROUGH_SHADER,
                 fragment = FXAA_FRAGMENT_SHADER,
             )
-            val viewportSizeUniform = glGetUniformLocation(shader, "u_viewportSize")
             val textureUniform = glGetUniformLocation(shader, "u_texture")
+            val viewportSizeUniform = glGetUniformLocation(shader, "u_viewportSize")
             val showEdgesUniform = glGetUniformLocation(shader, "u_showEdges")
-            val fxaaOnUniform = glGetUniformLocation(shader, "u_fxaaOn")
             val lumaThresholdUniform = glGetUniformLocation(shader, "u_lumaThreshold")
             val mulReduceUniform = glGetUniformLocation(shader, "u_mulReduce")
             val minReduceUniform = glGetUniformLocation(shader, "u_minReduce")
             val maxSpanUniform = glGetUniformLocation(shader, "u_maxSpan")
 
             glProgramUniform2f(shader, viewportSizeUniform, viewportWidth, viewportHeight)
+            glProgramUniform1i(shader, showEdgesUniform, showEdges)
+            glProgramUniform1f(shader, lumaThresholdUniform, lumaThreshold)
+            glProgramUniform1f(shader, mulReduceUniform, mulReduce)
+            glProgramUniform1f(shader, minReduceUniform, minReduce)
+            glProgramUniform1f(shader, maxSpanUniform, maxSpan)
 
-            return FXAA(shader, viewportSizeUniform, textureUniform, showEdgesUniform, fxaaOnUniform, lumaThresholdUniform, mulReduceUniform, minReduceUniform, maxSpanUniform)
+            return FXAA(shader, textureUniform, viewportSizeUniform, showEdgesUniform, lumaThresholdUniform, mulReduceUniform, minReduceUniform, maxSpanUniform)
         }
 
         /** TODO */
         context (GLContext, Lifetime)
-        fun create(viewportWidth: Int, viewportHeight: Int) =
-            create(viewportWidth.toFloat(), viewportHeight.toFloat())
+        fun create(
+            viewportWidth: Int,
+            viewportHeight: Int,
+            showEdges: Boolean = false,
+            lumaThreshold: Float = 0.04f,
+            mulReduce: Float = 0.125f,
+            minReduce: Float = 0.5f, // 1/128f
+            maxSpan: Float = 8f,
+        ) =
+            create(viewportWidth.toFloat(), viewportHeight.toFloat(), showEdges, lumaThreshold, mulReduce, minReduce, maxSpan)
     }
 }
 
@@ -116,14 +159,6 @@ class FXAA(
  * Fragment shader implementing FXAA (fast approximate anti aliasing).
  * Full credit to https://github.com/McNopper/OpenGL/tree/master/Example42 !
  * Ty dude you saved me.
- *
- * Uniforms:
- * * `u_showEdges` - 0 or 1 - highlights edges when set to 1
- * * `u_fxaaOn` - 0 or 1 - enables or disables anti aliasing
- * * `u_lumaThreshold` - ?
- * * `u_mulReduce` - ?
- * * `u_minReduce` - ?
- * * `u_maxSpan` - ?
  */
 private const val FXAA_FRAGMENT_SHADER = """
 #version 460 core
@@ -131,39 +166,19 @@ private const val FXAA_FRAGMENT_SHADER = """
 layout (binding = 0) uniform sampler2D u_texture;
 
 uniform vec2 u_viewportSize;
-
-uniform int u_showEdges = 0;
-uniform int u_fxaaOn = 1;
-
-//uniform float u_lumaThreshold = 0.04;
-//uniform float u_mulReduce = 0.125;
-//uniform float u_minReduce = 1/128;
-//uniform float u_maxSpan = 8.0;
-
-uniform float u_lumaThreshold = 0.04;
-uniform float u_mulReduce = 0.125;
-uniform float u_minReduce = 1/2;
-uniform float u_maxSpan = 8.0;
+uniform int u_showEdges;
+uniform float u_lumaThreshold;
+uniform float u_mulReduce;
+uniform float u_minReduce;
+uniform float u_maxSpan;
 
 in vec2 f_uv;
 
 out vec4 o_colour;
 
-// see FXAA
-// http://developer.download.nvidia.com/assets/gamedev/files/sdk/11/FXAA_WhitePaper.pdf
-// http://iryoku.com/aacourse/downloads/09-FXAA-3.11-in-15-Slides.pdf
-// http://horde3d.org/wiki/index.php5?title=Shading_Technique_-_FXAA
-
 void main(void)
 {
     vec3 rgbM = texture(u_texture, f_uv).rgb;
-
-	// Possibility to toggle FXAA on and off.
-	if (u_fxaaOn == 0)
-	{
-		o_colour = vec4(rgbM, 1.0);
-		return;
-	}
 
     vec2 texelStep = 1.0 / u_viewportSize.xy;
 
