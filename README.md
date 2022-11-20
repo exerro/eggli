@@ -70,7 +70,7 @@ Please use the
 as a reference for how to do things, both with Eggli and  just in general with
 OpenGL.
 
-![Screenshot of example showing a textured cube.](eggli-examples/src/main/kotlin/03_textured_cube/screenshot.png)
+![Screenshot of example showing a textured cube.](examples/src/main/kotlin/03_textured_cube/screenshot.png)
 
 ## Installation
 
@@ -137,22 +137,6 @@ can see this being used above, e.g. "Screen draw pass".
 To use RenderDoc, you need to pass an executable and parameters. See
 [this tutorial](https://lwjglgamedev.gitbooks.io/3d-game-development-with-lwjgl/content/appendixa/appendixa.html).
 One way that works is creating a "fat jar" with all your main code and passing
-that to `java` as shown in the tutorial. An example Gradle task to produce this
-is shown below
-
-```kotlin
-tasks.create<Jar>("TASK_NAME") {
-    archiveBaseName.set("ARCHIVE_NAME")
-    manifest { attributes["Main-Class"] = "MAIN_CLASS_QUALIFIED_NAME" }
-    group = "build"
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    val sourcesMain = sourceSets.main.get()
-    val sources = configurations["runtimeClasspath"].map { if (it.isDirectory) it else zipTree(it) } + sourcesMain.output
-    from(sources)
-    with(tasks["jar"] as CopySpec)
-}
-```
-
-In theory, it should be possible to get Gradle to run RenderDoc for you, but I
-don't know. Similarly, it should be possible to use `lwjglx-debug-1.0.0.jar` to
-get extra debug messages if your program is crashing. Will look into this...
+that to `java` as shown in the tutorial. See `examples/build.gradle.kts` for
+an implementation of both the fat jar task as well as a task to run RenderDoc
+with that jar.

@@ -8,3 +8,6 @@
 /build/
 /*/build/
 /*/*/build/
+
+# RenderDoc captures
+renderdoc/

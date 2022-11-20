@@ -29,8 +29,7 @@ class GLContext internal constructor(
     /** @see GLContext */
     companion object {
         /**
-         * Getter for the [GLContext] in scope, because Kotlin can be a pain
-         * with contexts sometimes.
+         * Get the [GLContext] in scope.
          */
         context (GLContext)
         fun get() = this@GLContext

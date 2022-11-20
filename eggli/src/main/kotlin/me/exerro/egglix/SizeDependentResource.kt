@@ -34,8 +34,7 @@ class SizeDependentResource<T> private constructor(
             width: Int,
             height: Int,
             create: context (GLContext, Lifetime) (Int, Int) -> GLResource<T>,
-        ): SizeDependentResource<T> {
-            return SizeDependentResource(width, height, create(this@GLContext, this@Lifetime, width, height), create)
-        }
+        ): SizeDependentResource<T> =
+            SizeDependentResource(width, height, create(GLContext.get(), this@Lifetime, width, height), create)
     }
 }

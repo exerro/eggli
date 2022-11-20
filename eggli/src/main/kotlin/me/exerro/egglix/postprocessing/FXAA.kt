@@ -11,6 +11,12 @@ import me.exerro.lifetimes.Lifetime
 /**
  * The [FXAA] class is a utility object that helps render "fast approximate anti
  * aliasing" aka FXAA as a shader pass using an aliased input texture.
+ *
+ * ```kotlin
+ * glUseProgram(fxaa.shader) {
+ *     // .. draw texture ..
+ * }
+ * ```
  */
 class FXAA(
     val shader: GLShaderProgram,
@@ -83,7 +89,7 @@ class FXAA(
         fun create(viewportWidth: Float, viewportHeight: Float): FXAA {
             val (shader) = createShaderProgram(
                 vertex = VERTEX_FULLSCREEN_PASS_THROUGH_SHADER,
-                fragment = FRAGMENT_FXAA_SHADER,
+                fragment = FXAA_FRAGMENT_SHADER,
             )
             val viewportSizeUniform = glGetUniformLocation(shader, "u_viewportSize")
             val textureUniform = glGetUniformLocation(shader, "u_texture")
@@ -119,7 +125,7 @@ class FXAA(
  * * `u_minReduce` - ?
  * * `u_maxSpan` - ?
  */
-private const val FRAGMENT_FXAA_SHADER = """
+private const val FXAA_FRAGMENT_SHADER = """
 #version 460 core
 
 layout (binding = 0) uniform sampler2D u_texture;
