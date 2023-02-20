@@ -77,6 +77,9 @@ OpenGL.
 Check out the [releases](https://github.com/exerro/eggli/releases), or
 using a build system...
 
+Note: There's an issue right now where you need the lifetimes library and LWJGL
+natives.
+
 ### Gradle (`build.gradle.kts`)
 
 ```kotlin

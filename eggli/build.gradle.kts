@@ -11,7 +11,7 @@ dependencies {
     ksp(project(":eggli:codegen"))
 
     implementation(kotlin("stdlib"))
-    api("me.exerro:lifetimes-kt:1.2.0")
+    api("me.exerro:lifetimes-kt:1.2.1")
 }
 
 configurations {

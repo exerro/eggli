@@ -11,3 +11,6 @@
 
 # RenderDoc captures
 renderdoc/
+
+# Crash dumps
+hs_err_pid*.log
