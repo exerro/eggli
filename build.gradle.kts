@@ -1,6 +1,6 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-val lwjglVersion = "3.3.2-SNAPSHOT"
+val lwjglVersion = "3.3.2"
 val lwjglNatives = run {
     val name = System.getProperty("os.name")!!
     val arch = System.getProperty("os.arch")!!
@@ -23,7 +23,7 @@ val lwjglNatives = run {
 }
 
 plugins {
-    kotlin("jvm") version "1.7.20"
+    kotlin("jvm") version "1.8.10"
 }
 
 allprojects {
@@ -34,7 +34,6 @@ allprojects {
         google()
         mavenCentral()
         maven { url = uri("https://jitpack.io") }
-        maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots/") }
     }
 
     dependencies {

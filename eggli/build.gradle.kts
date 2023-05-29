@@ -4,7 +4,7 @@ val eggliVersion = "0.2.0"
 plugins {
     kotlin("jvm")
     `maven-publish`
-    id("com.google.devtools.ksp") version "1.7.20-1.0.6"
+    id("com.google.devtools.ksp") version "1.8.10-1.0.9"
 }
 
 dependencies {
